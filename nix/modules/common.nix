@@ -20,7 +20,7 @@ in
         type = lib.types.nullOr lib.types.nonEmptyStr;
         default = null;
         example = "/path/to/raycast-config.json";
-        description = "Runtime path to consumer JSON configuring profile, aliases, AI policy, and themes";
+        description = "Runtime path to consumer JSON configuring profile, aliases, clipboard history, AI policy, and themes";
       };
       settings = lib.options.mkOption {
         type = lib.types.nullOr (lib.types.attrsOf jsonFormat.type);

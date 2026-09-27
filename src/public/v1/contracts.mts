@@ -130,6 +130,7 @@ export type ConsumerConfig = {
 		fallbackPath?: string | undefined;
 		enabled: boolean;
 	}[];
+	clipboardHistoryDuration?: ClipboardHistoryDuration | undefined;
 	themesFile?: string | undefined;
 	disableAi: boolean;
 	launch: boolean;
@@ -170,6 +171,20 @@ export type CommandAlias = {
 	alias: string | null;
 	enabled?: boolean | undefined;
 };
+/**
+ * Clipboard history retention values offered by Raycast
+ * @public
+ */
+export type ClipboardHistoryDuration =
+	| "5m"
+	| "60m"
+	| "P1D"
+	| "P1W"
+	| "P1M"
+	| "P3M"
+	| "P6M"
+	| "P1Y"
+	| "unlimited";
 /**
  * Alias state before the operation and actual or planned state afterward
  * @public
@@ -275,6 +290,12 @@ export interface RaycastClient {
 			aliases: readonly CommandAlias[],
 			options?: MutationOptions,
 		): Promise<{ dryRun: boolean; aliases: AliasChange[] }>;
+	};
+	readonly clipboard: {
+		/**
+		 * Set clipboard retention while preserving other extension preferences
+		 */
+		setHistoryDuration(duration: ClipboardHistoryDuration): Promise<void>;
 	};
 	readonly userDefaults: {
 		/**

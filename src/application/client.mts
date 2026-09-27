@@ -1,5 +1,6 @@
 import { createAiOperations } from "../features/ai/operations.mts";
 import { createAliasesOperations } from "../features/aliases/operations.mts";
+import { createClipboardOperations } from "../features/clipboard/operations.mts";
 import { createDatabaseOperations } from "../features/database/operations.mts";
 import { createProfileOperations } from "../features/profile/operations.mts";
 import { createThemesOperations } from "../features/themes/operations.mts";
@@ -11,6 +12,7 @@ export function createRaycastClient(): RaycastClient {
 		database: createDatabaseOperations(),
 		profile: createProfileOperations(),
 		aliases: createAliasesOperations(),
+		clipboard: createClipboardOperations(),
 		userDefaults: createUserDefaultsOperations(),
 		themes: createThemesOperations(),
 		ai: createAiOperations(),

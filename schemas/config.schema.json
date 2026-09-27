@@ -124,6 +124,20 @@
 			"minLength": 1,
 			"description": "Theme JSON path relative to this config file"
 		},
+		"clipboardHistoryDuration": {
+			"enum": [
+				"5m",
+				"60m",
+				"P1D",
+				"P1W",
+				"P1M",
+				"P3M",
+				"P6M",
+				"P1Y",
+				"unlimited"
+			],
+			"description": "Clipboard history retention"
+		},
 		"disableAi": {
 			"type": "boolean",
 			"default": false,
@@ -152,6 +166,9 @@
 			"properties": {
 				"appAliases": { "minItems": 1 }
 			}
+		},
+		{
+			"required": ["clipboardHistoryDuration"]
 		},
 		{
 			"required": ["themesFile"]

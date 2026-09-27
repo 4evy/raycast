@@ -10,6 +10,7 @@ import { isRecord } from "is-record";
 import untildify from "untildify";
 import { z } from "zod";
 import { aliasesSchema } from "../features/aliases/aliases.mts";
+import { historyDurationSchema } from "../features/clipboard/operations.mts";
 import { currentUserSchema } from "../features/profile/profile.mts";
 import { withDatabase } from "../platform/database.mts";
 import { extractDatabaseKey } from "../platform/extract-key.mts";
@@ -40,6 +41,7 @@ export const consumerConfigSchema = z
 		profile: profileSchema.optional(),
 		commandAliases: aliasesSchema.default([]),
 		appAliases: z.array(appAliasSchema).default([]),
+		clipboardHistoryDuration: historyDurationSchema.optional(),
 		themesFile: z.string().min(1).optional(),
 		disableAi: z.boolean().default(false),
 		launch: z.boolean().default(false),
@@ -49,6 +51,7 @@ export const consumerConfigSchema = z
 			config.profile !== undefined ||
 			config.commandAliases.length > 0 ||
 			config.appAliases.length > 0 ||
+			config.clipboardHistoryDuration !== undefined ||
 			config.themesFile !== undefined ||
 			config.disableAi ||
 			config.launch,
@@ -186,6 +189,7 @@ export async function configureFile(
 		config.profile ||
 		config.commandAliases.length ||
 		config.appAliases.length ||
+		config.clipboardHistoryDuration ||
 		config.disableAi ||
 		config.themesFile
 	) {
@@ -228,6 +232,8 @@ export async function configureFile(
 	if (commandAliases.length) {
 		await client.aliases.apply(commandAliases);
 	}
+	if (config.clipboardHistoryDuration)
+		await client.clipboard.setHistoryDuration(config.clipboardHistoryDuration);
 	if (config.disableAi) await client.ai.disable();
 	if (config.themesFile) {
 		await installThemes(resolveConsumerPath(config.themesFile, configFile));
