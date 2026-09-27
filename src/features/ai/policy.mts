@@ -350,6 +350,16 @@ function asSnapshot(value: unknown): Snapshot {
 	return snapshotSchema.parse(value);
 }
 
+async function loadBackup(file: string): Promise<Snapshot> {
+	const result = snapshotSchema.safeParse(await loadJsonFile(file));
+	if (!result.success) {
+		throw new Error(
+			`Raycast AI backup at ${file} is incompatible and cannot be safely restored. Keep the file; move it aside before disabling AI again. A new backup captures only the current settings`,
+		);
+	}
+	return result.data;
+}
+
 const backupWriteOptions = { indent: IO.JSON_INDENT, mode: IO.FILE_MODE };
 
 export async function ensureBackup(
@@ -357,15 +367,15 @@ export async function ensureBackup(
 	before: Snapshot,
 	dryRun: boolean,
 ): Promise<boolean> {
-	if (dryRun) return false;
 	const current = asSnapshot(before);
 
 	if (!(await pathExists(file))) {
+		if (dryRun) return false;
 		await writeJsonFile(file, current, backupWriteOptions);
 		return true;
 	}
 
-	const existing = asSnapshot(await loadJsonFile(file));
+	const existing = await loadBackup(file);
 	const savedIds = new Set(
 		existing.frecencyRecords.map((record) => record.itemId),
 	);
@@ -393,7 +403,7 @@ export async function ensureBackup(
 		],
 	};
 
-	if (isDeepStrictEqual(existing, merged)) return false;
+	if (dryRun || isDeepStrictEqual(existing, merged)) return false;
 	await writeJsonFile(file, merged, backupWriteOptions);
 	return true;
 }
@@ -407,7 +417,7 @@ export async function restore(
 	const file = backupPathFor(appSupport);
 	if (!(await pathExists(file))) throw new Error(`backup not found: ${file}`);
 
-	const backup = asSnapshot(await loadJsonFile(file));
+	const backup = await loadBackup(file);
 	return runOperations(
 		COLLECTIONS.flatMap((entry) => entry.restore(db, backup)),
 		dryRun,

@@ -136,6 +136,11 @@ disables built-in AI features, including dictation and translation, and clears
 BYOK keys and skill directories. Chat history and third-party extensions remain.
 Restore uses the saved backup.
 
+If an existing backup is incompatible, disable and restore stop before changing
+settings. Keep the old file and move it aside before disabling AI again. The new
+backup captures the current settings; it cannot recover values missing from the
+old file. Dry runs check existing backups too.
+
 ## CLI
 
 Use `npm run cli -- --help` or a command group's `--help` to browse commands.
