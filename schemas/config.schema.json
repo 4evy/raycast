@@ -11,6 +11,20 @@
 		"profile": {
 			"type": "object",
 			"properties": {
+				"fallbackUser": {
+					"type": "object",
+					"properties": {
+						"id": { "type": "string", "minLength": 1 },
+						"name": { "type": "string", "minLength": 1 }
+					},
+					"required": ["id", "name"],
+					"additionalProperties": true,
+					"description": "Used when no stored profile exists"
+				},
+				"currentUserPatch": {
+					"type": "object",
+					"description": "Fields applied over the stored profile or fallbackUser"
+				},
 				"currentUser": {
 					"type": "object",
 					"properties": {
@@ -38,7 +52,29 @@
 					"description": "Avatar URL used when avatarFile is absent"
 				}
 			},
-			"required": ["currentUser"]
+			"oneOf": [
+				{ "required": ["currentUser"] },
+				{ "required": ["fallbackUser", "currentUserPatch"] }
+			]
+		},
+		"appAliases": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"names": {
+						"type": "array",
+						"items": { "type": "string", "minLength": 1 },
+						"minItems": 1
+					},
+					"alias": { "type": "string", "minLength": 1, "pattern": "^\\S*$" },
+					"fallbackPath": { "type": "string", "minLength": 1 },
+					"enabled": { "type": "boolean", "default": true }
+				},
+				"required": ["names", "alias"]
+			},
+			"default": [],
+			"description": "Resolve application command IDs from the local Raycast index; unmatched entries without a fallback path are skipped"
 		},
 		"commandAliases": {
 			"type": "array",
@@ -109,6 +145,12 @@
 				"commandAliases": {
 					"minItems": 1
 				}
+			}
+		},
+		{
+			"required": ["appAliases"],
+			"properties": {
+				"appAliases": { "minItems": 1 }
 			}
 		},
 		{

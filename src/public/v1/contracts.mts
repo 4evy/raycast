@@ -116,8 +116,20 @@ export type ConsumerConfig = {
 				avatarUrl?: string | undefined;
 				avatarFile?: string | undefined;
 		  }
+		| {
+				fallbackUser: CurrentUser;
+				currentUserPatch: Record<string, unknown>;
+				avatarUrl?: string | undefined;
+				avatarFile?: string | undefined;
+		  }
 		| undefined;
 	commandAliases: CommandAlias[];
+	appAliases: {
+		names: string[];
+		alias: string;
+		fallbackPath?: string | undefined;
+		enabled: boolean;
+	}[];
 	themesFile?: string | undefined;
 	disableAi: boolean;
 	launch: boolean;

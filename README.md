@@ -82,6 +82,14 @@ also work.
 - **Aliases:** set `alias` to `null` to remove one, or `enabled` to `false` to
   disable the command. Omit `enabled` to preserve its value. Unlisted commands
   stay unchanged. Find IDs with `npm run db -- api builtin [filter]`.
+- **Application aliases:** use `appAliases` to find applications by their
+  indexed names and generate Raycast command IDs. Names are tried in order.
+  If none match, `fallbackPath` supplies the command path; without it, the
+  alias is skipped with a warning. `commandAliases` still handles built-in
+  commands.
+- **Existing profile:** use `fallbackUser` and `currentUserPatch` instead of
+  `currentUser` to keep stored profile fields. The fallback supplies `id` and
+  `name` when no profile exists; patch fields override the stored values.
 
 The [configuration schema](schemas/config.schema.json) lists supported fields.
 This format does not accept arbitrary Raycast settings.
@@ -379,6 +387,30 @@ Set only one form; omit both to install only the app. Nix settings go into the
 Nix store, so keep secrets out and use absolute paths for `avatarFile` and
 `themesFile`. The JSON file stays at its runtime path. nix-darwin needs
 `system.primaryUser` or `programs.raycast.user`.
+
+For a profile and aliases that depend on the local Raycast database, use Nix
+settings directly. Activation resolves application names after Raycast starts:
+
+```nix
+programs.raycast.configuration.settings = {
+  profile = {
+    fallbackUser = { id = "your-id"; name = "Your Name"; };
+    currentUserPatch.has_pro_features = true;
+    avatarUrl = "https://example.com/avatar.png";
+  };
+  appAliases = [
+    { names = [ "Zen Browser (Twilight)" "Zen Browser" ]; alias = "firefox"; }
+  ];
+  commandAliases = [
+    {
+      id = "c:r:clipboard-history::-::history";
+      extensionId = "e:r:clipboard-history";
+      alias = "clip";
+    }
+  ];
+  disableAi = true;
+};
+```
 
 ## Development
 
