@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"target": "ES2024",
+		"module": "nodenext",
+		"moduleResolution": "nodenext",
+		"strict": true,
+		"noEmit": true,
+		"resolveJsonModule": true,
+		"erasableSyntaxOnly": true,
+		"skipLibCheck": true,
+		"lib": ["esnext"],
+		"types": ["node"],
+		"allowImportingTsExtensions": true,
+		"exactOptionalPropertyTypes": true,
+		"verbatimModuleSyntax": true
+	},
+	"include": ["*.mts", "*.cts", "src/**/*.mts", "src/**/*.cts", "scripts/*.mts"]
+}

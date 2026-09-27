@@ -1,0 +1,134 @@
+{
+	"$schema": "https://json-schema.org/draft/2020-12/schema",
+	"title": "Raycast configuration",
+	"description": "Actions consumed by configureFile and the configure CLI; runtime validation additionally rejects duplicate command IDs",
+	"type": "object",
+	"properties": {
+		"$schema": {
+			"type": "string",
+			"description": "Editor schema association; ignored at runtime"
+		},
+		"profile": {
+			"type": "object",
+			"properties": {
+				"currentUser": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "string",
+							"minLength": 1
+						},
+						"name": {
+							"type": "string",
+							"minLength": 1
+						}
+					},
+					"required": ["id", "name"],
+					"additionalProperties": true,
+					"description": "Stored as a replacement profile; extra fields are preserved and local OAuth defaults are cleared"
+				},
+				"avatarFile": {
+					"type": "string",
+					"minLength": 1,
+					"description": "Path relative to this config file; takes precedence over avatarUrl"
+				},
+				"avatarUrl": {
+					"type": "string",
+					"format": "uri",
+					"description": "Avatar URL used when avatarFile is absent"
+				}
+			},
+			"required": ["currentUser"]
+		},
+		"commandAliases": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"minLength": 1,
+						"description": "Command ID; must be unique within commandAliases"
+					},
+					"extensionId": {
+						"type": "string",
+						"minLength": 1,
+						"description": "Owning extension ID; preferred spelling"
+					},
+					"extension_id": {
+						"type": "string",
+						"minLength": 1,
+						"description": "Accepted legacy spelling of extensionId"
+					},
+					"alias": {
+						"type": ["string", "null"],
+						"pattern": "^\\S*$",
+						"description": "No whitespace; null or an empty string removes the alias"
+					},
+					"enabled": {
+						"type": "boolean",
+						"description": "Omit to preserve the existing value, or default to true for a new command"
+					}
+				},
+				"required": ["id", "alias"],
+				"anyOf": [
+					{
+						"required": ["extensionId"]
+					},
+					{
+						"required": ["extension_id"]
+					}
+				]
+			},
+			"default": [],
+			"description": "Only listed commands are changed; command IDs must be unique"
+		},
+		"themesFile": {
+			"type": "string",
+			"minLength": 1,
+			"description": "Theme JSON path relative to this config file"
+		},
+		"disableAi": {
+			"type": "boolean",
+			"default": false,
+			"description": "True applies the AI-disable policy; false leaves settings unchanged"
+		},
+		"launch": {
+			"type": "boolean",
+			"default": false,
+			"description": "True opens Raycast after requested actions"
+		}
+	},
+	"anyOf": [
+		{
+			"required": ["profile"]
+		},
+		{
+			"required": ["commandAliases"],
+			"properties": {
+				"commandAliases": {
+					"minItems": 1
+				}
+			}
+		},
+		{
+			"required": ["themesFile"]
+		},
+		{
+			"required": ["disableAi"],
+			"properties": {
+				"disableAi": {
+					"const": true
+				}
+			}
+		},
+		{
+			"required": ["launch"],
+			"properties": {
+				"launch": {
+					"const": true
+				}
+			}
+		}
+	]
+}

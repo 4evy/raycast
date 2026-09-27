@@ -1,0 +1,8 @@
+{
+	"files": { "maxSize": 4194304 },
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	}
+}

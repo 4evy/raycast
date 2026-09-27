@@ -1,0 +1,19 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"noEmit": false,
+		"declaration": true,
+		"outDir": "dist",
+		"rootDir": ".",
+		"rewriteRelativeImportExtensions": true
+	},
+	"include": ["*.mts", "*.cts", "src/**/*.mts", "src/**/*.cts"],
+	"exclude": [
+		"scripts",
+		"dist",
+		"src/source/ast.mts",
+		"src/source/bindings.mts",
+		"src/source/analysis.mts",
+		"src/source/corpus.mts"
+	]
+}

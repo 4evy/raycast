@@ -1,0 +1,35 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"name": "Raycast CLI",
+			"type": "node",
+			"request": "launch",
+			"runtimeExecutable": "node",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"skipFiles": ["<node_internals>/**"],
+			"sourceMaps": false,
+			"program": "${workspaceFolder}/src/cli/main.mts",
+			"args": ["--help"]
+		},
+		{
+			"name": "Current TypeScript / JavaScript file",
+			"type": "node",
+			"request": "launch",
+			"runtimeExecutable": "node",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"skipFiles": ["<node_internals>/**"],
+			"sourceMaps": false,
+			"program": "${file}"
+		},
+		{
+			"name": "Attach to Node process",
+			"type": "node",
+			"request": "attach",
+			"processId": "${command:PickProcess}",
+			"skipFiles": ["<node_internals>/**"]
+		}
+	]
+}

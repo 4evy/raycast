@@ -1,0 +1,5151 @@
+{
+	"release": {
+		"version": "2.5.2.0",
+		"url": "https://x-r2.raycast-releases.com/Raycast_2.5.2.0_67ef5b0f31_arm64.dmg",
+		"hash": "sha256-G3l4Ng0blsqWsL8T2bHRlAWZzuxh3YyFoN4/DoJEWyM="
+	},
+	"native": {
+		"sha256": "ad60d56cc263e668a9dd4b534c90ec383637099a1a3ae045d7b65f95c5a59575",
+		"exports": {
+			"AiChatActivitySource": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"AiChat": "AiChat",
+					"AiChatTitle": "AiChatTitle",
+					"AiCommand": "AiCommand",
+					"EmojiSearch": "EmojiSearch",
+					"QuickAi": "QuickAi"
+				}
+			},
+			"AiChatActivityType": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"AssistantMessage": "AssistantMessage",
+					"UserMessage": "UserMessage"
+				}
+			},
+			"AiErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"BranchError": 12001
+				}
+			},
+			"AiPickerUsageRepository": {
+				"kind": "class",
+				"members": {
+					"listUsage": {
+						"kind": "method"
+					},
+					"recordUse": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"AiRepository": {
+				"kind": "class",
+				"members": {
+					"chatBranch": {
+						"kind": "method"
+					},
+					"chatClearConversation": {
+						"kind": "method"
+					},
+					"chatDeleteAll": {
+						"kind": "method"
+					},
+					"chatDeleteAllUnpinned": {
+						"kind": "method"
+					},
+					"chatDeleteOne": {
+						"kind": "method"
+					},
+					"chatGetAll": {
+						"kind": "method"
+					},
+					"chatGetAllByFolderId": {
+						"kind": "method"
+					},
+					"chatGetAllIds": {
+						"kind": "method"
+					},
+					"chatGetAllInvalidationSnapshots": {
+						"kind": "method"
+					},
+					"chatGetAllTitles": {
+						"kind": "method"
+					},
+					"chatGetChildPage": {
+						"kind": "method"
+					},
+					"chatGetCommandMessageByChatId": {
+						"kind": "method"
+					},
+					"chatGetConversationPage": {
+						"kind": "method"
+					},
+					"chatGetFilteredPage": {
+						"kind": "method"
+					},
+					"chatGetOne": {
+						"kind": "method"
+					},
+					"chatGetOneByMessageId": {
+						"kind": "method"
+					},
+					"chatGetOptional": {
+						"kind": "method"
+					},
+					"chatGetPage": {
+						"kind": "method"
+					},
+					"chatGetPageAfterId": {
+						"kind": "method"
+					},
+					"chatGetPinned": {
+						"kind": "method"
+					},
+					"chatGetRecentUpdatedBefore": {
+						"kind": "method"
+					},
+					"chatMessageDeleteMany": {
+						"kind": "method"
+					},
+					"chatMessageGetAll": {
+						"kind": "method"
+					},
+					"chatMessageGetAllByChatId": {
+						"kind": "method"
+					},
+					"chatMessageGetAllByRequestId": {
+						"kind": "method"
+					},
+					"chatMessageGetMemoryCandidates": {
+						"kind": "method"
+					},
+					"chatMessageGetPageAfterId": {
+						"kind": "method"
+					},
+					"chatMessageSearchByKeywords": {
+						"kind": "method"
+					},
+					"chatMessageSearchByTime": {
+						"kind": "method"
+					},
+					"chatMessageUpsertMany": {
+						"kind": "method"
+					},
+					"chatMessageUpsertOne": {
+						"kind": "method"
+					},
+					"chatRequestDeleteOne": {
+						"kind": "method"
+					},
+					"chatRequestGetAllByChatId": {
+						"kind": "method"
+					},
+					"chatRequestGetOne": {
+						"kind": "method"
+					},
+					"chatRequestGetPageAfterId": {
+						"kind": "method"
+					},
+					"chatRequestUpsertOne": {
+						"kind": "method"
+					},
+					"chatTouchUpdatedAt": {
+						"kind": "method"
+					},
+					"chatUpsertMany": {
+						"kind": "method"
+					},
+					"chatUpsertOne": {
+						"kind": "method"
+					},
+					"commandChatIdsForChatIds": {
+						"kind": "method"
+					},
+					"commandDeleteAll": {
+						"kind": "method"
+					},
+					"commandDeleteOne": {
+						"kind": "method"
+					},
+					"commandGetAll": {
+						"kind": "method"
+					},
+					"commandGetAllTags": {
+						"kind": "method"
+					},
+					"commandGetOne": {
+						"kind": "method"
+					},
+					"commandUpsertMany": {
+						"kind": "method"
+					},
+					"commandUpsertOne": {
+						"kind": "method"
+					},
+					"folderDeleteAll": {
+						"kind": "method"
+					},
+					"folderDeleteOne": {
+						"kind": "method"
+					},
+					"folderDeleteOneAndUnassignChats": {
+						"kind": "method"
+					},
+					"folderGetAll": {
+						"kind": "method"
+					},
+					"folderGetOne": {
+						"kind": "method"
+					},
+					"folderGetWorkingDirectory": {
+						"kind": "method"
+					},
+					"folderSetWorkingDirectory": {
+						"kind": "method"
+					},
+					"folderUpdateMemory": {
+						"kind": "method"
+					},
+					"folderUpsertOne": {
+						"kind": "method"
+					},
+					"modeDeleteAll": {
+						"kind": "method"
+					},
+					"modeDeleteOne": {
+						"kind": "method"
+					},
+					"modeGetAll": {
+						"kind": "method"
+					},
+					"modeGetOne": {
+						"kind": "method"
+					},
+					"modelDefaultGetAll": {
+						"kind": "method"
+					},
+					"modelDefaultUpsertOne": {
+						"kind": "method"
+					},
+					"modelGetAll": {
+						"kind": "method"
+					},
+					"modelGetById": {
+						"kind": "method"
+					},
+					"modelSetDisabledAt": {
+						"kind": "method"
+					},
+					"modelUpsertOne": {
+						"kind": "method"
+					},
+					"modeUpsertMany": {
+						"kind": "method"
+					},
+					"modeUpsertOne": {
+						"kind": "method"
+					},
+					"movePinnedDown": {
+						"kind": "method"
+					},
+					"movePinnedUp": {
+						"kind": "method"
+					},
+					"pinOne": {
+						"kind": "method"
+					},
+					"sanityCheck": {
+						"kind": "method"
+					},
+					"scheduledMessageDeleteOccurrence": {
+						"kind": "method"
+					},
+					"scheduledMessageDeleteOne": {
+						"kind": "method"
+					},
+					"scheduledMessageGetAll": {
+						"kind": "method"
+					},
+					"scheduledMessageGetOne": {
+						"kind": "method"
+					},
+					"scheduledMessageUpdateOccurrence": {
+						"kind": "method"
+					},
+					"scheduledMessageUpsertOne": {
+						"kind": "method"
+					},
+					"transcriptionBackfillMissingRawValues": {
+						"kind": "method"
+					},
+					"transcriptionBackfillMissingStats": {
+						"kind": "method"
+					},
+					"transcriptionDeleteAll": {
+						"kind": "method"
+					},
+					"transcriptionDeleteOne": {
+						"kind": "method"
+					},
+					"transcriptionGetAll": {
+						"kind": "method"
+					},
+					"transcriptionGetPage": {
+						"kind": "method"
+					},
+					"transcriptionGetPageAfterId": {
+						"kind": "method"
+					},
+					"transcriptionGetStats": {
+						"kind": "method"
+					},
+					"transcriptionStyleDeleteAll": {
+						"kind": "method"
+					},
+					"transcriptionStyleDeleteOne": {
+						"kind": "method"
+					},
+					"transcriptionStyleGetAll": {
+						"kind": "method"
+					},
+					"transcriptionStyleGetAllTags": {
+						"kind": "method"
+					},
+					"transcriptionStyleGetOne": {
+						"kind": "method"
+					},
+					"transcriptionStyleGetPage": {
+						"kind": "method"
+					},
+					"transcriptionStyleUpsertMany": {
+						"kind": "method"
+					},
+					"transcriptionStyleUpsertOne": {
+						"kind": "method"
+					},
+					"transcriptionUpsertOne": {
+						"kind": "method"
+					},
+					"unpinOne": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"AiRunErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"AdmissionConflict": 20005,
+					"CapacityExceeded": 20006,
+					"ContinuationPredecessorInvalid": 20007,
+					"CursorConflict": 20003,
+					"CursorNotContiguous": 20002,
+					"InputCommandConflict": 20004,
+					"JournalOwnershipLost": 20001,
+					"SupersedeHistoryChanged": 20008,
+					"TerminalPhaseConflict": 20009
+				}
+			},
+			"AiRunsRepository": {
+				"kind": "class",
+				"members": {
+					"abandonDeferredAdmission": {
+						"kind": "method"
+					},
+					"abandonRunInput": {
+						"kind": "method"
+					},
+					"abandonRunInputs": {
+						"kind": "method"
+					},
+					"acquireJournalOwnership": {
+						"kind": "method"
+					},
+					"applyRunEvent": {
+						"kind": "method"
+					},
+					"applyRunEvents": {
+						"kind": "method"
+					},
+					"backfillChatMessageSearch": {
+						"kind": "method"
+					},
+					"compareAndSwapSessionAgentState": {
+						"kind": "method"
+					},
+					"compressTurnProjections": {
+						"kind": "method"
+					},
+					"continueRun": {
+						"kind": "method"
+					},
+					"countNonterminalRuns": {
+						"kind": "method"
+					},
+					"countPendingDeferredAdmissions": {
+						"kind": "method"
+					},
+					"createSession": {
+						"kind": "method"
+					},
+					"deleteRunRecovery": {
+						"kind": "method"
+					},
+					"deleteSessionData": {
+						"kind": "method"
+					},
+					"editPendingRunInput": {
+						"kind": "method"
+					},
+					"enqueueDeferredAdmission": {
+						"kind": "method"
+					},
+					"enqueueOutbox": {
+						"kind": "method"
+					},
+					"eventsSince": {
+						"kind": "method"
+					},
+					"findAdmission": {
+						"kind": "method"
+					},
+					"findTurnProjectionLegacyRequests": {
+						"kind": "method"
+					},
+					"getChatMessageSearchBackfillProgress": {
+						"kind": "method"
+					},
+					"getDeferredAdmission": {
+						"kind": "method"
+					},
+					"getMaxSessionPin": {
+						"kind": "method"
+					},
+					"getRun": {
+						"kind": "method"
+					},
+					"getRunInput": {
+						"kind": "method"
+					},
+					"getRunRecovery": {
+						"kind": "method"
+					},
+					"getSessionAgent": {
+						"kind": "method"
+					},
+					"getSessionAgentState": {
+						"kind": "method"
+					},
+					"getSessionOrigin": {
+						"kind": "method"
+					},
+					"getSessionShell": {
+						"kind": "method"
+					},
+					"getTurnProjection": {
+						"kind": "method"
+					},
+					"incrementRecoveryAttempts": {
+						"kind": "method"
+					},
+					"insertLateToolResult": {
+						"kind": "method"
+					},
+					"leaseNextDeferredAdmission": {
+						"kind": "method"
+					},
+					"listAllSessionShells": {
+						"kind": "method"
+					},
+					"listArchivableSessionIds": {
+						"kind": "method"
+					},
+					"listArchivedSessionShells": {
+						"kind": "method"
+					},
+					"listChildRuns": {
+						"kind": "method"
+					},
+					"listDeletedSessionIds": {
+						"kind": "method"
+					},
+					"listDeletedSessionShells": {
+						"kind": "method"
+					},
+					"listFolderSessionShells": {
+						"kind": "method"
+					},
+					"listInterruptedRuns": {
+						"kind": "method"
+					},
+					"listLateToolResults": {
+						"kind": "method"
+					},
+					"listOrganizedSessionShells": {
+						"kind": "method"
+					},
+					"listOutboxForRun": {
+						"kind": "method"
+					},
+					"listPendingDeferredAdmissions": {
+						"kind": "method"
+					},
+					"listPendingOutbox": {
+						"kind": "method"
+					},
+					"listPendingRunInputs": {
+						"kind": "method"
+					},
+					"listPinnedSessionShells": {
+						"kind": "method"
+					},
+					"listRunRecovery": {
+						"kind": "method"
+					},
+					"listRuns": {
+						"kind": "method"
+					},
+					"listRunsAwaitingProjection": {
+						"kind": "method"
+					},
+					"listRunsRetainingQueue": {
+						"kind": "method"
+					},
+					"listSessionRootRuns": {
+						"kind": "method"
+					},
+					"listSessionShells": {
+						"kind": "method"
+					},
+					"listSupersededTurnProjectionRunIds": {
+						"kind": "method"
+					},
+					"listSuspendedRuns": {
+						"kind": "method"
+					},
+					"listTurnProjectionRunIds": {
+						"kind": "method"
+					},
+					"listTurnProjections": {
+						"kind": "method"
+					},
+					"listTurnProjectionsPendingSearchIndex": {
+						"kind": "method"
+					},
+					"listTurnSearchText": {
+						"kind": "method"
+					},
+					"markNonTimelineTurnProjectionsSearchIndexed": {
+						"kind": "method"
+					},
+					"markRunInputApplied": {
+						"kind": "method"
+					},
+					"markRunProjected": {
+						"kind": "method"
+					},
+					"markTurnProjectionSearchFailed": {
+						"kind": "method"
+					},
+					"projectSettledRun": {
+						"kind": "method"
+					},
+					"pruneJournal": {
+						"kind": "method"
+					},
+					"releaseDeferredAdmissionLease": {
+						"kind": "method"
+					},
+					"reorderPendingRunInputs": {
+						"kind": "method"
+					},
+					"repairSessionActivity": {
+						"kind": "method"
+					},
+					"replaceTurnProjectionLegacyRequests": {
+						"kind": "method"
+					},
+					"replaceTurnSearchText": {
+						"kind": "method"
+					},
+					"reserveAdmission": {
+						"kind": "method"
+					},
+					"reserveRunInput": {
+						"kind": "method"
+					},
+					"resolveDeferredAdmission": {
+						"kind": "method"
+					},
+					"resolveOutbox": {
+						"kind": "method"
+					},
+					"searchSessionShells": {
+						"kind": "method"
+					},
+					"searchSessionShellsWithContent": {
+						"kind": "method"
+					},
+					"setSessionArchived": {
+						"kind": "method"
+					},
+					"setSessionDeleted": {
+						"kind": "method"
+					},
+					"setSessionFolder": {
+						"kind": "method"
+					},
+					"setSessionOrigin": {
+						"kind": "method"
+					},
+					"setSessionPinned": {
+						"kind": "method"
+					},
+					"softDeleteUnpinnedSessions": {
+						"kind": "method"
+					},
+					"steerPendingRunInput": {
+						"kind": "method"
+					},
+					"supersedeRun": {
+						"kind": "method"
+					},
+					"touchSession": {
+						"kind": "method"
+					},
+					"transferPendingRunInput": {
+						"kind": "method"
+					},
+					"turnProjectionStorageStats": {
+						"kind": "method"
+					},
+					"upsertRunRecovery": {
+						"kind": "method"
+					},
+					"upsertTurnProjection": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"AiSettledRunProjectionResult": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"Projected": "projected",
+					"ProjectedCreated": "projectedCreated",
+					"SkippedAlreadyProjected": "skippedAlreadyProjected",
+					"SkippedDeleted": "skippedDeleted"
+				}
+			},
+			"AiToolUsageRepository": {
+				"kind": "class",
+				"members": {
+					"recordToolUse": {
+						"kind": "method"
+					},
+					"topTools": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"AppIndexContentType": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"App": 0,
+					"Game": 2,
+					"Preference": 1
+				}
+			},
+			"AppIndexRepository": {
+				"kind": "class",
+				"members": {
+					"deleteByRaycastId": {
+						"kind": "method"
+					},
+					"deleteManyByRaycastId": {
+						"kind": "method"
+					},
+					"getAllByContentType": {
+						"kind": "method"
+					},
+					"getAllBySystemContentType": {
+						"kind": "method"
+					},
+					"getByPath": {
+						"kind": "method"
+					},
+					"hasAnyByContentType": {
+						"kind": "method"
+					},
+					"sanityCheck": {
+						"kind": "method"
+					},
+					"setUserContentType": {
+						"kind": "method"
+					},
+					"upsert": {
+						"kind": "method"
+					},
+					"upsertMany": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"AppleShortcutsRepository": {
+				"kind": "class",
+				"members": {
+					"all": {
+						"kind": "method"
+					},
+					"replaceAll": {
+						"kind": "method"
+					},
+					"sanityCheck": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"AppMenuBarItemsRepository": {
+				"kind": "class",
+				"members": {
+					"listPinned": {
+						"kind": "method"
+					},
+					"movePinnedDown": {
+						"kind": "method"
+					},
+					"movePinnedUp": {
+						"kind": "method"
+					},
+					"pin": {
+						"kind": "method"
+					},
+					"unpin": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"busyErrorCount": {
+				"kind": "function",
+				"members": {},
+				"statics": {},
+				"values": {}
+			},
+			"CalculatorErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"EntryNotFound": 15001,
+					"InvalidUpdate": 15002
+				}
+			},
+			"CalculatorRepository": {
+				"kind": "class",
+				"members": {
+					"all": {
+						"kind": "method"
+					},
+					"deleteAll": {
+						"kind": "method"
+					},
+					"deleteExceedingLimit": {
+						"kind": "method"
+					},
+					"deleteOlderThan": {
+						"kind": "method"
+					},
+					"deleteOne": {
+						"kind": "method"
+					},
+					"getOne": {
+						"kind": "method"
+					},
+					"movePinnedDown": {
+						"kind": "method"
+					},
+					"movePinnedUp": {
+						"kind": "method"
+					},
+					"pinOne": {
+						"kind": "method"
+					},
+					"unpinOne": {
+						"kind": "method"
+					},
+					"upsert": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"ClipboardErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"DateTimeFormat": 3008,
+					"ExhaustedIds": 3005,
+					"InvalidContentType": 3002,
+					"InvalidDateTimeString": 3004,
+					"InvalidEntryId": 3001,
+					"InvalidSourceHost": 3003,
+					"NoSuchEntry": 3006,
+					"NoSuchFilter": 3007
+				}
+			},
+			"ClipboardRepository": {
+				"kind": "class",
+				"members": {
+					"all": {
+						"kind": "method"
+					},
+					"deleteAll": {
+						"kind": "method"
+					},
+					"deleteAllAfterDate": {
+						"kind": "method"
+					},
+					"deleteAllBeforeDate": {
+						"kind": "method"
+					},
+					"deleteFilter": {
+						"kind": "method"
+					},
+					"deleteOne": {
+						"kind": "method"
+					},
+					"getAllFilters": {
+						"kind": "method"
+					},
+					"getAllTags": {
+						"kind": "method"
+					},
+					"getFilter": {
+						"kind": "method"
+					},
+					"getOne": {
+						"kind": "method"
+					},
+					"getOneByContentHash": {
+						"kind": "method"
+					},
+					"insertMany": {
+						"kind": "method"
+					},
+					"insertOne": {
+						"kind": "method"
+					},
+					"last": {
+						"kind": "method"
+					},
+					"movePinnedDown": {
+						"kind": "method"
+					},
+					"movePinnedUp": {
+						"kind": "method"
+					},
+					"pinOne": {
+						"kind": "method"
+					},
+					"sanityCheck": {
+						"kind": "method"
+					},
+					"unpinOne": {
+						"kind": "method"
+					},
+					"updateOne": {
+						"kind": "method"
+					},
+					"upsertFilter": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"ClipboardSourceHost": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"iOS": "iOS",
+					"MacOS": "MacOS",
+					"Windows": "Windows"
+				}
+			},
+			"CloudSyncActivityKind": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"Importing": "Importing",
+					"Reconciling": "Reconciling"
+				}
+			},
+			"cloudSyncApplyFailureDiagnosticSnapshot": {
+				"kind": "function",
+				"members": {},
+				"statics": {},
+				"values": {}
+			},
+			"cloudSyncApplyFailureTelemetrySnapshot": {
+				"kind": "function",
+				"members": {},
+				"statics": {},
+				"values": {}
+			},
+			"CloudSyncAuthFailureKind": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"AuthFailed": "AuthFailed",
+					"AuthUserMismatch": "AuthUserMismatch"
+				}
+			},
+			"CloudSyncDeviceDrainBlocker": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"BridgeEnrollment": "BridgeEnrollment",
+					"BridgeImport": "BridgeImport",
+					"BridgeReconcile": "BridgeReconcile",
+					"BridgeV1ToV2": "BridgeV1ToV2",
+					"DeviceShape": "DeviceShape",
+					"EntityConvergence": "EntityConvergence",
+					"SessionOwner": "SessionOwner",
+					"ShapeBackfill": "ShapeBackfill",
+					"ShapeBackfillFailed": "ShapeBackfillFailed",
+					"StaleEntities": "StaleEntities"
+				}
+			},
+			"CloudSyncDeviceDrainStatus": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"Pending": "Pending",
+					"Reached": "Reached",
+					"Unsupported": "Unsupported"
+				}
+			},
+			"CloudSyncEnvironment": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"Custom": "custom",
+					"Production": "production",
+					"Staging": "staging"
+				}
+			},
+			"CloudSyncErrorKind": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"Auth": "Auth",
+					"Cancelled": "Cancelled",
+					"CertificateUntrusted": "CertificateUntrusted",
+					"Database": "Database",
+					"Network": "Network",
+					"Server": "Server",
+					"Timeout": "Timeout",
+					"UpgradeRequired": "UpgradeRequired"
+				}
+			},
+			"CloudSyncFlavor": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"Development": "Development",
+					"Internal": "Internal",
+					"Production": "Production"
+				}
+			},
+			"cloudSyncIdentityDiagnosticSnapshot": {
+				"kind": "function",
+				"members": {},
+				"statics": {},
+				"values": {}
+			},
+			"CloudSyncOperationType": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"DELETE": "DELETE",
+					"PUT": "PUT"
+				}
+			},
+			"cloudSyncPendingOperationDiagnosticSnapshot": {
+				"kind": "function",
+				"members": {},
+				"statics": {},
+				"values": {}
+			},
+			"CloudSyncPhase": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"Connecting": "Connecting",
+					"Idle": "Idle",
+					"InitialSync": "InitialSync",
+					"Offline": "Offline",
+					"Online": "Online"
+				}
+			},
+			"cloudSyncPushRejectionDiagnosticSnapshot": {
+				"kind": "function",
+				"members": {},
+				"statics": {},
+				"values": {}
+			},
+			"ContactsRepository": {
+				"kind": "class",
+				"members": {
+					"all": {
+						"kind": "method"
+					},
+					"replaceAll": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"ContentType": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"Blob": "blob",
+					"Text": "text",
+					"Url": "url"
+				}
+			},
+			"ControlKey": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"ArrowDown": "ArrowDown",
+					"ArrowLeft": "ArrowLeft",
+					"ArrowRight": "ArrowRight",
+					"ArrowUp": "ArrowUp",
+					"Backspace": "Backspace",
+					"CapsLock": "CapsLock",
+					"Delete": "Delete",
+					"End": "End",
+					"Enter": "Enter",
+					"Escape": "Escape",
+					"F1": "F1",
+					"F10": "F10",
+					"F11": "F11",
+					"F12": "F12",
+					"F13": "F13",
+					"F14": "F14",
+					"F15": "F15",
+					"F16": "F16",
+					"F17": "F17",
+					"F18": "F18",
+					"F19": "F19",
+					"F2": "F2",
+					"F20": "F20",
+					"F21": "F21",
+					"F22": "F22",
+					"F23": "F23",
+					"F24": "F24",
+					"F3": "F3",
+					"F4": "F4",
+					"F5": "F5",
+					"F6": "F6",
+					"F7": "F7",
+					"F8": "F8",
+					"F9": "F9",
+					"Home": "Home",
+					"Insert": "Insert",
+					"NumpadDelete": "NumpadDelete",
+					"NumpadEnd": "NumpadEnd",
+					"NumpadEnter": "NumpadEnter",
+					"NumpadHome": "NumpadHome",
+					"NumpadInsert": "NumpadInsert",
+					"NumpadPageDown": "NumpadPageDown",
+					"NumpadPageUp": "NumpadPageUp",
+					"PageDown": "PageDown",
+					"PageUp": "PageUp",
+					"Tab": "Tab"
+				}
+			},
+			"createCloudSyncConnection": {
+				"kind": "function",
+				"members": {},
+				"statics": {},
+				"values": {}
+			},
+			"CurrenciesRepository": {
+				"kind": "class",
+				"members": {
+					"all": {
+						"kind": "method"
+					},
+					"deleteAllCrypto": {
+						"kind": "method"
+					},
+					"deleteAllFiat": {
+						"kind": "method"
+					},
+					"replaceCrypto": {
+						"kind": "method"
+					},
+					"replaceFiat": {
+						"kind": "method"
+					},
+					"sanityCheck": {
+						"kind": "method"
+					},
+					"setCrypto": {
+						"kind": "method"
+					},
+					"setFiat": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"CurrencyErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"InvalidValueType": 6001
+				}
+			},
+			"DatabaseClient": {
+				"kind": "class",
+				"members": {
+					"ai": {
+						"kind": "getter"
+					},
+					"aiPickerUsage": {
+						"kind": "getter"
+					},
+					"aiRuns": {
+						"kind": "getter"
+					},
+					"aiToolUsage": {
+						"kind": "getter"
+					},
+					"appIndex": {
+						"kind": "getter"
+					},
+					"appleShortcuts": {
+						"kind": "getter"
+					},
+					"appMenuBarItems": {
+						"kind": "getter"
+					},
+					"backupDatabases": {
+						"kind": "method"
+					},
+					"calculator": {
+						"kind": "getter"
+					},
+					"clipboard": {
+						"kind": "getter"
+					},
+					"contacts": {
+						"kind": "getter"
+					},
+					"currencies": {
+						"kind": "getter"
+					},
+					"effectiveEncryptionKey": {
+						"kind": "getter"
+					},
+					"emoji": {
+						"kind": "getter"
+					},
+					"focusCategories": {
+						"kind": "getter"
+					},
+					"frecency": {
+						"kind": "getter"
+					},
+					"getDatabaseStatus": {
+						"kind": "method"
+					},
+					"initReport": {
+						"kind": "getter"
+					},
+					"nodeExtensions": {
+						"kind": "getter"
+					},
+					"notes": {
+						"kind": "getter"
+					},
+					"openDatabaseSnapshot": {
+						"kind": "method"
+					},
+					"orgPacks": {
+						"kind": "getter"
+					},
+					"pendingTokens": {
+						"kind": "getter"
+					},
+					"quicklinks": {
+						"kind": "getter"
+					},
+					"resetDatabase": {
+						"kind": "method"
+					},
+					"restoreFromBackup": {
+						"kind": "method"
+					},
+					"screenshots": {
+						"kind": "getter"
+					},
+					"setDeviceId": {
+						"kind": "method"
+					},
+					"settings": {
+						"kind": "getter"
+					},
+					"shutdown": {
+						"kind": "method"
+					},
+					"snippets": {
+						"kind": "getter"
+					},
+					"testHang": {
+						"kind": "method"
+					},
+					"translateCustomCommands": {
+						"kind": "getter"
+					},
+					"userActivity": {
+						"kind": "getter"
+					},
+					"userDefaults": {
+						"kind": "getter"
+					},
+					"vacuum": {
+						"kind": "method"
+					},
+					"vacuumAll": {
+						"kind": "method"
+					},
+					"walCheckpoint": {
+						"kind": "method"
+					},
+					"walCheckpointAll": {
+						"kind": "method"
+					},
+					"windowManagement": {
+						"kind": "getter"
+					},
+					"windowsRunCommands": {
+						"kind": "getter"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"DatabaseErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"BackupDirectoryCreationFailed": 1020,
+					"BackupDirectoryListingFailed": 1021,
+					"CannotReadDatabase": 1016,
+					"CouldNotAttach": 1009,
+					"CouldNotDetach": 1010,
+					"DatabaseLockFailed": 1012,
+					"DatabaseNotInitialized": 1011,
+					"EncryptionKeyError": 1014,
+					"EncryptionKeyMismatch": 1023,
+					"InvalidAttach": 1007,
+					"InvalidPath": 1013,
+					"IoError": 1022,
+					"MigrationDivergent": 1005,
+					"MigrationError": 1003,
+					"MigrationMissing": 1004,
+					"NoBackupFound": 1025,
+					"NoEncryptionKey": 1015,
+					"OpenError": 1001,
+					"PathDoesNotExist": 1018,
+					"PathIsNotFolder": 1019,
+					"PostInitHook": 1008,
+					"PragmaError": 1002,
+					"ResetDatabaseFailed": 1026,
+					"RestoreFromBackupFailed": 1024,
+					"RusqliteError": 1006,
+					"SanityCheckFailed": 1017
+				}
+			},
+			"DatabaseKind": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"Ai": "Ai",
+					"AppIndex": "AppIndex",
+					"Clipboard": "Clipboard",
+					"Emoji": "Emoji",
+					"Frecency": "Frecency",
+					"Main": "Main",
+					"NodeExtensions": "NodeExtensions",
+					"Screenshots": "Screenshots",
+					"Settings": "Settings",
+					"SettingsV2": "SettingsV2",
+					"UserActivity": "UserActivity"
+				}
+			},
+			"DatabaseSnapshot": {
+				"kind": "class",
+				"members": {
+					"ai": {
+						"kind": "getter"
+					},
+					"clipboard": {
+						"kind": "getter"
+					},
+					"emoji": {
+						"kind": "getter"
+					},
+					"focusCategories": {
+						"kind": "getter"
+					},
+					"frecency": {
+						"kind": "getter"
+					},
+					"nodeExtensions": {
+						"kind": "getter"
+					},
+					"notes": {
+						"kind": "getter"
+					},
+					"orgPacks": {
+						"kind": "getter"
+					},
+					"quicklinks": {
+						"kind": "getter"
+					},
+					"release": {
+						"kind": "method"
+					},
+					"settings": {
+						"kind": "getter"
+					},
+					"snippets": {
+						"kind": "getter"
+					},
+					"userActivity": {
+						"kind": "getter"
+					},
+					"userDefaults": {
+						"kind": "getter"
+					},
+					"windowManagement": {
+						"kind": "getter"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"DataErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"DatabaseCorrupt": 2002,
+					"DatabaseLockFailed": 2007,
+					"DatabaseNotInitialized": 2008,
+					"JsonSerializationError": 2004,
+					"PinOpError": 2005,
+					"QueryError": 2001,
+					"SanityCheckFailed": 2006,
+					"SerializationError": 2003
+				}
+			},
+			"Directionality": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"left": "left",
+					"right": "right"
+				}
+			},
+			"EmojiErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"ImportParseError": 8001,
+					"InvalidEmojiId": 8002
+				}
+			},
+			"EmojiRepository": {
+				"kind": "class",
+				"members": {
+					"all": {
+						"kind": "method"
+					},
+					"getBySymbol": {
+						"kind": "method"
+					},
+					"movePinnedDown": {
+						"kind": "method"
+					},
+					"movePinnedUp": {
+						"kind": "method"
+					},
+					"pinOne": {
+						"kind": "method"
+					},
+					"resetFrecency": {
+						"kind": "method"
+					},
+					"restoreFrecency": {
+						"kind": "method"
+					},
+					"sanityCheck": {
+						"kind": "method"
+					},
+					"setCustomKeywords": {
+						"kind": "method"
+					},
+					"unpinOne": {
+						"kind": "method"
+					},
+					"visit": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"FaviconProvider": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"DuckDuckGo": "duckduckgo",
+					"Google": "google",
+					"Local": "local",
+					"None": "none",
+					"Raycast": "raycast"
+				}
+			},
+			"FocusCategoriesRepository": {
+				"kind": "class",
+				"members": {
+					"deleteCustomByCategoryId": {
+						"kind": "method"
+					},
+					"getByCategoryId": {
+						"kind": "method"
+					},
+					"insertCustom": {
+						"kind": "method"
+					},
+					"list": {
+						"kind": "method"
+					},
+					"updateAccessedAtByCategoryId": {
+						"kind": "method"
+					},
+					"updateCustomByCategoryId": {
+						"kind": "method"
+					},
+					"upsertBuiltin": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"FocusCategoryErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"InvalidKind": 19201,
+					"InvalidUlid": 19203,
+					"NotFound": 19202
+				}
+			},
+			"FrecencyRepository": {
+				"kind": "class",
+				"members": {
+					"getAll": {
+						"kind": "method"
+					},
+					"getAllByIds": {
+						"kind": "method"
+					},
+					"getRecords": {
+						"kind": "method"
+					},
+					"insertMany": {
+						"kind": "method"
+					},
+					"reset": {
+						"kind": "method"
+					},
+					"sanityCheck": {
+						"kind": "method"
+					},
+					"search": {
+						"kind": "method"
+					},
+					"visit": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"GeneralSettingsColumn": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"AdditionalCertificateAuthorities": "AdditionalCertificateAuthorities",
+					"Appearance": "Appearance",
+					"BuiltinHotkeysPreset": "BuiltinHotkeysPreset",
+					"EnforcedInputSourceId": "EnforcedInputSourceId",
+					"EscapeKeyBehavior": "EscapeKeyBehavior",
+					"EscapeKeyClosesWindow": "EscapeKeyClosesWindow",
+					"FaviconProvider": "FaviconProvider",
+					"GlobalHotkey": "GlobalHotkey",
+					"HyperKeyCapsLockAction": "HyperKeyCapsLockAction",
+					"HyperKeyCode": "HyperKeyCode",
+					"HyperKeyDisplayShortcut": "HyperKeyDisplayShortcut",
+					"HyperKeyIncludeShift": "HyperKeyIncludeShift",
+					"NavigationBindings": "NavigationBindings",
+					"OpenAtLogin": "OpenAtLogin",
+					"OpenFoldersInTabs": "OpenFoldersInTabs",
+					"PageNavigationKeys": "PageNavigationKeys",
+					"PopToRootTimeout": "PopToRootTimeout",
+					"RootSearchSensitivity": "RootSearchSensitivity",
+					"ShowFavoritesInCompactMode": "ShowFavoritesInCompactMode",
+					"ShowInMenuBar": "ShowInMenuBar",
+					"ThemeDarkId": "ThemeDarkId",
+					"ThemeLightId": "ThemeLightId",
+					"TidyMenuBar": "TidyMenuBar",
+					"UiZoom": "UiZoom",
+					"UseSpotlightGesture": "UseSpotlightGesture",
+					"UseSystemProxySettings": "UseSystemProxySettings",
+					"WindowActivationBehavior": "WindowActivationBehavior",
+					"WindowMode": "WindowMode",
+					"WindowPresentationMode": "WindowPresentationMode"
+				}
+			},
+			"gracefulShutdownFinished": {
+				"kind": "function",
+				"members": {},
+				"statics": {},
+				"values": {}
+			},
+			"HyperKeyCapsLockAction": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"trigger_escape": "trigger_escape",
+					"trigger_key": "trigger_key"
+				}
+			},
+			"HyperKeyCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"caps_lock": "caps_lock",
+					"copilot": "copilot",
+					"f1": "f1",
+					"f10": "f10",
+					"f11": "f11",
+					"f12": "f12",
+					"f2": "f2",
+					"f3": "f3",
+					"f4": "f4",
+					"f5": "f5",
+					"f6": "f6",
+					"f7": "f7",
+					"f8": "f8",
+					"f9": "f9",
+					"left_command": "left_command",
+					"left_control": "left_control",
+					"left_option": "left_option",
+					"left_shift": "left_shift",
+					"right_command": "right_command",
+					"right_control": "right_control",
+					"right_option": "right_option",
+					"right_shift": "right_shift"
+				}
+			},
+			"KeyboardShortcutLocality": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"Global": "Global",
+					"Local": "Local"
+				}
+			},
+			"MigrationErrorKind": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"Config": "Config",
+					"Connection": "Connection",
+					"Divergent": "Divergent",
+					"InvalidFile": "InvalidFile",
+					"InvalidName": "InvalidName",
+					"InvalidPath": "InvalidPath",
+					"InvalidVersion": "InvalidVersion",
+					"Missing": "Missing",
+					"Repeated": "Repeated"
+				}
+			},
+			"ModifierKey": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"Alt": "Alt",
+					"Ctrl": "Ctrl",
+					"Fn": "Fn",
+					"Meta": "Meta",
+					"Shift": "Shift"
+				}
+			},
+			"NodeExtensionsErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"CommandNotFound": 11003,
+					"ExtensionNotFound": 11002,
+					"InvalidColumn": 11001,
+					"ToolNotFound": 11004
+				}
+			},
+			"NodeExtensionsRepository": {
+				"kind": "class",
+				"members": {
+					"addExtension": {
+						"kind": "method"
+					},
+					"addExtensionInstallHistory": {
+						"kind": "method"
+					},
+					"allCommands": {
+						"kind": "method"
+					},
+					"allExtensions": {
+						"kind": "method"
+					},
+					"allTools": {
+						"kind": "method"
+					},
+					"clearModelProviderDigest": {
+						"kind": "method"
+					},
+					"deleteExtension": {
+						"kind": "method"
+					},
+					"extensionIdsWithTools": {
+						"kind": "method"
+					},
+					"extensionsWithLocalSources": {
+						"kind": "method"
+					},
+					"getCommandById": {
+						"kind": "method"
+					},
+					"getCommandsByExtensionDatabaseId": {
+						"kind": "method"
+					},
+					"getDevelopmentExtensionByName": {
+						"kind": "method"
+					},
+					"getExtensionByDatabaseId": {
+						"kind": "method"
+					},
+					"getExtensionByExtensionId": {
+						"kind": "method"
+					},
+					"getExtensionInstallHistoryByUuid": {
+						"kind": "method"
+					},
+					"getStoreExtensionByName": {
+						"kind": "method"
+					},
+					"getToolById": {
+						"kind": "method"
+					},
+					"getToolsByExtensionDatabaseId": {
+						"kind": "method"
+					},
+					"hasAnyExtensions": {
+						"kind": "method"
+					},
+					"hasToolsByExtensionDatabaseId": {
+						"kind": "method"
+					},
+					"sanityCheck": {
+						"kind": "method"
+					},
+					"updateCommandDigest": {
+						"kind": "method"
+					},
+					"updateExtension": {
+						"kind": "method"
+					},
+					"updateModelProviderDigest": {
+						"kind": "method"
+					},
+					"updateToolDigest": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"NoteErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"InvalidNoteId": 14001,
+					"InvalidUpdate": 14002,
+					"NoteNotFound": 14003,
+					"UpdateConflict": 14004
+				}
+			},
+			"NotesRepository": {
+				"kind": "class",
+				"members": {
+					"browse": {
+						"kind": "method"
+					},
+					"count": {
+						"kind": "method"
+					},
+					"deleteAll": {
+						"kind": "method"
+					},
+					"deleteOne": {
+						"kind": "method"
+					},
+					"deleteOneImmediately": {
+						"kind": "method"
+					},
+					"emptyTrash": {
+						"kind": "method"
+					},
+					"getWindowData": {
+						"kind": "method"
+					},
+					"insertMany": {
+						"kind": "method"
+					},
+					"insertOne": {
+						"kind": "method"
+					},
+					"list": {
+						"kind": "method"
+					},
+					"listDeleted": {
+						"kind": "method"
+					},
+					"movePinnedDown": {
+						"kind": "method"
+					},
+					"movePinnedUp": {
+						"kind": "method"
+					},
+					"permanentlyDeleteOne": {
+						"kind": "method"
+					},
+					"pinOne": {
+						"kind": "method"
+					},
+					"purgeOldDeleted": {
+						"kind": "method"
+					},
+					"recoverOne": {
+						"kind": "method"
+					},
+					"replaceOne": {
+						"kind": "method"
+					},
+					"sanityCheck": {
+						"kind": "method"
+					},
+					"touchAccessed": {
+						"kind": "method"
+					},
+					"unpinOne": {
+						"kind": "method"
+					},
+					"updateOne": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"OrgPackErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"KeywordLengthLimitExceeded": 13001
+				}
+			},
+			"OrgPacksRepository": {
+				"kind": "class",
+				"members": {
+					"clearAllOrgData": {
+						"kind": "method"
+					},
+					"clearLocalOrgQuicklinkTags": {
+						"kind": "method"
+					},
+					"clearLocalOrgSnippetKeyword": {
+						"kind": "method"
+					},
+					"clearLocalOrgSnippetTags": {
+						"kind": "method"
+					},
+					"clearLocalTranscriptionStyleApplicationIds": {
+						"kind": "method"
+					},
+					"deleteOrgAiAgent": {
+						"kind": "method"
+					},
+					"deleteOrgAiAgentsByPack": {
+						"kind": "method"
+					},
+					"deleteOrgAiCommand": {
+						"kind": "method"
+					},
+					"deleteOrgAiCommandsByPack": {
+						"kind": "method"
+					},
+					"deleteOrgDataNotInOrgIds": {
+						"kind": "method"
+					},
+					"deleteOrgQuicklink": {
+						"kind": "method"
+					},
+					"deleteOrgQuicklinksByPack": {
+						"kind": "method"
+					},
+					"deleteOrgQuicklinksNotIn": {
+						"kind": "method"
+					},
+					"deleteOrgSkill": {
+						"kind": "method"
+					},
+					"deleteOrgSkillsByPack": {
+						"kind": "method"
+					},
+					"deleteOrgSnippet": {
+						"kind": "method"
+					},
+					"deleteOrgSnippetsByPack": {
+						"kind": "method"
+					},
+					"deleteOrgSnippetsNotIn": {
+						"kind": "method"
+					},
+					"deleteOrgTranscriptionStyle": {
+						"kind": "method"
+					},
+					"deleteOrgTranscriptionStylesByPack": {
+						"kind": "method"
+					},
+					"getAllOrgQuicklinkTags": {
+						"kind": "method"
+					},
+					"getAllOrgSnippetTags": {
+						"kind": "method"
+					},
+					"getAllPinnedOrgQuicklinks": {
+						"kind": "method"
+					},
+					"getAllPinnedOrgSnippets": {
+						"kind": "method"
+					},
+					"getLocalOrgSnippetKeyword": {
+						"kind": "method"
+					},
+					"getLocalTranscriptionStyleApplicationIds": {
+						"kind": "method"
+					},
+					"getOrgAiAgentById": {
+						"kind": "method"
+					},
+					"getOrgAiCommandById": {
+						"kind": "method"
+					},
+					"getOrgQuicklinkById": {
+						"kind": "method"
+					},
+					"getOrgSkillById": {
+						"kind": "method"
+					},
+					"getOrgSnippetById": {
+						"kind": "method"
+					},
+					"getOrgSnippetKeywords": {
+						"kind": "method"
+					},
+					"getOrgSnippetsByTitle": {
+						"kind": "method"
+					},
+					"getOrgTranscriptionStyleById": {
+						"kind": "method"
+					},
+					"getSyncState": {
+						"kind": "method"
+					},
+					"listOrgAiAgents": {
+						"kind": "method"
+					},
+					"listOrgAiCommands": {
+						"kind": "method"
+					},
+					"listOrgQuicklinks": {
+						"kind": "method"
+					},
+					"listOrgSkills": {
+						"kind": "method"
+					},
+					"listOrgSnippets": {
+						"kind": "method"
+					},
+					"listOrgTranscriptionStyles": {
+						"kind": "method"
+					},
+					"pinOrgQuicklinkAt": {
+						"kind": "method"
+					},
+					"pinOrgSnippetAt": {
+						"kind": "method"
+					},
+					"reconcileOrgAiAgents": {
+						"kind": "method"
+					},
+					"reconcileOrgAiCommands": {
+						"kind": "method"
+					},
+					"reconcileOrgQuicklinks": {
+						"kind": "method"
+					},
+					"reconcileOrgSkills": {
+						"kind": "method"
+					},
+					"reconcileOrgSnippets": {
+						"kind": "method"
+					},
+					"reconcileOrgTranscriptionStyles": {
+						"kind": "method"
+					},
+					"setLocalOrgQuicklinkTags": {
+						"kind": "method"
+					},
+					"setLocalOrgSnippetKeyword": {
+						"kind": "method"
+					},
+					"setLocalOrgSnippetKeywordPreservingExistingContent": {
+						"kind": "method"
+					},
+					"setLocalOrgSnippetTags": {
+						"kind": "method"
+					},
+					"setLocalTranscriptionStyleApplicationIds": {
+						"kind": "method"
+					},
+					"setOrgSkillEnabled": {
+						"kind": "method"
+					},
+					"setSyncState": {
+						"kind": "method"
+					},
+					"unpinOrgQuicklink": {
+						"kind": "method"
+					},
+					"unpinOrgSnippet": {
+						"kind": "method"
+					},
+					"updateOrgSnippetAccessedAt": {
+						"kind": "method"
+					},
+					"upsertOrgAiAgents": {
+						"kind": "method"
+					},
+					"upsertOrgAiCommands": {
+						"kind": "method"
+					},
+					"upsertOrgQuicklinks": {
+						"kind": "method"
+					},
+					"upsertOrgSkills": {
+						"kind": "method"
+					},
+					"upsertOrgSnippets": {
+						"kind": "method"
+					},
+					"upsertOrgTranscriptionStyles": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"PendingTokenErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"InvalidUpdate": 13001,
+					"PendingTokenNotFound": 13002
+				}
+			},
+			"PendingTokensRepository": {
+				"kind": "class",
+				"members": {
+					"all": {
+						"kind": "method"
+					},
+					"deleteOne": {
+						"kind": "method"
+					},
+					"insertOne": {
+						"kind": "method"
+					},
+					"sanityCheck": {
+						"kind": "method"
+					},
+					"updateOne": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"Platform": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"Macos": "macos",
+					"Windows": "windows"
+				}
+			},
+			"QuickLinkErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"InvalidQuickLinkId": 10001,
+					"InvalidUpdate": 10002,
+					"QuickLinkNotFound": 10003,
+					"TagNotFound": 10004
+				}
+			},
+			"QuicklinksRepository": {
+				"kind": "class",
+				"members": {
+					"count": {
+						"kind": "method"
+					},
+					"deleteAll": {
+						"kind": "method"
+					},
+					"deleteOne": {
+						"kind": "method"
+					},
+					"exportPlatformOpenWith": {
+						"kind": "method"
+					},
+					"getAllPinned": {
+						"kind": "method"
+					},
+					"getAllTags": {
+						"kind": "method"
+					},
+					"getOne": {
+						"kind": "method"
+					},
+					"importPlatformOpenWith": {
+						"kind": "method"
+					},
+					"insertMany": {
+						"kind": "method"
+					},
+					"insertOne": {
+						"kind": "method"
+					},
+					"list": {
+						"kind": "method"
+					},
+					"movePinnedDown": {
+						"kind": "method"
+					},
+					"movePinnedUp": {
+						"kind": "method"
+					},
+					"pinOne": {
+						"kind": "method"
+					},
+					"pinOneAt": {
+						"kind": "method"
+					},
+					"sanityCheck": {
+						"kind": "method"
+					},
+					"unpinOne": {
+						"kind": "method"
+					},
+					"updateOne": {
+						"kind": "method"
+					},
+					"updateOpenCount": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"ScreenshotCategory": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"ScreenCapture": "ScreenCapture",
+					"ScreenRecording": "ScreenRecording"
+				}
+			},
+			"ScreenshotErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"DuplicatePath": 17003,
+					"InvalidCategory": 17001,
+					"ScreenshotNotFound": 17002
+				}
+			},
+			"ScreenshotsRepository": {
+				"kind": "class",
+				"members": {
+					"all": {
+						"kind": "method"
+					},
+					"allByCategory": {
+						"kind": "method"
+					},
+					"deleteAll": {
+						"kind": "method"
+					},
+					"deleteByPath": {
+						"kind": "method"
+					},
+					"deleteByPaths": {
+						"kind": "method"
+					},
+					"deleteOne": {
+						"kind": "method"
+					},
+					"getByPath": {
+						"kind": "method"
+					},
+					"getLatestByDate": {
+						"kind": "method"
+					},
+					"getUnpinnedOlderThan": {
+						"kind": "method"
+					},
+					"insertMany": {
+						"kind": "method"
+					},
+					"insertOne": {
+						"kind": "method"
+					},
+					"pinOne": {
+						"kind": "method"
+					},
+					"reorderPinned": {
+						"kind": "method"
+					},
+					"search": {
+						"kind": "method"
+					},
+					"unpinOne": {
+						"kind": "method"
+					},
+					"updateOne": {
+						"kind": "method"
+					},
+					"updateText": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"SettingsErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"InvalidColumn": 5001
+				}
+			},
+			"SettingsRepository": {
+				"kind": "class",
+				"members": {
+					"addCommandSettings": {
+						"kind": "method"
+					},
+					"addInternalExtensionSettings": {
+						"kind": "method"
+					},
+					"addNodeExtensionSettings": {
+						"kind": "method"
+					},
+					"addTheme": {
+						"kind": "method"
+					},
+					"allCommandSettings": {
+						"kind": "method"
+					},
+					"allCommandSettingsForExtension": {
+						"kind": "method"
+					},
+					"allCommandsWithStatusItems": {
+						"kind": "method"
+					},
+					"allInternalExtensionsSettings": {
+						"kind": "method"
+					},
+					"allMcpServers": {
+						"kind": "method"
+					},
+					"allNodeExtensionsSettings": {
+						"kind": "method"
+					},
+					"allThemes": {
+						"kind": "method"
+					},
+					"allWindowModes": {
+						"kind": "method"
+					},
+					"clearCommandDeprecatedHotkey": {
+						"kind": "method"
+					},
+					"clearCommandDeprecatedMeta": {
+						"kind": "method"
+					},
+					"clearInternalExtensionDeprecatedMeta": {
+						"kind": "method"
+					},
+					"clearNodeExtensionDeprecatedMeta": {
+						"kind": "method"
+					},
+					"deleteAllMcpServers": {
+						"kind": "method"
+					},
+					"deleteCommandSettings": {
+						"kind": "method"
+					},
+					"deleteInternalExtensionSettings": {
+						"kind": "method"
+					},
+					"deleteMcpServer": {
+						"kind": "method"
+					},
+					"deleteNodeExtensionSettings": {
+						"kind": "method"
+					},
+					"deleteTheme": {
+						"kind": "method"
+					},
+					"getCloudSyncSettings": {
+						"kind": "method"
+					},
+					"getCommandSettings": {
+						"kind": "method"
+					},
+					"getCommandSettingsByIds": {
+						"kind": "method"
+					},
+					"getGeneralSettings": {
+						"kind": "method"
+					},
+					"getIdentifierMigrationSnapshot": {
+						"kind": "method"
+					},
+					"getInternalExtensionSettings": {
+						"kind": "method"
+					},
+					"getNodeExtensionSettings": {
+						"kind": "method"
+					},
+					"getTheme": {
+						"kind": "method"
+					},
+					"migrateSettingsIdentifiers": {
+						"kind": "method"
+					},
+					"overrideCloudSyncConnection": {
+						"kind": "method"
+					},
+					"sanityCheck": {
+						"kind": "method"
+					},
+					"setNodeExtensionUninstalled": {
+						"kind": "method"
+					},
+					"toggleCloudSyncCategory": {
+						"kind": "method"
+					},
+					"toggleCloudSyncSettings": {
+						"kind": "method"
+					},
+					"updateCommandRuntime": {
+						"kind": "method"
+					},
+					"updateCommandSettings": {
+						"kind": "method"
+					},
+					"updateCommandStatusItem": {
+						"kind": "method"
+					},
+					"updateGeneralSetting": {
+						"kind": "method"
+					},
+					"updateInternalExtensionSettings": {
+						"kind": "method"
+					},
+					"updateManyCommandSettings": {
+						"kind": "method"
+					},
+					"updateNodeExtensionSettings": {
+						"kind": "method"
+					},
+					"updateTheme": {
+						"kind": "method"
+					},
+					"upsertMcpServer": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"SnippetErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"ContentLengthLimitExceeded": 9003,
+					"InvalidSnippetId": 9001,
+					"InvalidUlid": 9007,
+					"InvalidUpdate": 9004,
+					"KeywordLengthLimitExceeded": 9002,
+					"SnippetNotFound": 9005,
+					"TagNotFound": 9006
+				}
+			},
+			"SnippetsRepository": {
+				"kind": "class",
+				"members": {
+					"count": {
+						"kind": "method"
+					},
+					"deleteAll": {
+						"kind": "method"
+					},
+					"deleteOne": {
+						"kind": "method"
+					},
+					"getAllPinned": {
+						"kind": "method"
+					},
+					"getAllTags": {
+						"kind": "method"
+					},
+					"getByTitle": {
+						"kind": "method"
+					},
+					"getKeywords": {
+						"kind": "method"
+					},
+					"getOne": {
+						"kind": "method"
+					},
+					"insertMany": {
+						"kind": "method"
+					},
+					"insertOne": {
+						"kind": "method"
+					},
+					"insertOnePreservingExistingContent": {
+						"kind": "method"
+					},
+					"list": {
+						"kind": "method"
+					},
+					"movePinnedDown": {
+						"kind": "method"
+					},
+					"movePinnedUp": {
+						"kind": "method"
+					},
+					"pinOne": {
+						"kind": "method"
+					},
+					"pinOneAt": {
+						"kind": "method"
+					},
+					"sanityCheck": {
+						"kind": "method"
+					},
+					"unpinOne": {
+						"kind": "method"
+					},
+					"updateAccessedAt": {
+						"kind": "method"
+					},
+					"updateCopyCount": {
+						"kind": "method"
+					},
+					"updateOne": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"subscribeToWindowCloseOnWindows": {
+				"kind": "function",
+				"members": {},
+				"statics": {},
+				"values": {}
+			},
+			"SyncAgent": {
+				"kind": "class",
+				"members": {
+					"destroyLocalState": {
+						"kind": "method"
+					},
+					"devices": {
+						"kind": "method"
+					},
+					"forwardDevices": {
+						"kind": "method"
+					},
+					"forwardEvents": {
+						"kind": "method"
+					},
+					"forwardStatus": {
+						"kind": "method"
+					},
+					"isRunning": {
+						"kind": "getter"
+					},
+					"pauseForContention": {
+						"kind": "method"
+					},
+					"reconnectNow": {
+						"kind": "method"
+					},
+					"run": {
+						"kind": "method"
+					},
+					"status": {
+						"kind": "getter"
+					},
+					"stop": {
+						"kind": "method"
+					}
+				},
+				"statics": {
+					"setLogger": {
+						"kind": "method"
+					}
+				},
+				"values": {}
+			},
+			"SyncAgentColumnStrategy": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"GCounter": "GCounter",
+					"LWW": "LWW",
+					"ORSet": "ORSet",
+					"PNCounter": "PNCounter"
+				}
+			},
+			"TranslateCustomCommandErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"InvalidId": 19001,
+					"NotFound": 19002
+				}
+			},
+			"TranslateCustomCommandsRepository": {
+				"kind": "class",
+				"members": {
+					"deleteOne": {
+						"kind": "method"
+					},
+					"getOne": {
+						"kind": "method"
+					},
+					"list": {
+						"kind": "method"
+					},
+					"save": {
+						"kind": "method"
+					},
+					"updateOne": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"UserActivityErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"InvalidYear": 13001
+				}
+			},
+			"UserActivityRepository": {
+				"kind": "class",
+				"members": {
+					"countActivitiesByTypeAndYear": {
+						"kind": "method"
+					},
+					"countActivitiesByTypeYearAndKeyPrefix": {
+						"kind": "method"
+					},
+					"countAiChatActivitiesBySourceAndYear": {
+						"kind": "method"
+					},
+					"countAiChatActivitiesBySourceTypeAndYear": {
+						"kind": "method"
+					},
+					"countAiChatActivitiesByTypeAndYear": {
+						"kind": "method"
+					},
+					"countAiChatActivitiesByYear": {
+						"kind": "method"
+					},
+					"countAiChatByModel": {
+						"kind": "method"
+					},
+					"deleteAllActivities": {
+						"kind": "method"
+					},
+					"deleteAllActivityInfo": {
+						"kind": "method"
+					},
+					"deleteAllAiChatActivities": {
+						"kind": "method"
+					},
+					"deleteAllFocusActivities": {
+						"kind": "method"
+					},
+					"getAllActivities": {
+						"kind": "method"
+					},
+					"getAllActivityInfo": {
+						"kind": "method"
+					},
+					"getAllAiChatActivities": {
+						"kind": "method"
+					},
+					"getAllFocusActivities": {
+						"kind": "method"
+					},
+					"getDailyActivityDistribution": {
+						"kind": "method"
+					},
+					"getHourlyActivityDistribution": {
+						"kind": "method"
+					},
+					"getLatestActivitiesByTypeAndYear": {
+						"kind": "method"
+					},
+					"getTopActivitiesByCount": {
+						"kind": "method"
+					},
+					"getTopActivitiesByCountAndKeyPrefix": {
+						"kind": "method"
+					},
+					"getTopAiChatModelsByYear": {
+						"kind": "method"
+					},
+					"importActivity": {
+						"kind": "method"
+					},
+					"importActivityInfo": {
+						"kind": "method"
+					},
+					"importAiChatActivity": {
+						"kind": "method"
+					},
+					"importFocusActivity": {
+						"kind": "method"
+					},
+					"sanityCheck": {
+						"kind": "method"
+					},
+					"sumAiChatWordCountByTypeAndYear": {
+						"kind": "method"
+					},
+					"trackActivity": {
+						"kind": "method"
+					},
+					"trackAiChatActivity": {
+						"kind": "method"
+					},
+					"trackFocusActivity": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"UserActivityType": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"AppClose": "AppClose",
+					"AppOpen": "AppOpen",
+					"InjectSnippet": "InjectSnippet",
+					"OpenAIChatPreset": "OpenAIChatPreset",
+					"OpenPreferences": "OpenPreferences",
+					"OpenRaycastCommand": "OpenRaycastCommand",
+					"OpenSystemApp": "OpenSystemApp",
+					"OpenWorkflow": "OpenWorkflow",
+					"StoreInstallExtension": "StoreInstallExtension",
+					"UseSnippet": "UseSnippet"
+				}
+			},
+			"UserDefaultsErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"InvalidValueType": 4001
+				}
+			},
+			"UserDefaultsRepository": {
+				"kind": "class",
+				"members": {
+					"delete": {
+						"kind": "method"
+					},
+					"get": {
+						"kind": "method"
+					},
+					"sanityCheck": {
+						"kind": "method"
+					},
+					"set": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"WindowManagementErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"GroupNotFound": 18003,
+					"InvalidId": 18001,
+					"InvalidUpdate": 18002
+				}
+			},
+			"WindowManagementRepository": {
+				"kind": "class",
+				"members": {
+					"deleteAll": {
+						"kind": "method"
+					},
+					"deleteOne": {
+						"kind": "method"
+					},
+					"exportPlatformSources": {
+						"kind": "method"
+					},
+					"getOne": {
+						"kind": "method"
+					},
+					"importPlatformSources": {
+						"kind": "method"
+					},
+					"insertMany": {
+						"kind": "method"
+					},
+					"list": {
+						"kind": "method"
+					},
+					"replaceOne": {
+						"kind": "method"
+					},
+					"save": {
+						"kind": "method"
+					},
+					"updateOne": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			},
+			"WindowsRunCommandErrorCode": {
+				"kind": "enum",
+				"members": {},
+				"statics": {},
+				"values": {
+					"InvalidId": 10001,
+					"InvalidUlid": 10005,
+					"InvalidUpdate": 10002,
+					"NotFound": 10003,
+					"TagNotFound": 10004
+				}
+			},
+			"WindowsRunCommandsRepository": {
+				"kind": "class",
+				"members": {
+					"all": {
+						"kind": "method"
+					},
+					"deleteAll": {
+						"kind": "method"
+					},
+					"deleteOne": {
+						"kind": "method"
+					},
+					"duplicate": {
+						"kind": "method"
+					},
+					"getAllTags": {
+						"kind": "method"
+					},
+					"getByAlias": {
+						"kind": "method"
+					},
+					"getByCommand": {
+						"kind": "method"
+					},
+					"getOne": {
+						"kind": "method"
+					},
+					"insertOne": {
+						"kind": "method"
+					},
+					"movePinnedDown": {
+						"kind": "method"
+					},
+					"movePinnedUp": {
+						"kind": "method"
+					},
+					"pinOne": {
+						"kind": "method"
+					},
+					"recordExecution": {
+						"kind": "method"
+					},
+					"unpinOne": {
+						"kind": "method"
+					},
+					"updateOne": {
+						"kind": "method"
+					}
+				},
+				"statics": {},
+				"values": {}
+			}
+		}
+	},
+	"repositories": {
+		"aiPickerUsage": "AiPickerUsageRepository",
+		"ai": "AiRepository",
+		"aiRuns": "AiRunsRepository",
+		"aiToolUsage": "AiToolUsageRepository",
+		"appIndex": "AppIndexRepository",
+		"appleShortcuts": "AppleShortcutsRepository",
+		"appMenuBarItems": "AppMenuBarItemsRepository",
+		"calculator": "CalculatorRepository",
+		"clipboard": "ClipboardRepository",
+		"contacts": "ContactsRepository",
+		"currencies": "CurrenciesRepository",
+		"emoji": "EmojiRepository",
+		"focusCategories": "FocusCategoriesRepository",
+		"frecency": "FrecencyRepository",
+		"nodeExtensions": "NodeExtensionsRepository",
+		"notes": "NotesRepository",
+		"orgPacks": "OrgPacksRepository",
+		"pendingTokens": "PendingTokensRepository",
+		"quicklinks": "QuicklinksRepository",
+		"screenshots": "ScreenshotsRepository",
+		"settings": "SettingsRepository",
+		"snippets": "SnippetsRepository",
+		"translateCustomCommands": "TranslateCustomCommandsRepository",
+		"userActivity": "UserActivityRepository",
+		"userDefaults": "UserDefaultsRepository",
+		"windowManagement": "WindowManagementRepository",
+		"windowsRunCommands": "WindowsRunCommandsRepository"
+	},
+	"coverage": {
+		"ai.chatBranch": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"ai.chatClearConversation": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"ai.chatDeleteAll": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"ai.chatDeleteAllUnpinned": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"ai.chatDeleteOne": {
+			"calls": 6,
+			"arities": [1]
+		},
+		"ai.chatGetAll": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"ai.chatGetAllByFolderId": {
+			"calls": 0,
+			"arities": []
+		},
+		"ai.chatGetAllIds": {
+			"calls": 3,
+			"arities": [0]
+		},
+		"ai.chatGetAllInvalidationSnapshots": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"ai.chatGetAllTitles": {
+			"calls": 0,
+			"arities": []
+		},
+		"ai.chatGetChildPage": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"ai.chatGetCommandMessageByChatId": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"ai.chatGetConversationPage": {
+			"calls": 5,
+			"arities": [1]
+		},
+		"ai.chatGetFilteredPage": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"ai.chatGetOne": {
+			"calls": 18,
+			"arities": [1]
+		},
+		"ai.chatGetOneByMessageId": {
+			"calls": 4,
+			"arities": [1]
+		},
+		"ai.chatGetOptional": {
+			"calls": 16,
+			"arities": [1]
+		},
+		"ai.chatGetPage": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"ai.chatGetPageAfterId": {
+			"calls": 3,
+			"arities": [2]
+		},
+		"ai.chatGetPinned": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"ai.chatGetRecentUpdatedBefore": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"ai.chatMessageDeleteMany": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"ai.chatMessageGetAll": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"ai.chatMessageGetAllByChatId": {
+			"calls": 11,
+			"arities": [1]
+		},
+		"ai.chatMessageGetAllByRequestId": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"ai.chatMessageGetMemoryCandidates": {
+			"calls": 2,
+			"arities": [1, 2]
+		},
+		"ai.chatMessageGetPageAfterId": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"ai.chatMessageSearchByKeywords": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"ai.chatMessageSearchByTime": {
+			"calls": 0,
+			"arities": []
+		},
+		"ai.chatMessageUpsertMany": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"ai.chatMessageUpsertOne": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"ai.chatRequestDeleteOne": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"ai.chatRequestGetAllByChatId": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"ai.chatRequestGetOne": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"ai.chatRequestGetPageAfterId": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"ai.chatRequestUpsertOne": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"ai.chatTouchUpdatedAt": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"ai.chatUpsertMany": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"ai.chatUpsertOne": {
+			"calls": 9,
+			"arities": [1]
+		},
+		"ai.commandChatIdsForChatIds": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"ai.commandDeleteAll": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"ai.commandDeleteOne": {
+			"calls": 4,
+			"arities": [1]
+		},
+		"ai.commandGetAll": {
+			"calls": 6,
+			"arities": [0]
+		},
+		"ai.commandGetAllTags": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"ai.commandGetOne": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"ai.commandUpsertMany": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"ai.commandUpsertOne": {
+			"calls": 4,
+			"arities": [1]
+		},
+		"ai.folderDeleteAll": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"ai.folderDeleteOne": {
+			"calls": 0,
+			"arities": []
+		},
+		"ai.folderDeleteOneAndUnassignChats": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"ai.folderGetAll": {
+			"calls": 4,
+			"arities": [0]
+		},
+		"ai.folderGetOne": {
+			"calls": 9,
+			"arities": [1]
+		},
+		"ai.folderGetWorkingDirectory": {
+			"calls": 4,
+			"arities": [1]
+		},
+		"ai.folderSetWorkingDirectory": {
+			"calls": 3,
+			"arities": [2]
+		},
+		"ai.folderUpdateMemory": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"ai.folderUpsertOne": {
+			"calls": 6,
+			"arities": [1]
+		},
+		"ai.modeDeleteAll": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"ai.modeDeleteOne": {
+			"calls": 4,
+			"arities": [1]
+		},
+		"ai.modeGetAll": {
+			"calls": 4,
+			"arities": [0]
+		},
+		"ai.modeGetOne": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"ai.modeUpsertMany": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"ai.modeUpsertOne": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"ai.modelDefaultGetAll": {
+			"calls": 2,
+			"arities": [0]
+		},
+		"ai.modelDefaultUpsertOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"ai.modelGetAll": {
+			"calls": 17,
+			"arities": [0]
+		},
+		"ai.modelGetById": {
+			"calls": 5,
+			"arities": [1]
+		},
+		"ai.modelSetDisabledAt": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"ai.modelUpsertOne": {
+			"calls": 14,
+			"arities": [1]
+		},
+		"ai.movePinnedDown": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"ai.movePinnedUp": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"ai.pinOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"ai.sanityCheck": {
+			"calls": 0,
+			"arities": []
+		},
+		"ai.scheduledMessageDeleteOccurrence": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"ai.scheduledMessageDeleteOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"ai.scheduledMessageGetAll": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"ai.scheduledMessageGetOne": {
+			"calls": 9,
+			"arities": [1]
+		},
+		"ai.scheduledMessageUpdateOccurrence": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"ai.scheduledMessageUpsertOne": {
+			"calls": 5,
+			"arities": [1]
+		},
+		"ai.transcriptionBackfillMissingRawValues": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"ai.transcriptionBackfillMissingStats": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"ai.transcriptionDeleteAll": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"ai.transcriptionDeleteOne": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"ai.transcriptionGetAll": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"ai.transcriptionGetPage": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"ai.transcriptionGetPageAfterId": {
+			"calls": 0,
+			"arities": []
+		},
+		"ai.transcriptionGetStats": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"ai.transcriptionStyleDeleteAll": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"ai.transcriptionStyleDeleteOne": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"ai.transcriptionStyleGetAll": {
+			"calls": 4,
+			"arities": [0]
+		},
+		"ai.transcriptionStyleGetAllTags": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"ai.transcriptionStyleGetOne": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"ai.transcriptionStyleGetPage": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"ai.transcriptionStyleUpsertMany": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"ai.transcriptionStyleUpsertOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"ai.transcriptionUpsertOne": {
+			"calls": 4,
+			"arities": [1]
+		},
+		"ai.unpinOne": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"aiPickerUsage.listUsage": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"aiPickerUsage.recordUse": {
+			"calls": 2,
+			"arities": [3]
+		},
+		"aiRuns.abandonDeferredAdmission": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"aiRuns.abandonRunInput": {
+			"calls": 1,
+			"arities": [5]
+		},
+		"aiRuns.abandonRunInputs": {
+			"calls": 2,
+			"arities": [4]
+		},
+		"aiRuns.acquireJournalOwnership": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"aiRuns.applyRunEvent": {
+			"calls": 2,
+			"arities": [5]
+		},
+		"aiRuns.applyRunEvents": {
+			"calls": 4,
+			"arities": [3]
+		},
+		"aiRuns.backfillChatMessageSearch": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"aiRuns.compareAndSwapSessionAgentState": {
+			"calls": 1,
+			"arities": [5]
+		},
+		"aiRuns.compressTurnProjections": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"aiRuns.continueRun": {
+			"calls": 1,
+			"arities": [13]
+		},
+		"aiRuns.countNonterminalRuns": {
+			"calls": 2,
+			"arities": [1, 2]
+		},
+		"aiRuns.countPendingDeferredAdmissions": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"aiRuns.createSession": {
+			"calls": 1,
+			"arities": [5]
+		},
+		"aiRuns.deleteRunRecovery": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"aiRuns.deleteSessionData": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"aiRuns.editPendingRunInput": {
+			"calls": 1,
+			"arities": [8]
+		},
+		"aiRuns.enqueueDeferredAdmission": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"aiRuns.enqueueOutbox": {
+			"calls": 0,
+			"arities": []
+		},
+		"aiRuns.eventsSince": {
+			"calls": 3,
+			"arities": [3]
+		},
+		"aiRuns.findAdmission": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"aiRuns.findTurnProjectionLegacyRequests": {
+			"calls": 4,
+			"arities": [1]
+		},
+		"aiRuns.getChatMessageSearchBackfillProgress": {
+			"calls": 2,
+			"arities": [0]
+		},
+		"aiRuns.getDeferredAdmission": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"aiRuns.getMaxSessionPin": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"aiRuns.getRun": {
+			"calls": 10,
+			"arities": [1]
+		},
+		"aiRuns.getRunInput": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"aiRuns.getRunRecovery": {
+			"calls": 0,
+			"arities": []
+		},
+		"aiRuns.getSessionAgent": {
+			"calls": 5,
+			"arities": [1]
+		},
+		"aiRuns.getSessionAgentState": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"aiRuns.getSessionOrigin": {
+			"calls": 4,
+			"arities": [1]
+		},
+		"aiRuns.getSessionShell": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"aiRuns.getTurnProjection": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"aiRuns.incrementRecoveryAttempts": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"aiRuns.insertLateToolResult": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"aiRuns.leaseNextDeferredAdmission": {
+			"calls": 1,
+			"arities": [4]
+		},
+		"aiRuns.listAllSessionShells": {
+			"calls": 1,
+			"arities": [4]
+		},
+		"aiRuns.listArchivableSessionIds": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"aiRuns.listArchivedSessionShells": {
+			"calls": 1,
+			"arities": [4]
+		},
+		"aiRuns.listChildRuns": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"aiRuns.listDeletedSessionIds": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"aiRuns.listDeletedSessionShells": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"aiRuns.listFolderSessionShells": {
+			"calls": 1,
+			"arities": [5]
+		},
+		"aiRuns.listInterruptedRuns": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"aiRuns.listLateToolResults": {
+			"calls": 0,
+			"arities": []
+		},
+		"aiRuns.listOrganizedSessionShells": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"aiRuns.listOutboxForRun": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"aiRuns.listPendingDeferredAdmissions": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"aiRuns.listPendingOutbox": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"aiRuns.listPendingRunInputs": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"aiRuns.listPinnedSessionShells": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"aiRuns.listRunRecovery": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"aiRuns.listRuns": {
+			"calls": 3,
+			"arities": [2]
+		},
+		"aiRuns.listRunsAwaitingProjection": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"aiRuns.listRunsRetainingQueue": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"aiRuns.listSessionRootRuns": {
+			"calls": 1,
+			"arities": [4]
+		},
+		"aiRuns.listSessionShells": {
+			"calls": 1,
+			"arities": [4]
+		},
+		"aiRuns.listSupersededTurnProjectionRunIds": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"aiRuns.listSuspendedRuns": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"aiRuns.listTurnProjectionRunIds": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"aiRuns.listTurnProjections": {
+			"calls": 1,
+			"arities": [4]
+		},
+		"aiRuns.listTurnProjectionsPendingSearchIndex": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"aiRuns.listTurnSearchText": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"aiRuns.markNonTimelineTurnProjectionsSearchIndexed": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"aiRuns.markRunInputApplied": {
+			"calls": 0,
+			"arities": []
+		},
+		"aiRuns.markRunProjected": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"aiRuns.markTurnProjectionSearchFailed": {
+			"calls": 2,
+			"arities": [2]
+		},
+		"aiRuns.projectSettledRun": {
+			"calls": 2,
+			"arities": [2]
+		},
+		"aiRuns.pruneJournal": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"aiRuns.releaseDeferredAdmissionLease": {
+			"calls": 1,
+			"arities": [5]
+		},
+		"aiRuns.reorderPendingRunInputs": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"aiRuns.repairSessionActivity": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"aiRuns.replaceTurnProjectionLegacyRequests": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"aiRuns.replaceTurnSearchText": {
+			"calls": 1,
+			"arities": [6]
+		},
+		"aiRuns.reserveAdmission": {
+			"calls": 1,
+			"arities": [11]
+		},
+		"aiRuns.reserveRunInput": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"aiRuns.resolveDeferredAdmission": {
+			"calls": 1,
+			"arities": [7]
+		},
+		"aiRuns.resolveOutbox": {
+			"calls": 1,
+			"arities": [4]
+		},
+		"aiRuns.searchSessionShells": {
+			"calls": 0,
+			"arities": []
+		},
+		"aiRuns.searchSessionShellsWithContent": {
+			"calls": 1,
+			"arities": [5]
+		},
+		"aiRuns.setSessionArchived": {
+			"calls": 2,
+			"arities": [2]
+		},
+		"aiRuns.setSessionDeleted": {
+			"calls": 2,
+			"arities": [2]
+		},
+		"aiRuns.setSessionFolder": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"aiRuns.setSessionOrigin": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"aiRuns.setSessionPinned": {
+			"calls": 2,
+			"arities": [2]
+		},
+		"aiRuns.softDeleteUnpinnedSessions": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"aiRuns.steerPendingRunInput": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"aiRuns.supersedeRun": {
+			"calls": 1,
+			"arities": [7]
+		},
+		"aiRuns.touchSession": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"aiRuns.transferPendingRunInput": {
+			"calls": 1,
+			"arities": [4]
+		},
+		"aiRuns.turnProjectionStorageStats": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"aiRuns.upsertRunRecovery": {
+			"calls": 2,
+			"arities": [2]
+		},
+		"aiRuns.upsertTurnProjection": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"aiToolUsage.recordToolUse": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"aiToolUsage.topTools": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"appIndex.deleteByRaycastId": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"appIndex.deleteManyByRaycastId": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"appIndex.getAllByContentType": {
+			"calls": 7,
+			"arities": [1]
+		},
+		"appIndex.getAllBySystemContentType": {
+			"calls": 11,
+			"arities": [1]
+		},
+		"appIndex.getByPath": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"appIndex.hasAnyByContentType": {
+			"calls": 0,
+			"arities": []
+		},
+		"appIndex.sanityCheck": {
+			"calls": 0,
+			"arities": []
+		},
+		"appIndex.setUserContentType": {
+			"calls": 3,
+			"arities": [2]
+		},
+		"appIndex.upsert": {
+			"calls": 0,
+			"arities": []
+		},
+		"appIndex.upsertMany": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"appMenuBarItems.listPinned": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"appMenuBarItems.movePinnedDown": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"appMenuBarItems.movePinnedUp": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"appMenuBarItems.pin": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"appMenuBarItems.unpin": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"appleShortcuts.all": {
+			"calls": 0,
+			"arities": []
+		},
+		"appleShortcuts.replaceAll": {
+			"calls": 0,
+			"arities": []
+		},
+		"appleShortcuts.sanityCheck": {
+			"calls": 0,
+			"arities": []
+		},
+		"backupDatabases": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"calculator.all": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"calculator.deleteAll": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"calculator.deleteExceedingLimit": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"calculator.deleteOlderThan": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"calculator.deleteOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"calculator.getOne": {
+			"calls": 0,
+			"arities": []
+		},
+		"calculator.movePinnedDown": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"calculator.movePinnedUp": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"calculator.pinOne": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"calculator.unpinOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"calculator.upsert": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"clipboard.all": {
+			"calls": 7,
+			"arities": [1]
+		},
+		"clipboard.deleteAll": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"clipboard.deleteAllAfterDate": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"clipboard.deleteAllBeforeDate": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"clipboard.deleteFilter": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"clipboard.deleteOne": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"clipboard.getAllFilters": {
+			"calls": 2,
+			"arities": [0]
+		},
+		"clipboard.getAllTags": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"clipboard.getFilter": {
+			"calls": 0,
+			"arities": []
+		},
+		"clipboard.getOne": {
+			"calls": 15,
+			"arities": [1]
+		},
+		"clipboard.getOneByContentHash": {
+			"calls": 4,
+			"arities": [1]
+		},
+		"clipboard.insertMany": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"clipboard.insertOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"clipboard.last": {
+			"calls": 4,
+			"arities": [1]
+		},
+		"clipboard.movePinnedDown": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"clipboard.movePinnedUp": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"clipboard.pinOne": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"clipboard.sanityCheck": {
+			"calls": 0,
+			"arities": []
+		},
+		"clipboard.unpinOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"clipboard.updateOne": {
+			"calls": 9,
+			"arities": [1]
+		},
+		"clipboard.upsertFilter": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"contacts.all": {
+			"calls": 0,
+			"arities": []
+		},
+		"contacts.replaceAll": {
+			"calls": 0,
+			"arities": []
+		},
+		"currencies.all": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"currencies.deleteAllCrypto": {
+			"calls": 0,
+			"arities": []
+		},
+		"currencies.deleteAllFiat": {
+			"calls": 0,
+			"arities": []
+		},
+		"currencies.replaceCrypto": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"currencies.replaceFiat": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"currencies.sanityCheck": {
+			"calls": 0,
+			"arities": []
+		},
+		"currencies.setCrypto": {
+			"calls": 0,
+			"arities": []
+		},
+		"currencies.setFiat": {
+			"calls": 0,
+			"arities": []
+		},
+		"emoji.all": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"emoji.getBySymbol": {
+			"calls": 3,
+			"arities": [1, 2]
+		},
+		"emoji.movePinnedDown": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"emoji.movePinnedUp": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"emoji.pinOne": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"emoji.resetFrecency": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"emoji.restoreFrecency": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"emoji.sanityCheck": {
+			"calls": 0,
+			"arities": []
+		},
+		"emoji.setCustomKeywords": {
+			"calls": 3,
+			"arities": [2]
+		},
+		"emoji.unpinOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"emoji.visit": {
+			"calls": 2,
+			"arities": [1, 2]
+		},
+		"focusCategories.deleteCustomByCategoryId": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"focusCategories.getByCategoryId": {
+			"calls": 5,
+			"arities": [1]
+		},
+		"focusCategories.insertCustom": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"focusCategories.list": {
+			"calls": 0,
+			"arities": []
+		},
+		"focusCategories.updateAccessedAtByCategoryId": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"focusCategories.updateCustomByCategoryId": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"focusCategories.upsertBuiltin": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"frecency.getAll": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"frecency.getAllByIds": {
+			"calls": 4,
+			"arities": [1]
+		},
+		"frecency.getRecords": {
+			"calls": 0,
+			"arities": []
+		},
+		"frecency.insertMany": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"frecency.reset": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"frecency.sanityCheck": {
+			"calls": 0,
+			"arities": []
+		},
+		"frecency.search": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"frecency.visit": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"getDatabaseStatus": {
+			"calls": 2,
+			"arities": [0]
+		},
+		"nodeExtensions.addExtension": {
+			"calls": 2,
+			"arities": [3]
+		},
+		"nodeExtensions.addExtensionInstallHistory": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"nodeExtensions.allCommands": {
+			"calls": 2,
+			"arities": [0]
+		},
+		"nodeExtensions.allExtensions": {
+			"calls": 21,
+			"arities": [0]
+		},
+		"nodeExtensions.allTools": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"nodeExtensions.clearModelProviderDigest": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"nodeExtensions.deleteExtension": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"nodeExtensions.extensionIdsWithTools": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"nodeExtensions.extensionsWithLocalSources": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"nodeExtensions.getCommandById": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"nodeExtensions.getCommandsByExtensionDatabaseId": {
+			"calls": 15,
+			"arities": [1]
+		},
+		"nodeExtensions.getDevelopmentExtensionByName": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"nodeExtensions.getExtensionByDatabaseId": {
+			"calls": 0,
+			"arities": []
+		},
+		"nodeExtensions.getExtensionByExtensionId": {
+			"calls": 41,
+			"arities": [1]
+		},
+		"nodeExtensions.getExtensionInstallHistoryByUuid": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"nodeExtensions.getStoreExtensionByName": {
+			"calls": 3,
+			"arities": [2]
+		},
+		"nodeExtensions.getToolById": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"nodeExtensions.getToolsByExtensionDatabaseId": {
+			"calls": 8,
+			"arities": [1]
+		},
+		"nodeExtensions.hasAnyExtensions": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"nodeExtensions.hasToolsByExtensionDatabaseId": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"nodeExtensions.sanityCheck": {
+			"calls": 0,
+			"arities": []
+		},
+		"nodeExtensions.updateCommandDigest": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"nodeExtensions.updateExtension": {
+			"calls": 7,
+			"arities": [3]
+		},
+		"nodeExtensions.updateModelProviderDigest": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"nodeExtensions.updateToolDigest": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"notes.browse": {
+			"calls": 2,
+			"arities": [2, 3]
+		},
+		"notes.count": {
+			"calls": 2,
+			"arities": [0]
+		},
+		"notes.deleteAll": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"notes.deleteOne": {
+			"calls": 5,
+			"arities": [1]
+		},
+		"notes.deleteOneImmediately": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"notes.emptyTrash": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"notes.getWindowData": {
+			"calls": 6,
+			"arities": [1]
+		},
+		"notes.insertMany": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"notes.insertOne": {
+			"calls": 4,
+			"arities": [1]
+		},
+		"notes.list": {
+			"calls": 5,
+			"arities": [2, 3]
+		},
+		"notes.listDeleted": {
+			"calls": 3,
+			"arities": [0]
+		},
+		"notes.movePinnedDown": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"notes.movePinnedUp": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"notes.permanentlyDeleteOne": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"notes.pinOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"notes.purgeOldDeleted": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"notes.recoverOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"notes.replaceOne": {
+			"calls": 2,
+			"arities": [2]
+		},
+		"notes.sanityCheck": {
+			"calls": 0,
+			"arities": []
+		},
+		"notes.touchAccessed": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"notes.unpinOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"notes.updateOne": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"openDatabaseSnapshot": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"orgPacks.clearAllOrgData": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"orgPacks.clearLocalOrgQuicklinkTags": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"orgPacks.clearLocalOrgSnippetKeyword": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"orgPacks.clearLocalOrgSnippetTags": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"orgPacks.clearLocalTranscriptionStyleApplicationIds": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"orgPacks.deleteOrgAiAgent": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"orgPacks.deleteOrgAiAgentsByPack": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.deleteOrgAiCommand": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"orgPacks.deleteOrgAiCommandsByPack": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.deleteOrgDataNotInOrgIds": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"orgPacks.deleteOrgQuicklink": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"orgPacks.deleteOrgQuicklinksByPack": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.deleteOrgQuicklinksNotIn": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.deleteOrgSkill": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.deleteOrgSkillsByPack": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.deleteOrgSnippet": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"orgPacks.deleteOrgSnippetsByPack": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.deleteOrgSnippetsNotIn": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.deleteOrgTranscriptionStyle": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"orgPacks.deleteOrgTranscriptionStylesByPack": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.getAllOrgQuicklinkTags": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"orgPacks.getAllOrgSnippetTags": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"orgPacks.getAllPinnedOrgQuicklinks": {
+			"calls": 3,
+			"arities": [0]
+		},
+		"orgPacks.getAllPinnedOrgSnippets": {
+			"calls": 3,
+			"arities": [0]
+		},
+		"orgPacks.getLocalOrgSnippetKeyword": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.getLocalTranscriptionStyleApplicationIds": {
+			"calls": 6,
+			"arities": [1]
+		},
+		"orgPacks.getOrgAiAgentById": {
+			"calls": 6,
+			"arities": [1]
+		},
+		"orgPacks.getOrgAiCommandById": {
+			"calls": 6,
+			"arities": [1]
+		},
+		"orgPacks.getOrgQuicklinkById": {
+			"calls": 6,
+			"arities": [1]
+		},
+		"orgPacks.getOrgSkillById": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"orgPacks.getOrgSnippetById": {
+			"calls": 8,
+			"arities": [1]
+		},
+		"orgPacks.getOrgSnippetKeywords": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"orgPacks.getOrgSnippetsByTitle": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"orgPacks.getOrgTranscriptionStyleById": {
+			"calls": 6,
+			"arities": [1]
+		},
+		"orgPacks.getSyncState": {
+			"calls": 5,
+			"arities": [1]
+		},
+		"orgPacks.listOrgAiAgents": {
+			"calls": 2,
+			"arities": [0]
+		},
+		"orgPacks.listOrgAiCommands": {
+			"calls": 4,
+			"arities": [0]
+		},
+		"orgPacks.listOrgQuicklinks": {
+			"calls": 3,
+			"arities": [0, 3]
+		},
+		"orgPacks.listOrgSkills": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.listOrgSnippets": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"orgPacks.listOrgTranscriptionStyles": {
+			"calls": 5,
+			"arities": [0, 1]
+		},
+		"orgPacks.pinOrgQuicklinkAt": {
+			"calls": 4,
+			"arities": [2]
+		},
+		"orgPacks.pinOrgSnippetAt": {
+			"calls": 4,
+			"arities": [2]
+		},
+		"orgPacks.reconcileOrgAiAgents": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"orgPacks.reconcileOrgAiCommands": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"orgPacks.reconcileOrgQuicklinks": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"orgPacks.reconcileOrgSkills": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.reconcileOrgSnippets": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"orgPacks.reconcileOrgTranscriptionStyles": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"orgPacks.setLocalOrgQuicklinkTags": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"orgPacks.setLocalOrgSnippetKeyword": {
+			"calls": 2,
+			"arities": [2]
+		},
+		"orgPacks.setLocalOrgSnippetKeywordPreservingExistingContent": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"orgPacks.setLocalOrgSnippetTags": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"orgPacks.setLocalTranscriptionStyleApplicationIds": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"orgPacks.setOrgSkillEnabled": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.setSyncState": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.unpinOrgQuicklink": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"orgPacks.unpinOrgSnippet": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"orgPacks.updateOrgSnippetAccessedAt": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"orgPacks.upsertOrgAiAgents": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.upsertOrgAiCommands": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.upsertOrgQuicklinks": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.upsertOrgSkills": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.upsertOrgSnippets": {
+			"calls": 0,
+			"arities": []
+		},
+		"orgPacks.upsertOrgTranscriptionStyles": {
+			"calls": 0,
+			"arities": []
+		},
+		"pendingTokens.all": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"pendingTokens.deleteOne": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"pendingTokens.insertOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"pendingTokens.sanityCheck": {
+			"calls": 0,
+			"arities": []
+		},
+		"pendingTokens.updateOne": {
+			"calls": 2,
+			"arities": [2]
+		},
+		"quicklinks.count": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"quicklinks.deleteAll": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"quicklinks.deleteOne": {
+			"calls": 4,
+			"arities": [1]
+		},
+		"quicklinks.exportPlatformOpenWith": {
+			"calls": 0,
+			"arities": []
+		},
+		"quicklinks.getAllPinned": {
+			"calls": 3,
+			"arities": [0]
+		},
+		"quicklinks.getAllTags": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"quicklinks.getOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"quicklinks.importPlatformOpenWith": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"quicklinks.insertMany": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"quicklinks.insertOne": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"quicklinks.list": {
+			"calls": 10,
+			"arities": [2, 4]
+		},
+		"quicklinks.movePinnedDown": {
+			"calls": 0,
+			"arities": []
+		},
+		"quicklinks.movePinnedUp": {
+			"calls": 0,
+			"arities": []
+		},
+		"quicklinks.pinOne": {
+			"calls": 0,
+			"arities": []
+		},
+		"quicklinks.pinOneAt": {
+			"calls": 3,
+			"arities": [2]
+		},
+		"quicklinks.sanityCheck": {
+			"calls": 0,
+			"arities": []
+		},
+		"quicklinks.unpinOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"quicklinks.updateOne": {
+			"calls": 4,
+			"arities": [2]
+		},
+		"quicklinks.updateOpenCount": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"resetDatabase": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"restoreFromBackup": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"screenshots.all": {
+			"calls": 4,
+			"arities": [2]
+		},
+		"screenshots.allByCategory": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"screenshots.deleteAll": {
+			"calls": 0,
+			"arities": []
+		},
+		"screenshots.deleteByPath": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"screenshots.deleteByPaths": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"screenshots.deleteOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"screenshots.getByPath": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"screenshots.getLatestByDate": {
+			"calls": 2,
+			"arities": [0, 1]
+		},
+		"screenshots.getUnpinnedOlderThan": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"screenshots.insertMany": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"screenshots.insertOne": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"screenshots.pinOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"screenshots.reorderPinned": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"screenshots.search": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"screenshots.unpinOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"screenshots.updateOne": {
+			"calls": 0,
+			"arities": []
+		},
+		"screenshots.updateText": {
+			"calls": 2,
+			"arities": [3]
+		},
+		"setDeviceId": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"settings.addCommandSettings": {
+			"calls": 8,
+			"arities": [1]
+		},
+		"settings.addInternalExtensionSettings": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"settings.addNodeExtensionSettings": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"settings.addTheme": {
+			"calls": 4,
+			"arities": [1]
+		},
+		"settings.allCommandSettings": {
+			"calls": 11,
+			"arities": [0]
+		},
+		"settings.allCommandSettingsForExtension": {
+			"calls": 16,
+			"arities": [1]
+		},
+		"settings.allCommandsWithStatusItems": {
+			"calls": 2,
+			"arities": [0]
+		},
+		"settings.allInternalExtensionsSettings": {
+			"calls": 8,
+			"arities": [0]
+		},
+		"settings.allMcpServers": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"settings.allNodeExtensionsSettings": {
+			"calls": 10,
+			"arities": [0]
+		},
+		"settings.allThemes": {
+			"calls": 4,
+			"arities": [0]
+		},
+		"settings.allWindowModes": {
+			"calls": 0,
+			"arities": []
+		},
+		"settings.clearCommandDeprecatedHotkey": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"settings.clearCommandDeprecatedMeta": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"settings.clearInternalExtensionDeprecatedMeta": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"settings.clearNodeExtensionDeprecatedMeta": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"settings.deleteAllMcpServers": {
+			"calls": 0,
+			"arities": []
+		},
+		"settings.deleteCommandSettings": {
+			"calls": 11,
+			"arities": [1]
+		},
+		"settings.deleteInternalExtensionSettings": {
+			"calls": 0,
+			"arities": []
+		},
+		"settings.deleteMcpServer": {
+			"calls": 0,
+			"arities": []
+		},
+		"settings.deleteNodeExtensionSettings": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"settings.deleteTheme": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"settings.getCloudSyncSettings": {
+			"calls": 5,
+			"arities": [0]
+		},
+		"settings.getCommandSettings": {
+			"calls": 40,
+			"arities": [1]
+		},
+		"settings.getCommandSettingsByIds": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"settings.getGeneralSettings": {
+			"calls": 22,
+			"arities": [0]
+		},
+		"settings.getIdentifierMigrationSnapshot": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"settings.getInternalExtensionSettings": {
+			"calls": 68,
+			"arities": [1]
+		},
+		"settings.getNodeExtensionSettings": {
+			"calls": 20,
+			"arities": [1]
+		},
+		"settings.getTheme": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"settings.migrateSettingsIdentifiers": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"settings.overrideCloudSyncConnection": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"settings.sanityCheck": {
+			"calls": 0,
+			"arities": []
+		},
+		"settings.setNodeExtensionUninstalled": {
+			"calls": 3,
+			"arities": [2]
+		},
+		"settings.toggleCloudSyncCategory": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"settings.toggleCloudSyncSettings": {
+			"calls": 8,
+			"arities": [1]
+		},
+		"settings.updateCommandRuntime": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"settings.updateCommandSettings": {
+			"calls": 14,
+			"arities": [2]
+		},
+		"settings.updateCommandStatusItem": {
+			"calls": 3,
+			"arities": [2]
+		},
+		"settings.updateGeneralSetting": {
+			"calls": 29,
+			"arities": [1]
+		},
+		"settings.updateInternalExtensionSettings": {
+			"calls": 17,
+			"arities": [2]
+		},
+		"settings.updateManyCommandSettings": {
+			"calls": 2,
+			"arities": [2]
+		},
+		"settings.updateNodeExtensionSettings": {
+			"calls": 6,
+			"arities": [2]
+		},
+		"settings.updateTheme": {
+			"calls": 3,
+			"arities": [2]
+		},
+		"settings.upsertMcpServer": {
+			"calls": 0,
+			"arities": []
+		},
+		"shutdown": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"snippets.count": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"snippets.deleteAll": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"snippets.deleteOne": {
+			"calls": 4,
+			"arities": [1]
+		},
+		"snippets.getAllPinned": {
+			"calls": 3,
+			"arities": [0]
+		},
+		"snippets.getAllTags": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"snippets.getByTitle": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"snippets.getKeywords": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"snippets.getOne": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"snippets.insertMany": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"snippets.insertOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"snippets.insertOnePreservingExistingContent": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"snippets.list": {
+			"calls": 8,
+			"arities": [2, 4]
+		},
+		"snippets.movePinnedDown": {
+			"calls": 0,
+			"arities": []
+		},
+		"snippets.movePinnedUp": {
+			"calls": 0,
+			"arities": []
+		},
+		"snippets.pinOne": {
+			"calls": 0,
+			"arities": []
+		},
+		"snippets.pinOneAt": {
+			"calls": 3,
+			"arities": [2]
+		},
+		"snippets.sanityCheck": {
+			"calls": 0,
+			"arities": []
+		},
+		"snippets.unpinOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"snippets.updateAccessedAt": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"snippets.updateCopyCount": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"snippets.updateOne": {
+			"calls": 2,
+			"arities": [2]
+		},
+		"testHang": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"translateCustomCommands.deleteOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"translateCustomCommands.getOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"translateCustomCommands.list": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"translateCustomCommands.save": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"translateCustomCommands.updateOne": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"userActivity.countActivitiesByTypeAndYear": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"userActivity.countActivitiesByTypeYearAndKeyPrefix": {
+			"calls": 1,
+			"arities": [4]
+		},
+		"userActivity.countAiChatActivitiesBySourceAndYear": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"userActivity.countAiChatActivitiesBySourceTypeAndYear": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"userActivity.countAiChatActivitiesByTypeAndYear": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"userActivity.countAiChatActivitiesByYear": {
+			"calls": 0,
+			"arities": []
+		},
+		"userActivity.countAiChatByModel": {
+			"calls": 0,
+			"arities": []
+		},
+		"userActivity.deleteAllActivities": {
+			"calls": 2,
+			"arities": [0]
+		},
+		"userActivity.deleteAllActivityInfo": {
+			"calls": 2,
+			"arities": [0]
+		},
+		"userActivity.deleteAllAiChatActivities": {
+			"calls": 2,
+			"arities": [0]
+		},
+		"userActivity.deleteAllFocusActivities": {
+			"calls": 2,
+			"arities": [0]
+		},
+		"userActivity.getAllActivities": {
+			"calls": 0,
+			"arities": []
+		},
+		"userActivity.getAllActivityInfo": {
+			"calls": 0,
+			"arities": []
+		},
+		"userActivity.getAllAiChatActivities": {
+			"calls": 0,
+			"arities": []
+		},
+		"userActivity.getAllFocusActivities": {
+			"calls": 2,
+			"arities": [0]
+		},
+		"userActivity.getDailyActivityDistribution": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"userActivity.getHourlyActivityDistribution": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"userActivity.getLatestActivitiesByTypeAndYear": {
+			"calls": 1,
+			"arities": [4]
+		},
+		"userActivity.getTopActivitiesByCount": {
+			"calls": 1,
+			"arities": [3]
+		},
+		"userActivity.getTopActivitiesByCountAndKeyPrefix": {
+			"calls": 1,
+			"arities": [4]
+		},
+		"userActivity.getTopAiChatModelsByYear": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"userActivity.importActivity": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"userActivity.importActivityInfo": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"userActivity.importAiChatActivity": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"userActivity.importFocusActivity": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"userActivity.sanityCheck": {
+			"calls": 0,
+			"arities": []
+		},
+		"userActivity.sumAiChatWordCountByTypeAndYear": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"userActivity.trackActivity": {
+			"calls": 1,
+			"arities": [6]
+		},
+		"userActivity.trackAiChatActivity": {
+			"calls": 1,
+			"arities": [7]
+		},
+		"userActivity.trackFocusActivity": {
+			"calls": 1,
+			"arities": [9]
+		},
+		"userDefaults.delete": {
+			"calls": 17,
+			"arities": [1]
+		},
+		"userDefaults.get": {
+			"calls": 61,
+			"arities": [1]
+		},
+		"userDefaults.sanityCheck": {
+			"calls": 0,
+			"arities": []
+		},
+		"userDefaults.set": {
+			"calls": 63,
+			"arities": [2]
+		},
+		"vacuum": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"vacuumAll": {
+			"calls": 0,
+			"arities": []
+		},
+		"walCheckpoint": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"walCheckpointAll": {
+			"calls": 0,
+			"arities": []
+		},
+		"windowManagement.deleteAll": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"windowManagement.deleteOne": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"windowManagement.exportPlatformSources": {
+			"calls": 0,
+			"arities": []
+		},
+		"windowManagement.getOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"windowManagement.importPlatformSources": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"windowManagement.insertMany": {
+			"calls": 3,
+			"arities": [1]
+		},
+		"windowManagement.list": {
+			"calls": 8,
+			"arities": [0]
+		},
+		"windowManagement.replaceOne": {
+			"calls": 2,
+			"arities": [2]
+		},
+		"windowManagement.save": {
+			"calls": 2,
+			"arities": [1]
+		},
+		"windowManagement.updateOne": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"windowsRunCommands.all": {
+			"calls": 2,
+			"arities": [2, 4]
+		},
+		"windowsRunCommands.deleteAll": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"windowsRunCommands.deleteOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"windowsRunCommands.duplicate": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"windowsRunCommands.getAllTags": {
+			"calls": 1,
+			"arities": [0]
+		},
+		"windowsRunCommands.getByAlias": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"windowsRunCommands.getByCommand": {
+			"calls": 1,
+			"arities": [2]
+		},
+		"windowsRunCommands.getOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"windowsRunCommands.insertOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"windowsRunCommands.movePinnedDown": {
+			"calls": 0,
+			"arities": []
+		},
+		"windowsRunCommands.movePinnedUp": {
+			"calls": 0,
+			"arities": []
+		},
+		"windowsRunCommands.pinOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"windowsRunCommands.recordExecution": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"windowsRunCommands.unpinOne": {
+			"calls": 1,
+			"arities": [1]
+		},
+		"windowsRunCommands.updateOne": {
+			"calls": 1,
+			"arities": [2]
+		}
+	}
+}

@@ -1,0 +1,98 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "npm: check",
+			"type": "npm",
+			"script": "check",
+			"problemMatcher": ["$tsc"],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "npm: typecheck",
+			"type": "npm",
+			"script": "typecheck",
+			"problemMatcher": ["$tsc"],
+			"group": "build"
+		},
+		{
+			"label": "npm: lint",
+			"type": "npm",
+			"script": "lint",
+			"problemMatcher": []
+		},
+		{
+			"label": "npm: format",
+			"type": "npm",
+			"script": "format",
+			"problemMatcher": []
+		},
+		{
+			"label": "npm: build",
+			"type": "npm",
+			"script": "build",
+			"problemMatcher": ["$tsc"],
+			"group": "build"
+		},
+		{
+			"label": "npm: build:emit",
+			"type": "npm",
+			"script": "build:emit",
+			"problemMatcher": ["$tsc"],
+			"group": "build"
+		},
+		{
+			"label": "npm: lint:package",
+			"type": "npm",
+			"script": "lint:package",
+			"problemMatcher": []
+		},
+		{
+			"label": "npm: api:update",
+			"type": "npm",
+			"script": "api:update",
+			"problemMatcher": ["$tsc"]
+		},
+		{
+			"label": "npm: source:sync",
+			"type": "npm",
+			"script": "source:sync",
+			"problemMatcher": []
+		},
+		{
+			"label": "npm: source:inspect",
+			"type": "npm",
+			"script": "source:inspect",
+			"problemMatcher": []
+		},
+		{
+			"label": "npm: source:latest",
+			"type": "npm",
+			"script": "source:latest",
+			"problemMatcher": []
+		},
+		{
+			"label": "npm: source:api",
+			"type": "npm",
+			"script": "source:api",
+			"problemMatcher": []
+		},
+		{
+			"label": "npm: release:update",
+			"type": "npm",
+			"script": "release:update",
+			"problemMatcher": []
+		},
+		{
+			"label": "Typecheck: watch",
+			"type": "shell",
+			"command": "npm",
+			"args": ["run", "typecheck", "--", "--watch"],
+			"isBackground": true,
+			"problemMatcher": ["$tsc-watch"]
+		}
+	]
+}

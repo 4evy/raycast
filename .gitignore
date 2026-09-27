@@ -1,0 +1,27 @@
+# Dependencies and build output
+node_modules/
+dist/
+*.tsbuildinfo
+*.tgz
+
+# Downloaded and extracted Raycast sources
+.cache/
+packages/raycast-source/generated/
+packages/raycast-source/.stage-*/
+
+# Local credentials and environment settings
+.env
+.env.*
+!.env.example
+.raycast-key-cache
+
+# Tool caches and logs
+.ruff_cache/
+__pycache__/
+*.py[cod]
+*.log
+
+# Local editor and OS state
+.jj/
+.DS_Store
+.idea/

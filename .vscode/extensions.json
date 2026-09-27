@@ -1,0 +1,8 @@
+{
+	"recommendations": [
+		"biomejs.biome",
+		"TypeScriptTeam.native-preview",
+		"jnoortheen.nix-ide",
+		"timonwong.shellcheck"
+	]
+}

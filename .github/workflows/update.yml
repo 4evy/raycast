@@ -1,0 +1,42 @@
+name: Update Raycast
+
+on:
+  push:
+    paths:
+      - .github/workflows/update.yml
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-raycast
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "26.10.0"
+          cache: npm
+      - run: npm ci
+      - name: Check for a new release
+        id: update
+        run: npm run release:update
+      - uses: DeterminateSystems/nix-installer-action@3138316df39ed29be04236d7ffc686fa525866aa # v23
+        if: ${{ steps.update.outputs.changed == 'true' }}
+      - name: Check package evaluation
+        if: ${{ steps.update.outputs.changed == 'true' }}
+        run: nix flake check --all-systems --no-build
+      - name: Commit a new release
+        if: ${{ steps.update.outputs.changed == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: npm run release:commit

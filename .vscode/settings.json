@@ -1,0 +1,32 @@
+{
+	"[javascript][javascriptreact][typescript][typescriptreact][json][jsonc]": {
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.formatOnSave": true
+	},
+	"js/ts.experimental.useTsgo": true,
+	"js/ts.tsdk.path": "./node_modules/typescript",
+	"npm.packageManager": "npm",
+	"npm.autoDetect": "on",
+	"search.exclude": {
+		"**/.cache": true,
+		"**/dist": true,
+		"**/packages/raycast-source/generated": true,
+		"**/.jj": true
+	},
+	"files.watcherExclude": {
+		"**/.cache/**": true,
+		"**/dist/**": true,
+		"**/packages/raycast-source/generated/**": true,
+		"**/.jj/**": true
+	},
+	"json.schemas": [
+		{
+			"fileMatch": ["/raycast-config.json"],
+			"url": "./schemas/config.schema.json"
+		},
+		{
+			"fileMatch": ["/themes.json"],
+			"url": "./schemas/themes.schema.json"
+		}
+	]
+}
