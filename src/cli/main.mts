@@ -1,308 +1,278 @@
 #!/usr/bin/env node
 import process from "node:process";
-import {
-	buildApplication,
-	buildCommand,
-	buildRouteMap,
-	run,
-} from "@stricli/core";
+import { object, or, tuple } from "@optique/core/constructs";
+import { message, text } from "@optique/core/message";
+import { map, multiple, withDefault } from "@optique/core/modifiers";
+import type { NonEmptyString } from "@optique/core/nonempty";
+import { argument, command, constant, flag } from "@optique/core/primitives";
+import { string } from "@optique/core/valueparser";
+import { run } from "@optique/run";
 import { extractDatabaseKey } from "../public/v1/index.mts";
 import { runAi } from "./commands/ai.mts";
 import { runConfigure } from "./commands/configure.mts";
 import { runDatabaseCommand } from "./commands/database.mts";
 import { runThemes } from "./commands/themes.mts";
 
-const string = (value: string) => value;
-const dryRun = {
-	kind: "boolean",
-	brief: "Show planned changes without writing them",
-	default: false,
-	withNegated: false,
-} as const;
+const dryRun = withDefault(
+	flag("--dry-run", {
+		description: message`Show planned changes without writing them`,
+	}),
+	false,
+);
+
+function positional(name: NonEmptyString, description = "Command argument") {
+	return argument(string({ metavar: name }), {
+		description: message`${text(description)}`,
+	});
+}
 
 function dbCommand(
 	name: string,
 	brief: string,
-	minimum = 0,
-	maximum = 0,
-	usage?: string,
-	prefix: string[] = [],
+	arguments_: readonly NonEmptyString[] = [],
+	prefix: readonly string[] = [],
+	optional = false,
 ) {
-	if (maximum === 0)
-		return buildCommand({
-			func: async (flags: { dryRun: boolean }) =>
-				runDatabaseCommand(name, { ...flags, positionals: prefix }),
-			parameters: { flags: { dryRun } },
-			docs: { brief },
-		});
-	return buildCommand({
-		func: async (flags: { dryRun: boolean }, ...positionals: string[]) =>
-			runDatabaseCommand(name, {
-				...flags,
-				positionals: [...prefix, ...positionals],
-			}),
-		parameters: {
-			flags: { dryRun },
-			positional: {
-				kind: "array",
-				parameter: { brief: "Command argument", parse: string },
-				minimum,
-				maximum,
-			},
-		},
-		docs: { brief, ...(usage ? { customUsage: [usage] } : {}) },
-	});
+	return map(
+		object(brief, {
+			dryRun,
+			positionals: optional
+				? multiple(positional(arguments_[0] ?? "argument"), { max: 1 })
+				: tuple(arguments_.map((name) => positional(name))),
+		}),
+		({ dryRun, positionals }) =>
+			() =>
+				runDatabaseCommand(name, {
+					dryRun,
+					positionals: [...prefix, ...positionals],
+				}),
+	);
 }
 
-const db = buildRouteMap({
-	routes: {
-		trace: dbCommand(
-			"trace",
-			"Trace backend handler effects with source locations",
-			1,
-			2,
-			"<handler> [effect]",
-		),
-		api: buildRouteMap({
-			routes: {
-				builtin: dbCommand(
+const db = command(
+	"db",
+	or(
+		command(
+			"api",
+			command(
+				"builtin",
+				dbCommand(
 					"builtin-api",
 					"List built-in commands and preferences",
-					0,
-					1,
-					"[filter]",
+					["filter"],
+					[],
+					true,
 				),
-				backend: dbCommand(
-					"backend-api",
-					"List backend request handlers",
-					0,
-					1,
-					"[filter]",
-				),
-				native: dbCommand(
-					"api",
-					"List database interfaces and call evidence",
-					0,
-					1,
-					"[filter]",
-				),
+				{ description: message`List built-in commands and preferences` },
+			),
+			{
+				description: message`Find built-in command IDs and configuration preferences`,
 			},
-			docs: { brief: "Inspect Raycast API catalogs" },
-		}),
-		compatibility: dbCommand(
-			"compatibility",
-			"Check installed native API compatibility",
 		),
-		runtime: dbCommand("runtime", "Show the checked Raycast runtime contract"),
-		surface: dbCommand("surface", "Show native addon exports"),
-		status: dbCommand("status", "Show database status"),
-		summary: dbCommand("summary", "Show database settings and counts"),
-		methods: dbCommand("methods", "List callable database methods"),
-		call: buildCommand({
-			func: async (
-				flags: { dryRun: boolean; undefinedArgs?: string },
-				...positionals: string[]
-			) => runDatabaseCommand("call", { ...flags, positionals }),
-			parameters: {
-				flags: {
-					dryRun,
-					undefinedArgs: {
-						kind: "parsed",
-						parse: string,
-						optional: true,
-						brief:
-							"Comma-separated zero-based argument indexes to pass as undefined",
-					},
-				},
-				positional: {
-					kind: "array",
-					parameter: {
-						brief: "Method path and optional JSON argument array",
-						parse: string,
-					},
-					minimum: 1,
-					maximum: 2,
-				},
+		command(
+			"runtime",
+			dbCommand("runtime", "Show the checked Raycast runtime contract"),
+			{
+				description: message`Show the checked Raycast runtime contract`,
 			},
-			docs: { brief: "Call a database method with JSON arguments" },
+		),
+		command("status", dbCommand("status", "Show database status"), {
+			description: message`Show database status`,
 		}),
-		profile: buildRouteMap({
-			routes: {
-				get: dbCommand("profile", "Show profile defaults"),
-				apply: dbCommand(
-					"profile",
-					"Apply profile defaults",
-					1,
-					1,
-					"<current-user-json> [--dry-run]",
-					["apply"],
+		command(
+			"summary",
+			dbCommand("summary", "Show database settings and counts"),
+			{
+				description: message`Show database settings and counts`,
+			},
+		),
+		command(
+			"profile",
+			or(
+				command("get", dbCommand("profile", "Show profile defaults"), {
+					description: message`Show profile defaults`,
+				}),
+				command(
+					"apply",
+					dbCommand(
+						"profile",
+						"Apply profile defaults",
+						["current-user-json"],
+						["apply"],
+					),
+					{
+						description: message`Apply profile defaults`,
+					},
 				),
-			},
-			docs: { brief: "Show or apply profile defaults" },
-		}),
-		aliases: buildRouteMap({
-			routes: {
-				apply: dbCommand(
+			),
+			{ description: message`Show or apply profile defaults` },
+		),
+		command(
+			"aliases",
+			command(
+				"apply",
+				dbCommand(
 					"aliases",
 					"Apply command aliases from JSON",
-					1,
-					1,
-					"<aliases-json> [--dry-run]",
+					["aliases-json"],
 					["apply"],
 				),
-			},
-			docs: { brief: "Manage command aliases" },
-		}),
-		user: buildRouteMap({
-			routes: {
-				defaults: buildRouteMap({
-					routes: {
-						get: dbCommand(
-							"user-default",
-							"Get a user default",
-							1,
-							1,
-							"<key>",
-							["get"],
-						),
-						delete: dbCommand(
+				{
+					description: message`Apply command aliases from JSON`,
+				},
+			),
+			{ description: message`Manage command aliases` },
+		),
+		command(
+			"user",
+			command(
+				"defaults",
+				or(
+					command(
+						"get",
+						dbCommand("user-default", "Get a user default", ["key"], ["get"]),
+						{
+							description: message`Get a user default`,
+						},
+					),
+					command(
+						"delete",
+						dbCommand(
 							"user-default",
 							"Delete a user default",
-							1,
-							1,
-							"<key> [--dry-run]",
+							["key"],
 							["delete"],
 						),
-						set: buildRouteMap({
-							routes: {
-								text: dbCommand(
+						{
+							description: message`Delete a user default`,
+						},
+					),
+					command(
+						"set",
+						or(
+							command(
+								"text",
+								dbCommand(
 									"user-default",
 									"Store text",
-									2,
-									2,
-									"<key> <value> [--dry-run]",
+									["key", "value"],
 									["set"],
 								),
-								json: dbCommand(
+								{
+									description: message`Store text`,
+								},
+							),
+							command(
+								"json",
+								dbCommand(
 									"user-default",
 									"Store serialized JSON",
-									2,
-									2,
-									"<key> <json> [--dry-run]",
+									["key", "json"],
 									["set-json"],
 								),
-								value: dbCommand(
+								{
+									description: message`Store serialized JSON`,
+								},
+							),
+							command(
+								"value",
+								dbCommand(
 									"user-default",
 									"Store a native string, number, or boolean",
-									2,
-									2,
-									"<key> <json-primitive> [--dry-run]",
+									["key", "json-primitive"],
 									["set-value"],
 								),
-							},
-							docs: { brief: "Set a user default" },
-						}),
-					},
-					docs: { brief: "Get, set, or delete user defaults" },
-				}),
-			},
-			docs: { brief: "Manage local user settings" },
-		}),
-	},
-	docs: { brief: "Inspect and change Raycast's local database" },
-});
-
-const app = buildApplication(
-	buildRouteMap({
-		routes: {
-			configure: buildCommand({
-				func: async (flags: { ifPresent: boolean }, configFile: string) =>
-					runConfigure(configFile, flags.ifPresent),
-				parameters: {
-					flags: {
-						ifPresent: {
-							kind: "boolean",
-							brief: "Skip when the consumer config is absent",
-							default: false,
-							withNegated: false,
-						},
-					},
-					positional: {
-						kind: "tuple",
-						parameters: [{ brief: "Consumer config JSON file", parse: string }],
-					},
-				},
-				docs: { brief: "Apply consumer supplied Raycast configuration" },
-			}),
-			key: buildRouteMap({
-				routes: {
-					extract: buildCommand({
-						func: async () => {
-							const { stdout, stderr } = await extractDatabaseKey();
-							process.stdout.write(stdout);
-							process.stderr.write(stderr);
-						},
-						parameters: {},
-						docs: { brief: "Extract Raycast's local database key" },
-					}),
-				},
-				docs: { brief: "Manage the local database key" },
-			}),
-			themes: buildCommand({
-				func: async (_flags: Record<string, never>, file: string) =>
-					runThemes(file),
-				parameters: {
-					flags: {},
-					positional: {
-						kind: "tuple",
-						parameters: [{ brief: "Themes JSON file", parse: string }],
-					},
-				},
-				docs: { brief: "Install and select consumer supplied themes" },
-			}),
-			ai: buildRouteMap({
-				routes: {
-					status: buildCommand({
-						func: async () => runAi("status"),
-						parameters: {},
-						docs: { brief: "Show current AI settings" },
-					}),
-					disable: buildCommand({
-						func: async (flags: { dryRun: boolean }) => runAi("disable", flags),
-						parameters: { flags: { dryRun } },
-						docs: { brief: "Back up and disable Raycast AI settings" },
-					}),
-					restore: buildCommand({
-						func: async (flags: { dryRun: boolean }) => runAi("restore", flags),
-						parameters: { flags: { dryRun } },
-						docs: { brief: "Restore AI settings from the backup" },
-					}),
-				},
-				docs: { brief: "Inspect, disable, or restore Raycast AI settings" },
-			}),
-			db,
-		},
-		docs: { brief: "Manage the local Raycast profile" },
-	}),
-	{
-		name: "raycast",
-		scanner: {
-			caseStyle: "allow-kebab-for-camel",
-			allowArgumentEscapeSequence: true,
-		},
-	},
+								{
+									description: message`Store a native string, number, or boolean`,
+								},
+							),
+						),
+						{ description: message`Set a user default` },
+					),
+				),
+				{ description: message`Get, set, or delete user defaults` },
+			),
+			{ description: message`Manage local user settings` },
+		),
+	),
+	{ description: message`Inspect and change Raycast's local database` },
 );
 
-await run(app, process.argv.slice(2), {
-	process: {
-		stdout: process.stdout,
-		stderr: process.stderr,
-		env: process.env,
-		get exitCode() {
-			return process.exitCode ?? null;
-		},
-		set exitCode(value: number | string | null) {
-			process.exitCode = value;
-		},
-	},
+const app = or(
+	command(
+		"configure",
+		map(
+			object({
+				ifPresent: withDefault(
+					flag("--if-present", {
+						description: message`Skip when the consumer config is absent`,
+					}),
+					false,
+				),
+				configFile: positional("config-file", "Consumer config JSON file"),
+			}),
+			({ configFile, ifPresent }) =>
+				() =>
+					runConfigure(configFile, ifPresent),
+		),
+		{ description: message`Apply consumer supplied Raycast configuration` },
+	),
+	command(
+		"key",
+		command(
+			"extract",
+			constant(async () => {
+				const { stdout, stderr } = await extractDatabaseKey();
+				process.stdout.write(stdout);
+				process.stderr.write(stderr);
+			}),
+			{ description: message`Extract Raycast's local database key` },
+		),
+		{ description: message`Manage the local database key` },
+	),
+	command(
+		"themes",
+		map(
+			positional("file", "Themes JSON file"),
+			(file) => () => runThemes(file),
+		),
+		{ description: message`Install and select consumer supplied themes` },
+	),
+	command(
+		"ai",
+		or(
+			command(
+				"status",
+				constant(() => runAi("status")),
+				{
+					description: message`Show current AI settings`,
+				},
+			),
+			command(
+				"disable",
+				map(object({ dryRun }), (flags) => () => runAi("disable", flags)),
+				{
+					description: message`Back up and disable Raycast AI settings`,
+				},
+			),
+			command(
+				"restore",
+				map(object({ dryRun }), (flags) => () => runAi("restore", flags)),
+				{
+					description: message`Restore AI settings from the backup`,
+				},
+			),
+		),
+		{ description: message`Inspect, disable, or restore Raycast AI settings` },
+	),
+	db,
+);
+
+const execute = run(app, {
+	programName: "raycast",
+	args: process.argv.slice(2),
+	brief: message`Manage the local Raycast profile`,
+	help: "both",
+	commandList: "top-level",
 });
+await execute();

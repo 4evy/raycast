@@ -1,4 +1,3 @@
-import beautify from "json-beautify";
 import { createRaycastClient } from "../../public/v1/index.mts";
 import { IO } from "../../shared/config.mts";
 
@@ -8,7 +7,7 @@ export async function runAi(
 ): Promise<void> {
 	const { ai } = createRaycastClient();
 	console.log(
-		beautify(
+		JSON.stringify(
 			await (action === "status" ? ai.status() : ai[action](options)),
 			null,
 			IO.JSON_INDENT,
