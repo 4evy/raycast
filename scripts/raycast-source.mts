@@ -15,15 +15,13 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { format } from "prettier";
 import release from "../release.json" with { type: "json" };
-import { SourceParser, ts, walk } from "../src/source/ast.mts";
+import { SourceParser } from "../src/source/ast.mts";
 import {
 	isJavaScript,
 	type SourceManifest as Manifest,
 	openCorpus,
 	readSources,
 } from "../src/source/corpus.mts";
-import type { SourceAnalysis } from "../src/source/model.mts";
-import { traceEffects } from "../src/source/trace.mts";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const packageRoot = path.dirname(
@@ -121,19 +119,9 @@ async function sync(): Promise<void> {
 			release,
 			appVersion,
 			files: [],
-			nativeAddons: [],
 		};
 		console.log("Extracting and formatting JavaScript (without executing it)");
 		for await (const relative of files(resources)) {
-			if (relative.endsWith(".node")) {
-				const bytes = await readFile(path.join(resources, relative));
-				manifest.nativeAddons.push({
-					path: relative,
-					bytes: bytes.length,
-					sha256: createHash("sha256").update(bytes).digest("hex"),
-				});
-				continue;
-			}
 			if (
 				!/\.(?:js|mjs|cjs|map|ts)$/.test(relative) &&
 				path.basename(relative) !== "package.json"
@@ -208,43 +196,12 @@ async function inspect(
 	query?: string,
 	filter = "",
 ): Promise<void> {
-	if (!["list", "find", "calls", "check", "evidence", "trace"].includes(action))
+	if (!["list", "find", "check"].includes(action))
 		throw new Error(`Unknown source command: ${action}`);
-	if (["find", "calls", "evidence", "trace"].includes(action) && !query)
+	if (action === "find" && !query)
 		throw new Error(`${action} needs a search term`);
 	const corpus = await openCorpus();
 	const { manifest } = corpus;
-	if (action === "evidence" || action === "trace") {
-		const analysis = JSON.parse(
-			await readFile(path.join(generated, "analysis.json"), "utf8").catch(
-				() => {
-					throw new Error("Run npm run source:api first");
-				},
-			),
-		) as SourceAnalysis & { release: typeof release };
-		if (analysis.release.hash !== release.hash)
-			throw new Error("API evidence is stale; run npm run source:api");
-		if (action === "trace") {
-			console.log(
-				JSON.stringify(
-					traceEffects(
-						analysis.functionGraph,
-						analysis.handlers,
-						query ?? "",
-						filter,
-					),
-					null,
-					2,
-				),
-			);
-			return;
-		}
-		const matches = Object.entries(analysis.calls).filter(([name]) =>
-			name.includes(query ?? ""),
-		);
-		console.log(JSON.stringify(Object.fromEntries(matches), null, 2));
-		return;
-	}
 	if (action === "list") {
 		for (const file of manifest.files)
 			if (file.path.includes(filter) && (!query || file.path.includes(query)))
@@ -264,25 +221,7 @@ async function inspect(
 	} else {
 		const parser = new SourceParser(sources);
 		try {
-			for (const file of sources.keys()) {
-				const ast = parser.parse(file);
-				if (action !== "calls") continue;
-				walk(ast, (node) => {
-					if (!ts.isCallExpression(node) && !ts.isNewExpression(node)) return;
-					const callee = node.expression.getText(ast);
-					if (!callee.includes(query ?? "")) return;
-					matches++;
-					console.log(
-						JSON.stringify({
-							file,
-							line:
-								ast.getLineAndCharacterOfPosition(node.getStart(ast)).line + 1,
-							callee,
-							arguments: (node.arguments ?? []).map((arg) => arg.getText(ast)),
-						}),
-					);
-				});
-			}
+			for (const file of sources.keys()) parser.parse(file);
 		} finally {
 			parser[Symbol.dispose]();
 		}
@@ -295,7 +234,7 @@ async function inspect(
 const [action, query, filter, ...extra] = process.argv.slice(2);
 if (!action) {
 	console.log(
-		"Usage: npm run source:inspect -- <list [path] | find <text> [path] | calls <callee> [path] | evidence <method> | trace <handler> [effect] | check>\nSync pinned sources: npm run source:sync\nCheck latest release and sync: npm run source:latest",
+		"Usage: npm run source:inspect -- <list [path] | find <text> [path] | check>\nSync pinned sources: npm run source:sync\nUpdate built-ins and validate AI policy: npm run source:builtins\nCheck latest release and sync: npm run source:latest",
 	);
 } else {
 	if (extra.length || ((action === "sync" || action === "check") && query))

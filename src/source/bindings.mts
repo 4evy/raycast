@@ -20,8 +20,7 @@ function createsScope(node: ts.Node): boolean {
 		ts.isForOfStatement(node) ||
 		ts.isForInStatement(node) ||
 		ts.isCaseBlock(node) ||
-		ts.isClassExpression(node) ||
-		ts.isClassDeclaration(node)
+		ts.isClassLikeDeclaration(node)
 	);
 }
 
@@ -32,11 +31,7 @@ function writtenNames(node: ts.Node | undefined): string[] {
 	if (ts.isIdentifier(node)) return [node.text];
 	if (ts.isBindingElement(node) || ts.isShorthandPropertyAssignment(node))
 		return writtenNames(node.name);
-	if (
-		ts.isObjectBindingPattern(node) ||
-		ts.isArrayBindingPattern(node) ||
-		ts.isArrayLiteralExpression(node)
-	)
+	if (ts.isBindingPattern(node) || ts.isArrayLiteralExpression(node))
 		return node.elements.flatMap(writtenNames);
 	if (ts.isObjectLiteralExpression(node))
 		return node.properties.flatMap(writtenNames);
@@ -54,8 +49,7 @@ function writtenNames(node: ts.Node | undefined): string[] {
 // Index bindings before resolving uses, including hoisted declarations
 export class SourceBindings {
 	readonly assignments: Assignment[] = [];
-	readonly objects: ts.ObjectLiteralExpression[] = [];
-	readonly calls: (ts.CallExpression | ts.NewExpression)[] = [];
+	readonly calls: ts.CallExpression[] = [];
 	private readonly contexts = new Map<ts.Node, Scope>();
 	private readonly values = new Map<
 		Scope,
@@ -105,8 +99,7 @@ export class SourceBindings {
 				bind(scope, node.name);
 			if (
 				ts.isBinaryExpression(node) &&
-				node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment &&
-				node.operatorToken.kind <= ts.SyntaxKind.LastAssignment
+				ts.isAssignmentOperator(node.operatorToken.kind)
 			) {
 				this.assignments.push({
 					target: node.left,
@@ -129,9 +122,7 @@ export class SourceBindings {
 					: [node.initializer];
 				for (const target of targets) this.assignments.push({ target, node });
 			}
-			if (ts.isObjectLiteralExpression(node)) this.objects.push(node);
-			if (ts.isCallExpression(node) || ts.isNewExpression(node))
-				this.calls.push(node);
+			if (ts.isCallExpression(node)) this.calls.push(node);
 			node.forEachChild((child) => {
 				visit(child, scope);
 			});
@@ -159,12 +150,6 @@ export class SourceBindings {
 
 	owner(name: string, node: ts.Node): ts.Node | undefined {
 		return this.scope(name, node)?.node;
-	}
-
-	functionOwner(node: ts.Node): ts.Node | undefined {
-		let scope = this.contexts.get(node);
-		while (scope && !functionScope(scope.node)) scope = scope.parent;
-		return scope?.node;
 	}
 
 	candidates(node: ts.Identifier): readonly (ts.Node | undefined)[] {

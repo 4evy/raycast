@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+import { hash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -14,7 +14,6 @@ export type SourceManifest = {
 	release: typeof release;
 	appVersion: string;
 	files: SourceFileRecord[];
-	nativeAddons: SourceFileRecord[];
 };
 export const isJavaScript = (name: string): boolean =>
 	/\.(?:mjs|cjs|js)$/.test(name);
@@ -45,10 +44,10 @@ export async function openCorpus() {
 	}
 	const verify = (
 		bytes: Buffer | string,
-		hash: string | undefined,
+		expectedHash: string | undefined,
 		file: string,
 	) => {
-		if (createHash("sha256").update(bytes).digest("hex") !== hash)
+		if (hash("sha256", bytes, "hex") !== expectedHash)
 			throw new Error(`Source hash mismatch: ${file}; run source:sync`);
 	};
 	return {

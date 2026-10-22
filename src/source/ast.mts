@@ -14,7 +14,9 @@ export class SourceParser implements Disposable {
 	constructor(sources: ReadonlyMap<string, string>) {
 		const config = path.join(this.root, "tsconfig.json");
 		const files = Object.fromEntries(
-			[...sources].map(([file, text]) => [path.join(this.root, file), text]),
+			sources
+				.entries()
+				.map(([file, text]) => [path.join(this.root, file), text]),
 		);
 		files[config] = JSON.stringify({
 			compilerOptions: { allowJs: true, noResolve: true, noLib: true },
@@ -64,12 +66,8 @@ export type FunctionNode =
 export function isFunction(node: ts.Node | undefined): node is FunctionNode {
 	return (
 		!!node &&
-		(ts.isFunctionDeclaration(node) ||
-			ts.isFunctionExpression(node) ||
-			ts.isArrowFunction(node) ||
-			ts.isMethodDeclaration(node) ||
-			ts.isGetAccessorDeclaration(node) ||
-			ts.isSetAccessorDeclaration(node))
+		ts.isFunctionLikeDeclaration(node) &&
+		!ts.isConstructorDeclaration(node)
 	);
 }
 
@@ -93,10 +91,7 @@ export function unwrap(node: ts.Node): ts.Node {
 }
 
 export function literal(node: ts.Node | undefined): string | undefined {
-	return node &&
-		(ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node))
-		? node.text
-		: undefined;
+	return node && ts.isStringLiteralLikeNode(node) ? node.text : undefined;
 }
 
 export function property(node: ts.Node | undefined): string | undefined {
@@ -105,29 +100,11 @@ export function property(node: ts.Node | undefined): string | undefined {
 	return ts.isIdentifier(node) ? node.text : literal(node);
 }
 
-export function member(node: ts.Node): { root: ts.Node; path: string[] } {
-	node = unwrap(node);
-	if (
-		ts.isPropertyAccessExpression(node) ||
-		ts.isElementAccessExpression(node)
-	) {
-		const key = ts.isPropertyAccessExpression(node)
-			? node.name.text
-			: literal(unwrap(node.argumentExpression));
-		if (key !== undefined) {
-			const parent = member(node.expression);
-			return { root: parent.root, path: [...parent.path, key] };
-		}
-	}
-	return { root: node, path: [] };
-}
-
 export function bindingNames(node: ts.Node | undefined): string[] {
 	if (!node) return [];
 	if (ts.isIdentifier(node)) return [node.text];
 	if (ts.isBindingElement(node) || ts.isParameterDeclaration(node))
 		return bindingNames(node.name);
-	if (ts.isObjectBindingPattern(node) || ts.isArrayBindingPattern(node))
-		return node.elements.flatMap(bindingNames);
+	if (ts.isBindingPattern(node)) return node.elements.flatMap(bindingNames);
 	return [];
 }

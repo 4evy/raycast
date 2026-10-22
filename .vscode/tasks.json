@@ -75,9 +75,9 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "npm: source:api",
+			"label": "npm: source:builtins",
 			"type": "npm",
-			"script": "source:api",
+			"script": "source:builtins",
 			"problemMatcher": []
 		},
 		{

@@ -156,10 +156,14 @@ Profile, alias, user-default, and AI mutations support `--dry-run`.
 
 ```sh
 npm run db -- summary
-npm run db -- compatibility
+npm run db -- api builtin clipboard-history
 npm run db -- user defaults get your-setting-key
 npm run db -- user defaults set --help
 ```
+
+The CLI is limited to AI controls and configuration. Database diagnostics cover
+health, theme selection, extension settings, and AI counts. Generic native
+method calls and backend API exploration are not supported.
 
 ## TypeScript library
 
@@ -418,6 +422,9 @@ programs.raycast.configuration.settings = {
 `npm run format` formats code. After public API changes, run
 `npm run api:update` and review the report.
 
-Refresh source catalogs with `npm run source:sync` and `npm run source:api`.
+Refresh extracted sources with `npm run source:sync`, then run
+`npm run source:builtins` to regenerate built-in command and preference IDs and
+check the AI policy against that release. `npm run source:inspect` lists the
+extracted files and supports static source searches.
 `npm run release:update` updates the pinned release. Dependency changes
 also require refreshing `npmDepsHash` in [nix/manager.nix](nix/manager.nix).

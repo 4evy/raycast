@@ -9,7 +9,7 @@
 		"source:sync": "node ../../scripts/raycast-source.mts sync",
 		"source:inspect": "node ../../scripts/raycast-source.mts",
 		"source:latest": "npm run release:update && npm run source:sync",
-		"source:api": "cd ../.. && node scripts/generate-native-api.mts && biome check --write src/native/generated.mts data/native-api.json data/backend-api.json data/builtin-api.json data/source-effects.json"
+		"source:builtins": "cd ../.. && node scripts/generate-builtin-api.mts && biome check --write data/builtin-api.json"
 	},
 	"exports": {
 		"./package.json": "./package.json",
