@@ -1,7 +1,9 @@
 import { execFile, spawn } from "node:child_process";
 import { createHash } from "node:crypto";
+import { once } from "node:events";
 import { appendFile, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { pipeline } from "node:stream/promises";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 
@@ -31,12 +33,10 @@ async function hashDownload(url: string): Promise<string> {
 		{ stdio: ["ignore", "pipe", "inherit"] },
 	);
 	const hash = createHash("sha256");
-	const finished = new Promise<number>((resolve, reject) => {
-		download.once("error", reject);
-		download.once("close", (code) => resolve(code ?? 1));
-	});
-	for await (const chunk of download.stdout) hash.update(chunk);
-	const code = await finished;
+	const [[code]] = await Promise.all([
+		once(download, "close"),
+		pipeline(download.stdout, hash),
+	]);
 	if (code !== 0) throw new Error("Raycast download failed");
 	return `sha256-${hash.digest("base64")}`;
 }
