@@ -1,12 +1,9 @@
+import { randomUUID } from "node:crypto";
+import { access, mkdir, open, readFile, rename, rm } from "node:fs/promises";
+import { basename, dirname, join } from "node:path";
 import { isDeepStrictEqual } from "node:util";
-import get from "es-toolkit/compat/get";
-import size from "es-toolkit/compat/size";
-import { isRecord } from "is-record";
-import { loadJsonFile } from "load-json-file";
-import pMap from "p-map";
-import { pathExists } from "path-exists";
-import { writeJsonFile } from "write-json-file";
-import { z } from "zod";
+import { Effect } from "effect";
+import * as v from "valibot";
 import { queryCount } from "../../native/query-count.mts";
 import type { FrecencyRecord } from "../../native/types.mts";
 import type { RaycastDatabaseClient } from "../../platform/database.mts";
@@ -34,13 +31,19 @@ export type Operation = {
 export type Snapshot = {
 	version: number;
 	createdAt: string;
-	internalExtensions: Record<string, JsonObject>;
+	internalExtensions: Record<string, BackupExtension>;
 	models: Record<string, { disabledAt: string | null }>;
 	frecencyRecords: FrecencyRecord[];
 	macOSDefaults: Record<string, MacOSDefaultValue>;
 };
 
 type CollectionKey = Exclude<keyof Snapshot, "version" | "createdAt">;
+
+type BackupExtension = v.InferOutput<typeof extensionSchema>;
+
+function attempt<A>(evaluate: () => PromiseLike<A>): Effect.Effect<A, unknown> {
+	return Effect.tryPromise({ try: evaluate, catch: (error) => error });
+}
 
 type Collection<K extends CollectionKey> = {
 	key: K;
@@ -83,7 +86,7 @@ export function isRaycastAiItemId(itemId: unknown): itemId is string {
 }
 
 function disabledInternalExtension(
-	previous: Record<string, unknown>,
+	previous: BackupExtension,
 	{ id: _id, ...patch }: ExtensionRule,
 ): Record<string, unknown> {
 	if (!previous.id)
@@ -96,11 +99,11 @@ function disabledInternalExtension(
 		...previous,
 		...patch,
 		syncedMeta: {
-			...(isRecord(previous.syncedMeta) ? previous.syncedMeta : {}),
+			...previous.syncedMeta,
 			...patch.syncedMeta,
 		},
 		localMeta: {
-			...(isRecord(previous.localMeta) ? previous.localMeta : {}),
+			...previous.localMeta,
 			...patch.localMeta,
 		},
 		enabledFallbackCommandIds:
@@ -116,8 +119,8 @@ async function restoreInternalExtension(
 	previous: JsonObject,
 ): Promise<void> {
 	const current = await db.settings.getInternalExtensionSettings(id);
-	// The native update method merges metadata, including null values. Replacing
-	// the row is necessary to remove preferences absent from the original backup
+	// Native updates merge metadata, including null values. Replace the row
+	// to remove preferences absent from the original backup
 	if (current) await db.settings.deleteInternalExtensionSettings(id);
 	if (!previous.id) return;
 	try {
@@ -142,12 +145,23 @@ const COLLECTIONS = [
 		key: "internalExtensions",
 		snapshot: async (db) =>
 			Object.fromEntries(
-				await pMap(POLICY.internalExtensions, async ({ id }) => [
-					id,
-					structuredClone(
-						(await db.settings.getInternalExtensionSettings(id)) ?? {},
+				await Effect.runPromise(
+					Effect.forEach(
+						POLICY.internalExtensions,
+						({ id }) =>
+							attempt(
+								async () =>
+									[
+										id,
+										structuredClone(
+											(await db.settings.getInternalExtensionSettings(id)) ??
+												{},
+										),
+									] as const,
+							),
+						{ concurrency: "unbounded" },
 					),
-				]),
+				),
 			),
 		disable: ({ db, value }) =>
 			POLICY.internalExtensions.flatMap((rule) => {
@@ -233,10 +247,16 @@ const COLLECTIONS = [
 		key: "macOSDefaults",
 		snapshot: async () =>
 			Object.fromEntries(
-				await pMap(POLICY.macOSDefaults, async (rule) => [
-					rule.key,
-					await readMacOSDefault(rule),
-				]),
+				await Effect.runPromise(
+					Effect.forEach(
+						POLICY.macOSDefaults,
+						(rule) =>
+							attempt(
+								async () => [rule.key, await readMacOSDefault(rule)] as const,
+							),
+						{ concurrency: "unbounded" },
+					),
+				),
 			),
 		disable: ({ value }) =>
 			Object.keys(value).map((key) =>
@@ -270,8 +290,12 @@ export async function buildSnapshot(
 		version: POLICY.backupVersion,
 		createdAt: new Date().toISOString(),
 		...Object.fromEntries(
-			await Promise.all(
-				COLLECTIONS.map(async (entry) => [entry.key, await entry.snapshot(db)]),
+			await Effect.runPromise(
+				Effect.forEach(
+					COLLECTIONS,
+					(entry) => attempt(async () => [entry.key, await entry.snapshot(db)]),
+					{ concurrency: "unbounded" },
+				),
 			),
 		),
 	} as Snapshot;
@@ -289,78 +313,123 @@ export async function applyDisabled(
 	);
 }
 
-const metadataSchema = z.record(z.string(), z.unknown()).nullish();
-const extensionSchema = z.looseObject({
-	id: z.string().optional(),
-	enabled: z.boolean().optional(),
-	enabledFallbackCommandIds: z.array(z.string()).optional(),
-	updatedAt: z.string().optional(),
+const metadataSchema = v.nullish(v.record(v.string(), v.unknown()));
+const extensionSchema = v.looseObject({
+	id: v.optional(v.string()),
+	enabled: v.optional(v.boolean()),
+	enabledFallbackCommandIds: v.optional(v.array(v.string())),
+	updatedAt: v.optional(v.string()),
 	syncedMeta: metadataSchema,
 	localMeta: metadataSchema,
 	macosSyncedMeta: metadataSchema,
 	windowsSyncedMeta: metadataSchema,
 });
-const snapshotSchema = z.looseObject({
-	version: z.literal(POLICY.backupVersion),
-	createdAt: z.string(),
-	internalExtensions: z
-		.record(z.string(), extensionSchema)
-		.superRefine((entries, ctx) => {
-			for (const [id, settings] of Object.entries(entries)) {
-				// An empty object records an extension absent when the backup was taken
-				if (
-					Object.keys(settings).length > 0 &&
-					(settings.id !== id || typeof settings.enabled !== "boolean")
-				) {
-					ctx.addIssue({
-						code: "custom",
-						path: [id],
-						message: "Invalid backup extension",
-					});
-				}
-			}
-		}),
-	models: z.record(
-		z.string(),
-		z.looseObject({ disabledAt: z.string().nullable().default(null) }),
+const snapshotSchema = v.looseObject({
+	version: v.literal(POLICY.backupVersion),
+	createdAt: v.string(),
+	internalExtensions: v.pipe(
+		v.record(v.string(), extensionSchema),
+		v.check(
+			(entries) =>
+				Object.entries(entries).every(
+					([id, settings]) =>
+						// Empty objects record extensions absent when the backup was taken
+						Object.keys(settings).length === 0 ||
+						(settings.id === id && typeof settings.enabled === "boolean"),
+				),
+			"Invalid backup extension",
+		),
 	),
-	frecencyRecords: z.array(
-		z.looseObject({
-			itemId: z.string(),
-			frecencyDate: z.number({
-				error:
+	models: v.record(
+		v.string(),
+		v.looseObject({
+			disabledAt: v.optional(v.nullable(v.string()), null),
+		}),
+	),
+	frecencyRecords: v.array(
+		v.looseObject({
+			itemId: v.string(),
+			frecencyDate: v.pipe(
+				v.number(
 					"Backup requires raw frecencyDate; computed score records cannot be restored exactly",
-			}),
-			searchTerms: z.string().optional(),
-			openedAt: z.string().optional(),
+				),
+				v.finite(),
+			),
+			searchTerms: v.optional(v.string()),
+			openedAt: v.optional(v.string()),
 		}),
 	),
-	macOSDefaults: z.record(
-		z.string(),
-		z.looseObject({
-			exists: z.boolean(),
-			key: z.string(),
-			restoreType: z.enum(["bool", "string"]),
-			value: z.union([z.boolean(), z.string(), z.null()]),
+	macOSDefaults: v.record(
+		v.string(),
+		v.looseObject({
+			exists: v.boolean(),
+			key: v.string(),
+			restoreType: v.picklist(["bool", "string"]),
+			value: v.union([v.boolean(), v.string(), v.null()]),
 		}),
 	),
 });
 
 function asSnapshot(value: unknown): Snapshot {
-	return snapshotSchema.parse(value);
+	return v.parse(snapshotSchema, value);
 }
 
 async function loadBackup(file: string): Promise<Snapshot> {
-	const result = snapshotSchema.safeParse(await loadJsonFile(file));
+	const content = new TextDecoder().decode(await readFile(file));
+	const result = v.safeParse(snapshotSchema, JSON.parse(content));
 	if (!result.success) {
 		throw new Error(
 			`Raycast AI backup at ${file} is incompatible and cannot be safely restored. Keep the file; move it aside before disabling AI again. A new backup captures only the current settings`,
 		);
 	}
-	return result.data;
+	return result.output;
 }
 
-const backupWriteOptions = { indent: IO.JSON_INDENT, mode: IO.FILE_MODE };
+function backupExists(file: string): Effect.Effect<boolean> {
+	return attempt(() => access(file)).pipe(
+		Effect.as(true),
+		Effect.catch(() => Effect.succeed(false)),
+	);
+}
+
+function writeBackup(
+	file: string,
+	snapshot: Snapshot,
+): Effect.Effect<void, unknown> {
+	return Effect.gen(function* () {
+		const directory = dirname(file);
+		yield* attempt(() => mkdir(directory, { recursive: true }));
+		const previous = yield* attempt(() => readFile(file, "utf8")).pipe(
+			Effect.catch((error) =>
+				(error as NodeJS.ErrnoException).code === "ENOENT"
+					? Effect.succeed(undefined)
+					: Effect.fail(error),
+			),
+		);
+		const newline =
+			previous === undefined || previous.endsWith("\n") ? "\n" : "";
+		const content = `${JSON.stringify(snapshot, null, IO.JSON_INDENT)}${newline}`;
+		const temporary = join(directory, `.${basename(file)}.${randomUUID()}.tmp`);
+		// Keep the temporary file beside the destination so rename is atomic
+		yield* Effect.acquireUseRelease(
+			attempt(() => open(temporary, "wx", IO.FILE_MODE)),
+			(handle) =>
+				Effect.gen(function* () {
+					yield* attempt(() => handle.writeFile(content, "utf8"));
+					yield* attempt(() => handle.chmod(IO.FILE_MODE));
+					yield* attempt(() => handle.sync());
+					yield* attempt(() => handle.close());
+					yield* attempt(() => rename(temporary, file));
+				}),
+			(handle) =>
+				attempt(() => handle.close()).pipe(
+					Effect.ensuring(
+						Effect.orDie(attempt(() => rm(temporary, { force: true }))),
+					),
+				),
+		);
+	});
+}
 
 export async function ensureBackup(
 	file: string,
@@ -369,9 +438,9 @@ export async function ensureBackup(
 ): Promise<boolean> {
 	const current = asSnapshot(before);
 
-	if (!(await pathExists(file))) {
+	if (!(await Effect.runPromise(backupExists(file)))) {
 		if (dryRun) return false;
-		await writeJsonFile(file, current, backupWriteOptions);
+		await Effect.runPromise(writeBackup(file, current));
 		return true;
 	}
 
@@ -384,13 +453,12 @@ export async function ensureBackup(
 		...existing,
 		...Object.fromEntries(
 			POLICY.mergeableBackupCollections.map((key) => {
-				const currentValue: unknown = get(current, [key]);
-				const existingValue: unknown = get(existing, [key]);
+				const collectionKey = key as Exclude<CollectionKey, "frecencyRecords">;
 				return [
 					key,
 					{
-						...(isRecord(currentValue) ? currentValue : {}),
-						...(isRecord(existingValue) ? existingValue : {}),
+						...current[collectionKey],
+						...existing[collectionKey],
 					},
 				];
 			}),
@@ -404,7 +472,7 @@ export async function ensureBackup(
 	};
 
 	if (dryRun || isDeepStrictEqual(existing, merged)) return false;
-	await writeJsonFile(file, merged, backupWriteOptions);
+	await Effect.runPromise(writeBackup(file, merged));
 	return true;
 }
 
@@ -415,7 +483,8 @@ export async function restore(
 	dryRun: boolean,
 ): Promise<JsonObject[]> {
 	const file = backupPathFor(appSupport);
-	if (!(await pathExists(file))) throw new Error(`backup not found: ${file}`);
+	if (!(await Effect.runPromise(backupExists(file))))
+		throw new Error(`backup not found: ${file}`);
 
 	const backup = await loadBackup(file);
 	return runOperations(
@@ -424,48 +493,71 @@ export async function restore(
 	);
 }
 
-function statusFieldValue(item: unknown, field: StatusField): unknown {
-	const value: unknown = get(item, field.path);
+function statusFieldValue(item: BackupExtension, field: StatusField): unknown {
+	const value = field.path.reduce<unknown>(
+		(current, key) =>
+			current == null ? undefined : (current as JsonObject)[key],
+		item,
+	);
 	if (!field.count) return value ?? structuredClone(field.defaultValue);
 	if (typeof value === "number") return value;
-	return typeof value === "object" ? size(value) : 0;
+	if (Array.isArray(value)) return value.length;
+	return value !== null && typeof value === "object"
+		? Object.keys(value).length
+		: 0;
 }
 
 export async function status(
 	db: RaycastDatabaseClient,
 ): Promise<Record<string, unknown>> {
-	const [internalExtensions, models, frecencyRecords, macOSDefaults, aiData] =
-		await Promise.all([
-			pMap(POLICY.internalExtensions, async ({ id }) => {
-				const item = await db.settings.getInternalExtensionSettings(id);
-				if (!isRecord(item) || !item.id) return [id, { present: false }];
-				return [
-					id,
-					{
-						present: true,
-						...Object.fromEntries(
-							POLICY.statusFields.map((field) => [
-								field.key,
-								statusFieldValue(item, field),
-							]),
+	const { internalExtensions, models, frecencyRecords, macOSDefaults, aiData } =
+		await Effect.runPromise(
+			Effect.all(
+				{
+					internalExtensions: Effect.forEach(
+						POLICY.internalExtensions,
+						({ id }) =>
+							attempt(async () => {
+								const item = await db.settings.getInternalExtensionSettings(id);
+								if (!item?.id) return [id, { present: false }] as const;
+								return [
+									id,
+									{
+										present: true,
+										...Object.fromEntries(
+											POLICY.statusFields.map((field) => [
+												field.key,
+												statusFieldValue(item, field),
+											]),
+										),
+									},
+								] as const;
+							}),
+						{ concurrency: "unbounded" },
+					).pipe(Effect.map(Object.fromEntries)),
+					models: attempt(() => db.ai.modelGetAll()),
+					frecencyRecords: attempt(() => db.frecency.getAll()).pipe(
+						Effect.map((records) =>
+							records.filter((record) => isRaycastAiItemId(record.itemId)),
 						),
-					},
-				];
-			}).then(Object.fromEntries),
-			db.ai.modelGetAll(),
-			db.frecency
-				.getAll()
-				.then((records) =>
-					records.filter((record) => isRaycastAiItemId(record.itemId)),
-				),
-			pMap(POLICY.macOSDefaults, async (rule) => [
-				rule.key,
-				await readMacOSDefault(rule),
-			]).then(Object.fromEntries),
-			pMap(POLICY.aiDataQueries, (query) => queryCount(db, query)).then(
-				Object.fromEntries,
+					),
+					macOSDefaults: Effect.forEach(
+						POLICY.macOSDefaults,
+						(rule) =>
+							attempt(
+								async () => [rule.key, await readMacOSDefault(rule)] as const,
+							),
+						{ concurrency: "unbounded" },
+					).pipe(Effect.map(Object.fromEntries)),
+					aiData: Effect.forEach(
+						POLICY.aiDataQueries,
+						(query) => attempt(() => queryCount(db, query)),
+						{ concurrency: "unbounded" },
+					).pipe(Effect.map(Object.fromEntries)),
+				},
+				{ concurrency: "unbounded" },
 			),
-		]);
+		);
 
 	return {
 		internalExtensions,
