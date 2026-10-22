@@ -6,47 +6,52 @@ import path from "node:path";
 import process from "node:process";
 import { pathToFileURL } from "node:url";
 import { promisify } from "node:util";
-import { isRecord } from "is-record";
-import untildify from "untildify";
-import { z } from "zod";
+import { Effect } from "effect";
+import * as v from "valibot";
 import { aliasesSchema } from "../features/aliases/aliases.mts";
 import { historyDurationSchema } from "../features/clipboard/operations.mts";
 import { currentUserSchema } from "../features/profile/profile.mts";
 import { withDatabase } from "../platform/database.mts";
 import { extractDatabaseKey } from "../platform/extract-key.mts";
+import { expandHome } from "../platform/path.mts";
 import { PATHS } from "../shared/config.mts";
 import { createRaycastClient } from "./client.mts";
 import { installThemes } from "./install-themes.mts";
 
 const execFile = promisify(execFileCallback);
-const profileAssetsSchema = z.object({
-	avatarUrl: z.url().optional(),
-	avatarFile: z.string().min(1).optional(),
-});
-const profileSchema = z.union([
-	profileAssetsSchema.extend({ currentUser: currentUserSchema }),
-	profileAssetsSchema.extend({
+const profileAssetEntries = {
+	avatarUrl: v.optional(v.pipe(v.string(), v.url())),
+	avatarFile: v.optional(v.pipe(v.string(), v.minLength(1))),
+};
+const profileSchema = v.union([
+	v.object({ ...profileAssetEntries, currentUser: currentUserSchema }),
+	v.object({
+		...profileAssetEntries,
 		fallbackUser: currentUserSchema,
-		currentUserPatch: z.record(z.string(), z.unknown()),
+		currentUserPatch: v.record(v.string(), v.unknown()),
 	}),
 ]);
-const appAliasSchema = z.object({
-	names: z.array(z.string().min(1)).min(1),
-	alias: z.string().min(1).regex(/^\S*$/, "Alias cannot contain whitespace"),
-	fallbackPath: z.string().min(1).optional(),
-	enabled: z.boolean().default(true),
+const appAliasSchema = v.object({
+	names: v.pipe(v.array(v.pipe(v.string(), v.minLength(1))), v.minLength(1)),
+	alias: v.pipe(
+		v.string(),
+		v.minLength(1),
+		v.regex(/^\S*$/, "Alias cannot contain whitespace"),
+	),
+	fallbackPath: v.optional(v.pipe(v.string(), v.minLength(1))),
+	enabled: v.optional(v.boolean(), true),
 });
-export const consumerConfigSchema = z
-	.object({
-		profile: profileSchema.optional(),
-		commandAliases: aliasesSchema.default([]),
-		appAliases: z.array(appAliasSchema).default([]),
-		clipboardHistoryDuration: historyDurationSchema.optional(),
-		themesFile: z.string().min(1).optional(),
-		disableAi: z.boolean().default(false),
-		launch: z.boolean().default(false),
-	})
-	.refine(
+export const consumerConfigSchema = v.pipe(
+	v.object({
+		profile: v.optional(profileSchema),
+		commandAliases: v.optional(aliasesSchema, () => []),
+		appAliases: v.optional(v.array(appAliasSchema), () => []),
+		clipboardHistoryDuration: v.optional(historyDurationSchema),
+		themesFile: v.optional(v.pipe(v.string(), v.minLength(1))),
+		disableAi: v.optional(v.boolean(), false),
+		launch: v.optional(v.boolean(), false),
+	}),
+	v.check(
 		(config) =>
 			config.profile !== undefined ||
 			config.commandAliases.length > 0 ||
@@ -56,21 +61,20 @@ export const consumerConfigSchema = z
 			config.disableAi ||
 			config.launch,
 		"consumer config has no actions",
-	);
-export type ConsumerConfig = z.infer<typeof consumerConfigSchema>;
+	),
+);
+export type ConsumerConfig = v.InferOutput<typeof consumerConfigSchema>;
 
-type IndexedApp = { name: string; raycastId: string };
+const indexedAppSchema = v.object({
+	name: v.string(),
+	raycastId: v.pipe(v.string(), v.minLength(1)),
+});
+type IndexedApp = v.InferOutput<typeof indexedAppSchema>;
 
 function indexedApps(value: unknown): IndexedApp[] {
 	if (!Array.isArray(value))
 		throw new Error("app index did not return an array");
-	return value.filter(
-		(app): app is IndexedApp =>
-			isRecord(app) &&
-			typeof app.name === "string" &&
-			typeof app.raycastId === "string" &&
-			app.raycastId.length > 0,
-	);
+	return value.filter((app): app is IndexedApp => v.is(indexedAppSchema, app));
 }
 
 async function resolveAppAliases(
@@ -104,7 +108,7 @@ async function resolveAppAliases(
 }
 
 function resolveConsumerPath(file: string, from: string): string {
-	return path.resolve(path.dirname(from), untildify(file));
+	return path.resolve(path.dirname(from), expandHome(file));
 }
 
 async function prepareAvatar(
@@ -154,11 +158,12 @@ export async function configureFile(
 	configPath: string,
 	ifPresent = false,
 ): Promise<ConfigureResult> {
-	const configFile = path.resolve(untildify(configPath));
+	const configFile = path.resolve(expandHome(configPath));
 	if (!existsSync(configFile) && ifPresent) {
 		return { applied: false, configFile, warnings: [] };
 	}
-	const config = consumerConfigSchema.parse(
+	const config = v.parse(
+		consumerConfigSchema,
 		JSON.parse(await readFile(configFile, "utf8")),
 	);
 	if (!process.env.RAYCAST_LOCK_HELD) {
@@ -183,7 +188,7 @@ export async function configureFile(
 		);
 		return JSON.parse(stdout) as ConfigureResult;
 	}
-	const app = untildify(process.env.RAYCAST_APP_BUNDLE || PATHS.appBundle);
+	const app = expandHome(process.env.RAYCAST_APP_BUNDLE || PATHS.appBundle);
 	if (!existsSync(app)) throw new Error(`Raycast app not found: ${app}`);
 	if (
 		config.profile ||
@@ -198,35 +203,49 @@ export async function configureFile(
 	const client = createRaycastClient();
 	const warnings: string[] = [];
 	const appAliases = await resolveAppAliases(config.appAliases, warnings);
-	const commandAliases = aliasesSchema.parse([
+	const commandAliases = v.parse(aliasesSchema, [
 		...config.commandAliases,
 		...appAliases,
 	]);
 	if (config.profile) {
+		const profile = config.profile;
 		const storedProfile =
-			"fallbackUser" in config.profile ? await client.profile.get() : undefined;
-		const storedUser = currentUserSchema.safeParse(storedProfile?.currentUser);
+			"fallbackUser" in profile ? await client.profile.get() : undefined;
+		const storedUser = v.safeParse(
+			currentUserSchema,
+			storedProfile?.currentUser,
+		);
 		const currentUser =
-			"currentUser" in config.profile
-				? { ...config.profile.currentUser }
-				: currentUserSchema.parse({
-						...config.profile.fallbackUser,
-						...(storedUser.success ? storedUser.data : {}),
-						...config.profile.currentUserPatch,
+			"currentUser" in profile
+				? { ...profile.currentUser }
+				: v.parse(currentUserSchema, {
+						...profile.fallbackUser,
+						...(storedUser.success ? storedUser.output : {}),
+						...profile.currentUserPatch,
 					});
-		try {
-			const avatar = await prepareAvatar(
-				config.profile,
-				configFile,
-				untildify(process.env.RAYCAST_APP_SUPPORT || PATHS.appSupport),
-			);
-			if (avatar) {
-				currentUser.image = avatar;
-				currentUser.avatar = avatar;
-			}
-		} catch (error) {
-			warnings.push(`avatar unavailable: ${error}`);
-		}
+		await Effect.runPromise(
+			Effect.tryPromise({
+				try: () =>
+					prepareAvatar(
+						profile,
+						configFile,
+						expandHome(process.env.RAYCAST_APP_SUPPORT || PATHS.appSupport),
+					),
+				catch: (error) => error,
+			}).pipe(
+				Effect.match({
+					onFailure: (error) => {
+						warnings.push(`avatar unavailable: ${error}`);
+					},
+					onSuccess: (avatar) => {
+						if (avatar) {
+							currentUser.image = avatar;
+							currentUser.avatar = avatar;
+						}
+					},
+				}),
+			),
+		);
 		await client.profile.apply(currentUser);
 	}
 	if (commandAliases.length) {

@@ -1,42 +1,62 @@
-import { isRecord } from "is-record";
-import { z } from "zod";
+import * as v from "valibot";
 import type { RaycastDatabaseClient } from "../../native/types.mts";
 
-const aliasSchema = z.object({
-	id: z.string().min(1),
-	extensionId: z.string().min(1),
-	alias: z
-		.string()
-		.regex(/^\S*$/, "Alias cannot contain whitespace")
-		.nullable()
-		.transform((value) => (value === "" ? null : value)),
-	enabled: z.boolean().optional(),
-});
-export const aliasesSchema = z
-	.array(
-		z.preprocess((value) => {
-			if (!isRecord(value)) return value;
-			return {
-				...value,
-				extensionId: value.extensionId ?? value.extension_id,
-			};
-		}, aliasSchema),
-	)
-	.superRefine((entries, ctx) => {
+const aliasSchema = v.pipe(
+	v.looseObject({
+		extensionId: v.optional(v.unknown()),
+		extension_id: v.optional(v.unknown()),
+	}),
+	v.transform((value) => ({
+		...value,
+		extensionId: value.extensionId ?? value.extension_id,
+	})),
+	v.object({
+		id: v.pipe(v.string(), v.minLength(1)),
+		extensionId: v.pipe(v.string(), v.minLength(1)),
+		alias: v.pipe(
+			v.nullable(
+				v.pipe(v.string(), v.regex(/^\S*$/, "Alias cannot contain whitespace")),
+			),
+			v.transform((value) => (value === "" ? null : value)),
+		),
+		enabled: v.optional(v.boolean()),
+	}),
+);
+export const aliasesSchema = v.pipe(
+	v.array(aliasSchema),
+	v.rawCheck(({ dataset, addIssue }) => {
+		if (!dataset.typed) return;
+		const entries = dataset.value;
 		const ids = new Set<string>();
-		entries.forEach(({ id }, index) => {
-			if (ids.has(id))
-				ctx.addIssue({
-					code: "custom",
-					path: [index, "id"],
+		entries.forEach((entry, index) => {
+			if (ids.has(entry.id)) {
+				addIssue({
 					message: "Duplicate alias command",
+					path: [
+						{
+							type: "array",
+							origin: "value",
+							input: entries,
+							key: index,
+							value: entry,
+						},
+						{
+							type: "object",
+							origin: "value",
+							input: entry,
+							key: "id",
+							value: entry.id,
+						},
+					],
 				});
-			ids.add(id);
+			}
+			ids.add(entry.id);
 		});
-	});
+	}),
+);
 
 export function parseAliasPayload(value: unknown) {
-	return aliasesSchema.parse(value);
+	return v.parse(aliasesSchema, value);
 }
 
 export async function applyCommandAliases(

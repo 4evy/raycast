@@ -1,3 +1,4 @@
+import * as v from "valibot";
 import { createRaycastClient as createClient } from "../../application/client.mts";
 import {
 	configureFile as configure,
@@ -45,12 +46,12 @@ export function configureFile(
 }
 /**
  * Validate configuration and fill defaults without performing I/O
- * @remarks Throws on invalid input or a configuration that requests no
- * actions
+ * @remarks Throws a Valibot ValiError with an issues array on invalid input
+ * or a configuration that requests no actions
  * @public
  */
 export function parseConsumerConfig(value: unknown): ConsumerConfig {
-	return consumerConfigSchema.parse(value);
+	return v.parse(consumerConfigSchema, value);
 }
 /**
  * Read a theme file, apply its themes, and restart Raycast when changed
@@ -88,10 +89,10 @@ export function themesFromPalette(
 
 /**
  * Validate a nonempty theme array without opening the database
- * @remarks Rejects duplicate name/appearance pairs and incomplete or invalid
- * colors
+ * @remarks Throws a Valibot ValiError with an issues array for duplicate
+ * name/appearance pairs, an empty array, or incomplete or invalid colors
  * @public
  */
 export function parseThemes(value: unknown): Theme[] {
-	return themeFileSchema.parse({ themes: value }).themes;
+	return v.parse(themeFileSchema, { themes: value }).themes;
 }

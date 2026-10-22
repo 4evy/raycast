@@ -1,14 +1,26 @@
-import { z } from "zod";
+import * as v from "valibot";
 import { withDatabase } from "../../platform/database.mts";
 import type {
+	JsonValue,
 	MutationOptions,
 	RaycastClient,
 	UserDefaultChange,
 } from "../../public/v1/contracts.mts";
 import { parseStoredJson, userDefaultValue } from "../database/inspect.mts";
 export function createUserDefaultsOperations(): RaycastClient["userDefaults"] {
-	const keySchema = z.string().min(1);
-	const primitiveSchema = z.union([z.string(), z.number(), z.boolean()]);
+	const keySchema = v.pipe(v.string(), v.minLength(1));
+	const numberSchema = v.pipe(v.number(), v.finite());
+	const primitiveSchema = v.union([v.string(), numberSchema, v.boolean()]);
+	const jsonSchema: v.GenericSchema<unknown, JsonValue> = v.lazy(() =>
+		v.union([
+			v.string(),
+			numberSchema,
+			v.boolean(),
+			v.null(),
+			v.array(jsonSchema),
+			v.record(v.string(), jsonSchema),
+		]),
+	);
 
 	async function writeDefault(
 		key: string,
@@ -16,8 +28,8 @@ export function createUserDefaultsOperations(): RaycastClient["userDefaults"] {
 		action: "set" | "set-json",
 		{ dryRun = false }: MutationOptions = {},
 	): Promise<UserDefaultChange> {
-		keySchema.parse(key);
-		primitiveSchema.parse(stored);
+		v.parse(keySchema, key);
+		v.parse(primitiveSchema, stored);
 		return withDatabase(async ({ db }) => {
 			const before = await userDefaultValue(db, key);
 			if (!dryRun) await db.userDefaults.set(key, stored);
@@ -35,7 +47,7 @@ export function createUserDefaultsOperations(): RaycastClient["userDefaults"] {
 	}
 	return {
 		async get(key) {
-			keySchema.parse(key);
+			v.parse(keySchema, key);
 			return withDatabase(async ({ db }) => {
 				const stored = await db.userDefaults.get(key);
 				return {
@@ -49,12 +61,12 @@ export function createUserDefaultsOperations(): RaycastClient["userDefaults"] {
 		setJson: (key, value, options) =>
 			writeDefault(
 				key,
-				JSON.stringify(z.json().parse(value)),
+				JSON.stringify(v.parse(jsonSchema, value)),
 				"set-json",
 				options,
 			),
 		async delete(key, { dryRun = false } = {}) {
-			keySchema.parse(key);
+			v.parse(keySchema, key);
 			return withDatabase(async ({ db }) => {
 				const before = await userDefaultValue(db, key);
 				if (!dryRun) await db.userDefaults.delete(key);

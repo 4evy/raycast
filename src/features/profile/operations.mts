@@ -1,3 +1,4 @@
+import * as v from "valibot";
 import { withDatabase } from "../../platform/database.mts";
 import type { RaycastClient } from "../../public/v1/contracts.mts";
 import { profileDefaults } from "../database/inspect.mts";
@@ -10,7 +11,7 @@ export function createProfileOperations(): RaycastClient["profile"] {
 	return {
 		get: () => withDatabase(({ db }) => profileDefaults(db)),
 		async apply(currentUser, { dryRun = false } = {}) {
-			const profile = { currentUser: currentUserSchema.parse(currentUser) };
+			const profile = { currentUser: v.parse(currentUserSchema, currentUser) };
 			if (dryRun) return { dryRun: true, profile };
 			return withDatabase(async ({ db }) => {
 				const stored = await applyProfileDefaults(db, profile);

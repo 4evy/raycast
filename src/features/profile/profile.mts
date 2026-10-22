@@ -1,14 +1,14 @@
-import { z } from "zod";
+import * as v from "valibot";
 import type { RaycastDatabaseClient } from "../../native/types.mts";
 import { PATHS } from "../../shared/config.mts";
 
-export const currentUserSchema = z.looseObject({
-	id: z.string().min(1),
-	name: z.string().min(1),
+export const currentUserSchema = v.looseObject({
+	id: v.pipe(v.string(), v.minLength(1)),
+	name: v.pipe(v.string(), v.minLength(1)),
 });
 
 export type RaycastProfilePayload = {
-	currentUser: z.infer<typeof currentUserSchema>;
+	currentUser: v.InferOutput<typeof currentUserSchema>;
 };
 
 export const PROFILE_USER_DEFAULTS = PATHS.profileUserDefaults;
@@ -17,12 +17,16 @@ export function parseProfilePayload(
 	currentUser: string | undefined,
 ): RaycastProfilePayload {
 	return {
-		currentUser: currentUserSchema.parse(
+		currentUser: v.parse(
+			currentUserSchema,
 			JSON.parse(
-				z
-					.string({ error: "current user JSON is required" })
-					.min(1, "current user JSON is required")
-					.parse(currentUser),
+				v.parse(
+					v.pipe(
+						v.string("current user JSON is required"),
+						v.minLength(1, "current user JSON is required"),
+					),
+					currentUser,
+				),
 			),
 		),
 	};

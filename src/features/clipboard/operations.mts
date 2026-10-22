@@ -1,10 +1,10 @@
-import { z } from "zod";
+import * as v from "valibot";
 import { withDatabase } from "../../platform/database.mts";
 import type { RaycastClient } from "../../public/v1/contracts.mts";
 
 const extensionId = "e:r:clipboard-history";
 
-export const historyDurationSchema = z.enum([
+export const historyDurationSchema = v.picklist([
 	"5m",
 	"60m",
 	"P1D",
@@ -19,7 +19,7 @@ export const historyDurationSchema = z.enum([
 export function createClipboardOperations(): RaycastClient["clipboard"] {
 	return {
 		async setHistoryDuration(input) {
-			const duration = historyDurationSchema.parse(input);
+			const duration = v.parse(historyDurationSchema, input);
 			return withDatabase(async ({ db }) => {
 				const current =
 					await db.settings.getInternalExtensionSettings(extensionId);
