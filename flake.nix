@@ -23,7 +23,7 @@
         raycast = {
           _class = "darwin";
           _file = __curPos.file;
-          imports = [ ./nix/modules/nix-darwin.nix ];
+          imports = [ ./nix/modules/darwin.nix ];
         };
         default = inputs.self.darwinModules.raycast;
       };
@@ -31,7 +31,7 @@
         raycast = {
           _class = "homeManager";
           _file = __curPos.file;
-          imports = [ ./nix/modules/home-manager.nix ];
+          imports = [ ./nix/modules/home.nix ];
         };
         default = inputs.self.homeManagerModules.raycast;
       };

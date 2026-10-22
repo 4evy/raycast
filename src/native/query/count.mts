@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import type { CountQuery } from "../shared/config.mts";
-import type { RaycastDatabaseClient } from "./types.mts";
+import type { CountQuery } from "../../shared/config.mts";
+import type { RaycastDatabaseClient } from "../types.mts";
 
 function countRecords(
 	db: RaycastDatabaseClient,

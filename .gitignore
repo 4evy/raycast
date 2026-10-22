@@ -6,8 +6,8 @@ dist/
 
 # Downloaded and extracted Raycast sources
 .cache/
-packages/raycast-source/generated/
-packages/raycast-source/.stage-*/
+packages/raycast/source/generated/
+packages/raycast/source/.stage-*/
 
 # Local credentials and environment settings
 .env

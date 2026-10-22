@@ -30,10 +30,10 @@ main() {
   default_app_support="${HOME}/Library/Application Support/com.raycast.macos"
   app_support="${RAYCAST_APP_SUPPORT:-${default_app_support}}"
   app="${RAYCAST_APP_BUNDLE:-${RAYCAST_APP:-/Applications/Raycast.app}}"
-  keydump_hook="${RAYCAST_KEYDUMP_HOOK:-${script_dir}/../keydump.cts}"
-  if [[ -f "${script_dir}/../keydump.cjs" &&
+  keydump_hook="${RAYCAST_KEYDUMP_HOOK:-${script_dir}/../../keydump.cts}"
+  if [[ -f "${script_dir}/../../keydump.cjs" &&
     -z "${RAYCAST_KEYDUMP_HOOK:-}" ]]; then
-    keydump_hook="${script_dir}/../keydump.cjs"
+    keydump_hook="${script_dir}/../../keydump.cjs"
   fi
   wait_timeout="${RAYCAST_KEYDUMP_TIMEOUT:-60}"
 

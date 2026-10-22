@@ -20,10 +20,10 @@ buildNpmPackage {
       ../bin
       ../src
       ../data
-      ../packages/raycast-source/package.json
+      ../packages/raycast/source/package.json
     ];
   };
-  npmDepsHash = "sha256-gZny0cTrQBxsvIxfaeVKCXuDTzjPb6AeM6wWvC0F6Fc=";
+  npmDepsHash = "sha256-UrqKqc0ze3xnrrm9zHL01Un/Ahl8NQ2uFvxJit5GJm0=";
   npmInstallFlags = [ "--omit=dev" ];
   dontNpmBuild = true;
   nativeBuildInputs = [ makeWrapper ];
@@ -31,7 +31,7 @@ buildNpmPackage {
     runHook preInstall
     mkdir -p "$out/lib/raycast" "$out/bin"
     cp -r bin src data node_modules *.cts package.json "$out/lib/raycast/"
-    substituteInPlace "$out/lib/raycast/src/application/configure.mts" "$out/lib/raycast/bin/extract-key.sh" \
+    substituteInPlace "$out/lib/raycast/src/application/configure/configure.mts" "$out/lib/raycast/bin/key/extract.sh" \
       --replace-fail /usr/bin/env ${lib.meta.getExe' coreutils "env"}
     substituteInPlace "$out/lib/raycast/data/paths.json" \
       --replace-fail '"defaultsBin": "defaults"' '"defaultsBin": "/usr/bin/defaults"'

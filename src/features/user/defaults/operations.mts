@@ -1,12 +1,12 @@
 import * as v from "valibot";
-import { withDatabase } from "../../platform/database.mts";
+import { withDatabase } from "../../../platform/database.mts";
 import type {
 	JsonValue,
 	MutationOptions,
 	RaycastClient,
 	UserDefaultChange,
-} from "../../public/v1/contracts.mts";
-import { parseStoredJson, userDefaultValue } from "../database/inspect.mts";
+} from "../../../public/v1/contracts.mts";
+import { parseStoredJson, userDefaultValue } from "../../database/inspect.mts";
 export function createUserDefaultsOperations(): RaycastClient["userDefaults"] {
 	const keySchema = v.pipe(v.string(), v.minLength(1));
 	const numberSchema = v.pipe(v.number(), v.finite());

@@ -1,13 +1,13 @@
 import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import aiPolicy from "../data/disable-ai.json" with { type: "json" };
-import { analyzeSource } from "../src/source/analysis.mts";
-import { SourceParser } from "../src/source/ast.mts";
-import { openCorpus, readSources } from "../src/source/corpus.mts";
-import { emptyAnalysis, mergeAnalysis } from "../src/source/model.mts";
+import aiPolicy from "../../data/ai/disable.json" with { type: "json" };
+import { analyzeSource } from "../../src/source/analysis.mts";
+import { SourceParser } from "../../src/source/ast.mts";
+import { openCorpus, readSources } from "../../src/source/corpus.mts";
+import { emptyAnalysis, mergeAnalysis } from "../../src/source/model.mts";
 
-const root = fileURLToPath(new URL("../", import.meta.url));
+const root = fileURLToPath(new URL("../../", import.meta.url));
 const corpus = await openCorpus();
 const analysis = emptyAnalysis();
 const sources = await readSources(corpus);
@@ -45,7 +45,7 @@ for (const id of aiPolicy.fallbackCommandIds) {
 		throw new Error(`AI policy command missing: ${id}`);
 }
 await writeFile(
-	path.join(root, "data/builtin-api.json"),
+	path.join(root, "data/builtin/api.json"),
 	`${JSON.stringify({ release: corpus.manifest.release, extensions: analysis.builtinExtensions, definitions: analysis.builtinDefinitions, unresolved: analysis.unresolvedBuiltins }, null, 2)}\n`,
 );
 console.log(

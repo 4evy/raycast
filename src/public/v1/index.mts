@@ -3,13 +3,13 @@ import { createRaycastClient as createClient } from "../../application/client.mt
 import {
 	configureFile as configure,
 	consumerConfigSchema,
-} from "../../application/configure.mts";
-import { installThemes as install } from "../../application/install-themes.mts";
+} from "../../application/configure/configure.mts";
+import { installThemes as install } from "../../application/themes/install.mts";
 import {
 	themesFromPalette as fromPalette,
 	themeFileSchema,
 } from "../../features/themes/themes.mts";
-import { extractDatabaseKey as extract } from "../../platform/extract-key.mts";
+import { extractDatabaseKey as extract } from "../../platform/key/extract.mts";
 import type {
 	ConfigureResult,
 	ConsumerConfig,

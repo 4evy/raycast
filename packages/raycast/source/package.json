@@ -4,12 +4,12 @@
 	"private": true,
 	"description": "Locally extracted Raycast app sources for static analysis",
 	"scripts": {
-		"release:update": "node ../../scripts/update.mts",
-		"release:commit": "node ../../scripts/commit-release.mts",
-		"source:sync": "node ../../scripts/raycast-source.mts sync",
-		"source:inspect": "node ../../scripts/raycast-source.mts",
+		"release:update": "node ../../../scripts/release/update.mts",
+		"release:commit": "node ../../../scripts/release/commit.mts",
+		"source:sync": "node ../../../scripts/source/source.mts sync",
+		"source:inspect": "node ../../../scripts/source/source.mts",
 		"source:latest": "npm run release:update && npm run source:sync",
-		"source:builtins": "cd ../.. && node scripts/generate-builtin-api.mts && biome check --write data/builtin-api.json"
+		"source:builtins": "cd ../../.. && node scripts/source/builtins.mts && biome check --write data/builtin/api.json"
 	},
 	"exports": {
 		"./package.json": "./package.json",

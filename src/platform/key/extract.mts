@@ -9,7 +9,7 @@ export async function extractDatabaseKey(): Promise<{
 	stderr: string;
 }> {
 	const { stdout, stderr } = await execFile(
-		path.resolve(import.meta.dirname, "../../bin/extract-key.sh"),
+		path.resolve(import.meta.dirname, "../../../bin/key/extract.sh"),
 	);
 	return { stdout, stderr };
 }

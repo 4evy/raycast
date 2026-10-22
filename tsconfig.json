@@ -14,5 +14,11 @@
 		"exactOptionalPropertyTypes": true,
 		"verbatimModuleSyntax": true
 	},
-	"include": ["*.mts", "*.cts", "src/**/*.mts", "src/**/*.cts", "scripts/*.mts"]
+	"include": [
+		"*.mts",
+		"*.cts",
+		"src/**/*.mts",
+		"src/**/*.cts",
+		"scripts/**/*.mts"
+	]
 }

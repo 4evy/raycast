@@ -14,16 +14,16 @@ import {
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { format } from "prettier";
-import release from "../release.json" with { type: "json" };
-import { SourceParser } from "../src/source/ast.mts";
+import release from "../../release.json" with { type: "json" };
+import { SourceParser } from "../../src/source/ast.mts";
 import {
 	isJavaScript,
 	type SourceManifest as Manifest,
 	openCorpus,
 	readSources,
-} from "../src/source/corpus.mts";
+} from "../../src/source/corpus.mts";
 
-const root = fileURLToPath(new URL("../", import.meta.url));
+const root = fileURLToPath(new URL("../../", import.meta.url));
 const packageRoot = path.dirname(
 	fileURLToPath(import.meta.resolve("raycast-app-source/package.json")),
 );

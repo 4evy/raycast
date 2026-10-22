@@ -4,7 +4,7 @@ import { basename, dirname, join } from "node:path";
 import { isDeepStrictEqual } from "node:util";
 import { Effect } from "effect";
 import * as v from "valibot";
-import { queryCount } from "../../native/query-count.mts";
+import { queryCount } from "../../native/query/count.mts";
 import type { FrecencyRecord } from "../../native/types.mts";
 import type { RaycastDatabaseClient } from "../../platform/database.mts";
 import {

@@ -4,7 +4,7 @@ import { createClipboardOperations } from "../features/clipboard/operations.mts"
 import { createDatabaseOperations } from "../features/database/operations.mts";
 import { createProfileOperations } from "../features/profile/operations.mts";
 import { createThemesOperations } from "../features/themes/operations.mts";
-import { createUserDefaultsOperations } from "../features/user-defaults/operations.mts";
+import { createUserDefaultsOperations } from "../features/user/defaults/operations.mts";
 import { API_VERSION, type RaycastClient } from "../public/v1/contracts.mts";
 export function createRaycastClient(): RaycastClient {
 	return {

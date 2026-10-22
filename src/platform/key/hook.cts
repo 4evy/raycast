@@ -2,9 +2,9 @@ const fs = require("node:fs") as typeof import("node:fs");
 const Module = require("node:module") as typeof import("node:module");
 
 const PATHS =
-	require("../../data/paths.json") as typeof import("../../data/paths.json");
+	require("../../../data/paths.json") as typeof import("../../../data/paths.json");
 const RUNTIME =
-	require("../../data/runtime.json") as typeof import("../../data/runtime.json");
+	require("../../../data/runtime.json") as typeof import("../../../data/runtime.json");
 
 const PATCHED = Symbol.for("dotfiles.raycast.keydumpHookPatched");
 const KEY_FIELDS = ["encryptionKey", "databaseKey", "key"] as const;

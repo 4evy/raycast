@@ -1,4 +1,4 @@
-import catalog from "../../data/builtin-api.json" with { type: "json" };
+import catalog from "../../data/builtin/api.json" with { type: "json" };
 
 export const builtinApiCatalog = catalog;
 export type BuiltinExtensionId = keyof typeof catalog.extensions;

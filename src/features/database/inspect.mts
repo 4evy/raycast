@@ -1,4 +1,4 @@
-import { queryCount } from "../../native/query-count.mts";
+import { queryCount } from "../../native/query/count.mts";
 import type { RaycastDatabaseClient } from "../../platform/database.mts";
 import { PATHS, SUMMARY } from "../../shared/config.mts";
 

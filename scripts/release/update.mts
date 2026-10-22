@@ -11,7 +11,7 @@ interface Release {
 	hash: string;
 }
 
-const root = fileURLToPath(new URL("../", import.meta.url));
+const root = fileURLToPath(new URL("../../", import.meta.url));
 const releasePath = path.join(root, "release.json");
 const downloadUrl =
 	"https://x.raycast-releases.com/download?platform=macos&architecture=arm64";

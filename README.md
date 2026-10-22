@@ -139,7 +139,7 @@ npm run ai -- disable
 npm run ai -- restore
 ```
 
-Disabling saves a backup, then applies the [AI policy](data/disable-ai.json). It
+Disabling saves a backup, then applies the [AI policy](data/ai/disable.json). It
 disables built-in AI features, including dictation and translation, and clears
 BYOK keys and skill directories. Chat history and third-party extensions remain.
 Restore uses the saved backup.

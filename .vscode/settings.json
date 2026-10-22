@@ -10,13 +10,13 @@
 	"search.exclude": {
 		"**/.cache": true,
 		"**/dist": true,
-		"**/packages/raycast-source/generated": true,
+		"**/packages/raycast/source/generated": true,
 		"**/.jj": true
 	},
 	"files.watcherExclude": {
 		"**/.cache/**": true,
 		"**/dist/**": true,
-		"**/packages/raycast-source/generated/**": true,
+		"**/packages/raycast/source/generated/**": true,
 		"**/.jj/**": true
 	},
 	"json.schemas": [

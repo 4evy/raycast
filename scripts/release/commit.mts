@@ -42,7 +42,7 @@ const tree = api<{ sha: string }>("POST", `${prefix}/trees`, {
 			mode: "100644",
 			type: "blob",
 			content: await readFile(
-				new URL("../release.json", import.meta.url),
+				new URL("../../release.json", import.meta.url),
 				"utf8",
 			),
 		},
