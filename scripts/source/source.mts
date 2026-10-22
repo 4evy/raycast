@@ -219,12 +219,8 @@ async function inspect(
 				}
 			});
 	} else {
-		const parser = new SourceParser(sources);
-		try {
-			for (const file of sources.keys()) parser.parse(file);
-		} finally {
-			parser[Symbol.dispose]();
-		}
+		using parser = new SourceParser(sources);
+		for (const file of sources.keys()) parser.parse(file);
 	}
 	console.error(
 		`${sources.size} JavaScript files ${action === "find" ? "searched" : "parsed"}; ${matches} matches; source hashes verified`,

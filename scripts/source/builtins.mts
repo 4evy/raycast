@@ -11,12 +11,10 @@ const root = fileURLToPath(new URL("../../", import.meta.url));
 const corpus = await openCorpus();
 const analysis = emptyAnalysis();
 const sources = await readSources(corpus);
-const parser = new SourceParser(sources);
-try {
+{
+	using parser = new SourceParser(sources);
 	for (const file of sources.keys())
 		mergeAnalysis(analysis, analyzeSource(parser.parse(file), file));
-} finally {
-	parser[Symbol.dispose]();
 }
 if (Object.keys(analysis.builtinExtensions).length === 0)
 	throw new Error("No built-in extensions found in extracted sources");
