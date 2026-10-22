@@ -1,27 +1,6 @@
 {
-	"generalSettings": [
-		"appearance",
-		"windowMode",
-		"windowPresentationMode",
-		"windowActivationBehavior",
-		"navigationBindings",
-		"pageNavigationKeys",
-		"rootSearchSensitivity",
-		"uiZoom"
-	],
+	"generalSettings": ["appearance", "themeDarkId", "themeLightId"],
 	"counts": [
-		{
-			"key": "nodeExtensions",
-			"methodPath": ["nodeExtensions", "allExtensions"]
-		},
-		{
-			"key": "nodeCommands",
-			"methodPath": ["nodeExtensions", "allCommands"]
-		},
-		{
-			"key": "nodeTools",
-			"methodPath": ["nodeExtensions", "allTools"]
-		},
 		{
 			"key": "commandSettings",
 			"methodPath": ["settings", "allCommandSettings"]
@@ -31,30 +10,8 @@
 			"methodPath": ["settings", "allMcpServers"]
 		},
 		{
-			"key": "quicklinks",
-			"methodPath": ["quicklinks", "count"]
-		},
-		{
-			"key": "snippets",
-			"methodPath": ["snippets", "count"]
-		},
-		{
-			"key": "notes",
-			"methodPath": ["notes", "count"]
-		},
-		{
-			"key": "clipboard",
-			"methodPath": ["clipboard", "all"],
-			"args": [{}],
-			"select": "entries"
-		},
-		{
 			"key": "frecency",
 			"methodPath": ["frecency", "getAll"]
-		},
-		{
-			"key": "userActivity",
-			"methodPath": ["userActivity", "getAllActivities"]
 		},
 		{
 			"key": "aiChats",
@@ -87,14 +44,6 @@
 		{
 			"key": "orgAgents",
 			"methodPath": ["orgPacks", "listOrgAiAgents"]
-		},
-		{
-			"key": "calculator",
-			"methodPath": ["calculator", "all"]
-		},
-		{
-			"key": "contacts",
-			"methodPath": ["contacts", "all"]
 		},
 		{
 			"key": "aiScheduledMessages",

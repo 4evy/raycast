@@ -1,11 +1,5 @@
-import catalog from "../../../data/native-api.json" with { type: "json" };
 import { queryCount } from "../../native/query-count.mts";
-import { describeNativeAddon } from "../../native/surface.mts";
-import {
-	dataAddonPath,
-	loadRaycastDataAddon,
-	type RaycastDatabaseClient,
-} from "../../platform/database.mts";
+import type { RaycastDatabaseClient } from "../../platform/database.mts";
 import { PATHS, SUMMARY } from "../../shared/config.mts";
 
 export function parseStoredJson(value: unknown): unknown {
@@ -15,49 +9,6 @@ export function parseStoredJson(value: unknown): unknown {
 	} catch {
 		return value;
 	}
-}
-
-function callableMethods(value: object): string[] {
-	return Object.entries(
-		Object.getOwnPropertyDescriptors(Object.getPrototypeOf(value) ?? {}),
-	)
-		.filter(
-			([name, descriptor]) =>
-				name !== "constructor" && typeof descriptor.value === "function",
-		)
-		.map(([name]) => name);
-}
-
-export function addonSurface() {
-	return {
-		addon: dataAddonPath(),
-		exports: describeNativeAddon(loadRaycastDataAddon()),
-	};
-}
-
-export function databaseMethodSurface(db: RaycastDatabaseClient): {
-	client: { methods: string[]; getters: string[] };
-	repositories: Record<string, { methods: string[] }>;
-} {
-	const getters = Object.entries(
-		Object.getOwnPropertyDescriptors(Object.getPrototypeOf(db) ?? {}),
-	)
-		.filter(([, descriptor]) => typeof descriptor.get === "function")
-		.map(([name]) => name);
-
-	return {
-		client: { methods: callableMethods(db), getters },
-		repositories: Object.fromEntries(
-			getters
-				.filter((name) => Object.hasOwn(catalog.repositories, name))
-				.flatMap((name) => {
-					const value: unknown = Reflect.get(db, name);
-					return value && typeof value === "object"
-						? [[name, { methods: callableMethods(value) }]]
-						: [];
-				}),
-		),
-	};
 }
 
 export async function databaseSummary(

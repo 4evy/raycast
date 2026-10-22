@@ -1,10 +1,10 @@
+import { existsSync } from "node:fs";
 import { glob, readFile } from "node:fs/promises";
 import { createRequire } from "node:module";
 import path from "node:path";
 import process from "node:process";
-import { pathExists } from "path-exists";
+import { Effect } from "effect";
 import semver from "semver";
-import untildify from "untildify";
 import type {
 	RaycastDatabaseClient,
 	RaycastDatabaseContext,
@@ -12,6 +12,7 @@ import type {
 	RaycastNativeAddon,
 } from "../native/types.mts";
 import { envName, PATHS } from "../shared/config.mts";
+import { expandHome } from "./path.mts";
 
 const require = createRequire(import.meta.url);
 
@@ -22,7 +23,7 @@ export type {
 };
 
 function envOr(key: keyof typeof PATHS.env, fallback: string): string {
-	return untildify(process.env[envName(key)] || fallback);
+	return expandHome(process.env[envName(key)] || fallback);
 }
 
 export function dataAddonPath(): string {
@@ -37,10 +38,6 @@ export function backupPath(appSupport: string): string {
 		"aiDisableBackup",
 		path.join(appSupport, PATHS.aiDisableBackupName),
 	);
-}
-
-export function loadRaycastDataAddon(): RaycastNativeAddon {
-	return require(dataAddonPath()) as RaycastNativeAddon;
 }
 
 export async function latestRaycastNodeBin(
@@ -73,13 +70,13 @@ export async function findKeyFile(
 	appSupport: string,
 ): Promise<string | undefined> {
 	const configuredPath = process.env[envName("keyFile")];
-	const configured = configuredPath && untildify(configuredPath);
+	const configured = configuredPath && expandHome(configuredPath);
 	if (configured) return configured;
 
 	const nodeBin = await latestRaycastNodeBin(appSupport);
 	if (nodeBin) {
 		const cached = path.join(nodeBin, PATHS.keyCacheName);
-		if (await pathExists(cached)) return cached;
+		if (existsSync(cached)) return cached;
 	}
 
 	return undefined;
@@ -152,6 +149,19 @@ export async function loadDatabase(): Promise<RaycastDatabaseContext> {
 export async function withDatabase<T>(
 	action: (context: RaycastDatabaseContext) => Promise<T>,
 ): Promise<T> {
-	await using context = await loadDatabase();
-	return await action(context);
+	return Effect.runPromise(
+		Effect.acquireUseRelease(
+			Effect.tryPromise({ try: loadDatabase, catch: (error) => error }),
+			(context) =>
+				Effect.tryPromise({
+					try: () => action(context),
+					catch: (error) => error,
+				}),
+			(context) =>
+				Effect.tryPromise({
+					try: () => context[Symbol.asyncDispose](),
+					catch: (error) => error,
+				}),
+		),
+	);
 }

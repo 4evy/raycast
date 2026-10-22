@@ -84,8 +84,6 @@ export type StatusField = {
 export type CountQuery = {
 	key: string;
 	methodPath: string[];
-	args?: unknown[];
-	select?: string;
 	filter?: { path: string[]; equals: unknown };
 };
 
