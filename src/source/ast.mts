@@ -1,11 +1,11 @@
 import path from "node:path";
-import * as ts from "typescript/unstable/ast";
-import { createVirtualFileSystem } from "typescript/unstable/fs";
-import { API, type Program } from "typescript/unstable/sync";
+import * as ts from "typescript/ast";
+import { createFileSystem } from "typescript/fs";
+import { API, type Program } from "typescript/sync";
 
 export { ts };
 
-// Keep the unstable native API behind one boundary and never execute input
+// Isolate the native compiler API and never execute input
 export class SourceParser implements Disposable {
 	private readonly api: API;
 	private readonly program: Program;
@@ -13,22 +13,24 @@ export class SourceParser implements Disposable {
 
 	constructor(sources: ReadonlyMap<string, string>) {
 		const config = path.join(this.root, "tsconfig.json");
-		const files = Object.fromEntries(
-			sources
-				.entries()
-				.map(([file, text]) => [path.join(this.root, file), text]),
-		);
-		files[config] = JSON.stringify({
-			compilerOptions: { allowJs: true, noResolve: true, noLib: true },
-			files: [...sources.keys()],
-		});
-		this.api = new API({
-			cwd: this.root,
-			fs: createVirtualFileSystem(files),
-		});
+		const files = Array.from(sources, ([file, text]): [string, string] => [
+			path.join(this.root, file),
+			text,
+		]);
+		files.push([
+			config,
+			JSON.stringify({
+				compilerOptions: { allowJs: true, noResolve: true, noLib: true },
+				files: [...sources.keys()],
+			}),
+		]);
+		this.api = new API({ cwd: this.root });
 		try {
-			const snapshot = this.api.updateSnapshot({ openProjects: [config] });
-			const project = snapshot.getProject(config);
+			const snapshot = this.api.createSnapshot({
+				openProjects: [config],
+				fileSystem: createFileSystem(files),
+			});
+			const project = snapshot.getConfiguredProject(config);
 			if (!project)
 				throw new Error("TypeScript did not load the source project");
 			this.program = project.program;

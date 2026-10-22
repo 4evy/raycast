@@ -23,7 +23,7 @@ buildNpmPackage {
       ../packages/raycast/source/package.json
     ];
   };
-  npmDepsHash = "sha256-UrqKqc0ze3xnrrm9zHL01Un/Ahl8NQ2uFvxJit5GJm0=";
+  npmDepsHash = "sha256-+GPFy2NW3P5q1xDfCOiVSKBWDsiBj1u/QhkDp9RJWvo=";
   npmInstallFlags = [ "--omit=dev" ];
   dontNpmBuild = true;
   nativeBuildInputs = [ makeWrapper ];

@@ -43,7 +43,7 @@
 		"prettier": "3.9.9",
 		"publint": "0.3.24",
 		"raycast-app-source": "file:packages/raycast/source",
-		"typescript": "7.0.2"
+		"typescript": "7.1.0-beta"
 	},
 	"description": "Local Raycast database and configuration tools",
 	"bin": {

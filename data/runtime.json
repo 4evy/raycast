@@ -12,7 +12,7 @@
 		"amaro": "1.1.5"
 	},
 	"typescript": {
-		"compiler": "7.0.2",
+		"compiler": "7.1.0-beta",
 		"runtime": "node-strip-only",
 		"erasableSyntaxOnly": true,
 		"unsupportedSyntax": [
