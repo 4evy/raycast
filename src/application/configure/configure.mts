@@ -86,6 +86,7 @@ async function resolveAppAliases(
 		const apps = indexedApps(await db.appIndex.getAllByContentType(0));
 		return aliases.flatMap(({ names, alias, fallbackPath, enabled }) => {
 			const app = names
+				.values()
 				.map((name) => apps.find((candidate) => candidate.name === name))
 				.find((candidate) => candidate !== undefined);
 			const raycastId = app?.raycastId ?? fallbackPath;
@@ -130,7 +131,7 @@ async function prepareAvatar(
 		});
 		if (!response.ok)
 			throw new Error(`avatar download failed: ${response.status}`);
-		await writeFile(source, Buffer.from(await response.arrayBuffer()));
+		await writeFile(source, response.body ?? "");
 	}
 	const output = path.join(temporary.path, "avatar.png");
 	await execFile("/usr/bin/sips", [
