@@ -1,13 +1,14 @@
 {
   lib,
   buildNpmPackage,
+  stdenvNoCC,
   nodejs_26,
   makeWrapper,
   coreutils,
   gawk,
   gnused,
 }:
-buildNpmPackage {
+(buildNpmPackage.override { stdenv = stdenvNoCC; }) {
   pname = "raycast-manager";
   inherit (lib.trivial.importJSON ../package.json) version;
   nodejs = nodejs_26;
