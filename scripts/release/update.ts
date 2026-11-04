@@ -72,7 +72,7 @@ async function main(): Promise<void> {
 		url,
 		hash: await hashDownload(url),
 	};
-	await writeFile(releasePath, `${JSON.stringify(updated, null, 2)}\n`);
+	await writeFile(releasePath, `${JSON.stringify(updated, null, "\t")}\n`);
 	await reportChanged();
 	console.log(`Updated Raycast ${current.version} -> ${updated.version}`);
 }
