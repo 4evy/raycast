@@ -33,8 +33,6 @@ in
         /bin/launchctl asuser "$raycast_uid" /usr/bin/sudo -H -u ${lib.strings.escapeShellArg cfg.user} -- ${
           pkgs.callPackage ../activation.nix {
             inherit cfg;
-            app = "${cfg.package}/Applications/Raycast.app";
-            jsonFormat = pkgs.formats.json { };
           }
         }
       ''

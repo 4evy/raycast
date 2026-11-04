@@ -17,8 +17,6 @@ in
         run ${
           (pkgs.callPackage ../activation.nix {
             inherit cfg;
-            app = "${cfg.package}/Applications/Raycast.app";
-            jsonFormat = pkgs.formats.json { };
           })
         }
       ''

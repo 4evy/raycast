@@ -105,10 +105,14 @@ Add this checkout as a flake input and import
 }
 ```
 
-Alternatively, set `programs.raycast.configuration.configFile` to an existing
-JSON file. Set only one configuration form, or omit both to install only the
-app. Settings enter the Nix store, so keep secrets out and use absolute asset
-paths. nix-darwin needs `system.primaryUser` or `programs.raycast.user`.
+Alternatively, set `programs.raycast.configuration.configFile` to a JSON file.
+Use a string such as `"~/raycast-config.json"` to read it at activation time,
+or a Nix path such as `./raycast-config.json` to copy it into the Nix store.
+Set only one configuration form, or omit both to install only the app.
+
+Settings and Nix-path configuration files enter the Nix store, so keep secrets
+out and use absolute asset paths. Use a string path for private configuration.
+nix-darwin needs `system.primaryUser` or `programs.raycast.user`.
 See the [Nix modules](nix/modules/) for options.
 
 ## Development

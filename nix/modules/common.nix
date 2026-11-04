@@ -17,10 +17,16 @@ in
         defaultText = lib.options.literalExpression "configFile != null || settings != null";
       };
       configFile = lib.options.mkOption {
-        type = lib.types.nullOr lib.types.nonEmptyStr;
+        type = lib.types.nullOr (lib.types.either lib.types.path lib.types.nonEmptyStr);
         default = null;
         example = "/path/to/raycast-config.json";
-        description = "Runtime path to consumer JSON configuring profile, aliases, clipboard history, AI policy, and themes";
+        description = ''
+          JSON file configuring profile, aliases, clipboard history, AI policy,
+          and themes
+
+          Nix paths are copied to the Nix store and must not contain secrets
+          String paths are read at activation time and may start with ~/
+        '';
       };
       settings = lib.options.mkOption {
         type = lib.types.nullOr (lib.types.attrsOf jsonFormat.type);
