@@ -5,4 +5,4 @@
 set -euo pipefail
 
 root="$(CDPATH='' cd -- "$(dirname -- "$0")/.." && pwd)"
-exec node "${root}/src/cli/main.mts" "$@"
+exec node "${root}/src/cli/main.ts" "$@"

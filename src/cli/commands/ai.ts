@@ -1,5 +1,5 @@
-import { createRaycastClient } from "../../public/v1/index.mts";
-import { IO } from "../../shared/config.mts";
+import { createRaycastClient } from "../../public/v1/index.ts";
+import { IO } from "../../shared/config.ts";
 
 export async function runAi(
 	action: "status" | "disable" | "restore",

@@ -1,12 +1,12 @@
 import * as v from "valibot";
-import { withDatabase } from "../../platform/database.mts";
-import type { RaycastClient } from "../../public/v1/contracts.mts";
-import { profileDefaults } from "../database/inspect.mts";
+import { withDatabase } from "../../platform/database.ts";
+import type { RaycastClient } from "../../public/v1/contracts.ts";
+import { profileDefaults } from "../database/inspect.ts";
 import {
 	applyProfileDefaults,
 	currentUserSchema,
 	profileSummary,
-} from "./profile.mts";
+} from "./profile.ts";
 export function createProfileOperations(): RaycastClient["profile"] {
 	return {
 		get: () => withDatabase(({ db }) => profileDefaults(db)),

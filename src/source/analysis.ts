@@ -1,12 +1,12 @@
-import { isFunction, literal, property, ts, unwrap, walk } from "./ast.mts";
-import { SourceBindings } from "./bindings.mts";
+import { isFunction, literal, property, ts, unwrap, walk } from "./ast.ts";
+import { SourceBindings } from "./bindings.ts";
 import {
 	type BuiltinCommand,
 	type BuiltinExpression,
 	type BuiltinExtension,
 	emptyAnalysis,
 	type SourceAnalysis,
-} from "./model.mts";
+} from "./model.ts";
 
 export function analyzeSource(
 	ast: ts.SourceFile,

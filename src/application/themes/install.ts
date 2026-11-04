@@ -6,10 +6,10 @@ import process from "node:process";
 import { promisify } from "node:util";
 import { Effect } from "effect";
 import * as v from "valibot";
-import { themeFileSchema } from "../../features/themes/themes.mts";
-import { expandHome } from "../../platform/path.mts";
-import { PATHS } from "../../shared/config.mts";
-import { createRaycastClient } from "../client.mts";
+import { themeFileSchema } from "../../features/themes/themes.ts";
+import { expandHome } from "../../platform/path.ts";
+import { PATHS } from "../../shared/config.ts";
+import { createRaycastClient } from "../client.ts";
 
 const execFile = promisify(execFileCallback);
 

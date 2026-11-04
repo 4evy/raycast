@@ -4,22 +4,22 @@ import { basename, dirname, join } from "node:path";
 import { isDeepStrictEqual } from "node:util";
 import { Effect } from "effect";
 import * as v from "valibot";
-import { queryCount } from "../../native/query/count.mts";
-import type { FrecencyRecord } from "../../native/types.mts";
-import type { RaycastDatabaseClient } from "../../platform/database.mts";
+import { queryCount } from "../../native/query/count.ts";
+import type { FrecencyRecord } from "../../native/types.ts";
+import type { RaycastDatabaseClient } from "../../platform/database.ts";
 import {
 	deleteMacOSDefault,
 	type MacOSDefaultValue,
 	readMacOSDefault,
 	restoreMacOSDefault,
-} from "../../platform/macos.mts";
+} from "../../platform/macos.ts";
 import {
 	type ExtensionRule,
 	IO,
 	OP,
 	POLICY,
 	type StatusField,
-} from "../../shared/config.mts";
+} from "../../shared/config.ts";
 
 export type JsonObject = Record<string, unknown>;
 export type Operation = {

@@ -10,7 +10,7 @@
 			"console": "integratedTerminal",
 			"skipFiles": ["<node_internals>/**"],
 			"sourceMaps": false,
-			"program": "${workspaceFolder}/src/cli/main.mts",
+			"program": "${workspaceFolder}/src/cli/main.ts",
 			"args": ["--help"]
 		},
 		{

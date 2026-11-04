@@ -1,7 +1,7 @@
 import { execFile as execFileCallback } from "node:child_process";
 import { promisify } from "node:util";
 
-import { PATHS, RESTORE_TYPE } from "../shared/config.mts";
+import { PATHS, RESTORE_TYPE } from "../shared/config.ts";
 
 const execFile = promisify(execFileCallback);
 

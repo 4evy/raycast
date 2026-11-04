@@ -1,6 +1,6 @@
 {
 	"$schema": "https://developer.microsoft.com/json-schemas/api-extractor/v7/api-extractor.schema.json",
-	"mainEntryPointFilePath": "<projectFolder>/dist/src/public/v1/index.d.mts",
+	"mainEntryPointFilePath": "<projectFolder>/dist/src/public/v1/index.d.ts",
 	"compiler": {
 		"overrideTsconfig": {
 			"compilerOptions": {
@@ -11,7 +11,7 @@
 				"skipLibCheck": false,
 				"types": []
 			},
-			"include": ["dist/src/public/v1/*.d.mts"]
+			"include": ["dist/src/public/v1/*.d.ts"]
 		}
 	},
 	"apiReport": {
@@ -25,7 +25,7 @@
 	},
 	"dtsRollup": {
 		"enabled": true,
-		"untrimmedFilePath": "<projectFolder>/dist/v1.d.mts"
+		"untrimmedFilePath": "<projectFolder>/dist/v1.d.ts"
 	},
 	"tsdocMetadata": {
 		"enabled": false

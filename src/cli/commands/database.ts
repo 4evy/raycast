@@ -1,7 +1,7 @@
-import { parseProfilePayload } from "../../features/profile/profile.mts";
-import { builtinApi } from "../../native/builtins.mts";
-import { createRaycastClient } from "../../public/v1/index.mts";
-import { IO, runtimeReport } from "../../shared/config.mts";
+import { parseProfilePayload } from "../../features/profile/profile.ts";
+import { builtinApi } from "../../native/builtins.ts";
+import { createRaycastClient } from "../../public/v1/index.ts";
+import { IO, runtimeReport } from "../../shared/config.ts";
 
 const client = createRaycastClient();
 

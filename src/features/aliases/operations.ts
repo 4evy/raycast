@@ -1,7 +1,7 @@
 import * as v from "valibot";
-import { withDatabase } from "../../platform/database.mts";
-import type { RaycastClient } from "../../public/v1/contracts.mts";
-import { aliasesSchema, applyCommandAliases } from "./aliases.mts";
+import { withDatabase } from "../../platform/database.ts";
+import type { RaycastClient } from "../../public/v1/contracts.ts";
+import { aliasesSchema, applyCommandAliases } from "./aliases.ts";
 export function createAliasesOperations(): RaycastClient["aliases"] {
 	return {
 		async apply(input, { dryRun = false } = {}) {

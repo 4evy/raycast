@@ -8,15 +8,15 @@ import { pathToFileURL } from "node:url";
 import { promisify } from "node:util";
 import { Effect } from "effect";
 import * as v from "valibot";
-import { aliasesSchema } from "../../features/aliases/aliases.mts";
-import { historyDurationSchema } from "../../features/clipboard/operations.mts";
-import { currentUserSchema } from "../../features/profile/profile.mts";
-import { withDatabase } from "../../platform/database.mts";
-import { extractDatabaseKey } from "../../platform/key/extract.mts";
-import { expandHome } from "../../platform/path.mts";
-import { PATHS } from "../../shared/config.mts";
-import { createRaycastClient } from "../client.mts";
-import { installThemes } from "../themes/install.mts";
+import { aliasesSchema } from "../../features/aliases/aliases.ts";
+import { historyDurationSchema } from "../../features/clipboard/operations.ts";
+import { currentUserSchema } from "../../features/profile/profile.ts";
+import { withDatabase } from "../../platform/database.ts";
+import { extractDatabaseKey } from "../../platform/key/extract.ts";
+import { expandHome } from "../../platform/path.ts";
+import { PATHS } from "../../shared/config.ts";
+import { createRaycastClient } from "../client.ts";
+import { installThemes } from "../themes/install.ts";
 
 const execFile = promisify(execFileCallback);
 const profileAssetEntries = {
@@ -179,7 +179,7 @@ export async function configureFile(
 				process.execPath,
 				path.join(
 					import.meta.dirname,
-					import.meta.url.endsWith(".mts") ? "worker.mts" : "worker.mjs",
+					import.meta.url.endsWith(".ts") ? "worker.ts" : "worker.js",
 				),
 				configFile,
 			],

@@ -1,12 +1,12 @@
-import { backupPath, withDatabase } from "../../platform/database.mts";
-import type { RaycastClient } from "../../public/v1/contracts.mts";
+import { backupPath, withDatabase } from "../../platform/database.ts";
+import type { RaycastClient } from "../../public/v1/contracts.ts";
 import {
 	applyDisabled,
 	buildSnapshot,
 	ensureBackup,
 	restore,
 	status,
-} from "./policy.mts";
+} from "./policy.ts";
 export function createAiOperations(): RaycastClient["ai"] {
 	return {
 		status: () => withDatabase(({ db }) => status(db)),

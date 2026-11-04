@@ -10,12 +10,12 @@
 		"typecheck": "tsc --noEmit",
 		"lint": "biome check .",
 		"format": "biome check --write .",
-		"cli": "node src/cli/main.mts",
-		"db": "node src/cli/main.mts db",
-		"ai": "node src/cli/main.mts ai",
-		"key": "node src/cli/main.mts key",
-		"configure": "node src/cli/main.mts configure",
-		"themes": "node src/cli/main.mts themes",
+		"cli": "node src/cli/main.ts",
+		"db": "node src/cli/main.ts db",
+		"ai": "node src/cli/main.ts ai",
+		"key": "node src/cli/main.ts key",
+		"configure": "node src/cli/main.ts configure",
+		"themes": "node src/cli/main.ts themes",
 		"source:sync": "npm run --prefix packages/raycast/source source:sync",
 		"release:update": "npm run --prefix packages/raycast/source release:update",
 		"release:commit": "npm run --prefix packages/raycast/source release:commit",
@@ -47,12 +47,12 @@
 	},
 	"description": "Local Raycast database and configuration tools",
 	"bin": {
-		"raycast": "./dist/src/cli/main.mjs"
+		"raycast": "./dist/src/cli/main.js"
 	},
 	"exports": {
 		"./v1": {
-			"types": "./dist/v1.d.mts",
-			"default": "./dist/src/public/v1/index.mjs"
+			"types": "./dist/v1.d.ts",
+			"default": "./dist/src/public/v1/index.js"
 		},
 		"./schemas/config.schema.json": "./schemas/config.schema.json",
 		"./schemas/themes.schema.json": "./schemas/themes.schema.json"

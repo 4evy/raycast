@@ -1,4 +1,4 @@
-import { bindingNames, isFunction, ts, unwrap } from "./ast.mts";
+import { bindingNames, isFunction, ts, unwrap } from "./ast.ts";
 
 export type Assignment = { target: ts.Node; value?: ts.Node; node: ts.Node };
 type Scope = { parent?: Scope; node: ts.Node; names: Set<string> };

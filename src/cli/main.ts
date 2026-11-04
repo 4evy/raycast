@@ -7,11 +7,11 @@ import type { NonEmptyString } from "@optique/core/nonempty";
 import { argument, command, constant, flag } from "@optique/core/primitives";
 import { string } from "@optique/core/valueparser";
 import { run } from "@optique/run";
-import { extractDatabaseKey } from "../public/v1/index.mts";
-import { runAi } from "./commands/ai.mts";
-import { runConfigure } from "./commands/configure.mts";
-import { runDatabaseCommand } from "./commands/database.mts";
-import { runThemes } from "./commands/themes.mts";
+import { extractDatabaseKey } from "../public/v1/index.ts";
+import { runAi } from "./commands/ai.ts";
+import { runConfigure } from "./commands/configure.ts";
+import { runDatabaseCommand } from "./commands/database.ts";
+import { runThemes } from "./commands/themes.ts";
 
 const dryRun = withDefault(
 	flag("--dry-run", {

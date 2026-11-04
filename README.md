@@ -175,7 +175,7 @@ npm install /path/to/raycast-1.0.0.tgz
 
 The examples below run as `.mts` files on Node 26.10.0+. Profile and theme
 scripts preview by default; `--apply` writes changes. Key extraction may restart
-Raycast. See the [API contracts](src/public/v1/contracts.mts) for the full API,
+Raycast. See the [API contracts](src/public/v1/contracts.ts) for the full API,
 or use `configureFile(path)` to apply a JSON configuration.
 
 <details>

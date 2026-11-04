@@ -22,7 +22,7 @@
 			"importEquals"
 		],
 		"modules": {
-			"esm": ".mts",
+			"esm": ".ts",
 			"cjs": ".cts",
 			"requireHook": ".cts"
 		}

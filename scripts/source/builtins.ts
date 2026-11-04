@@ -2,10 +2,10 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import aiPolicy from "../../data/ai/disable.json" with { type: "json" };
-import { analyzeSource } from "../../src/source/analysis.mts";
-import { SourceParser } from "../../src/source/ast.mts";
-import { openCorpus, readSources } from "../../src/source/corpus.mts";
-import { emptyAnalysis, mergeAnalysis } from "../../src/source/model.mts";
+import { analyzeSource } from "../../src/source/analysis.ts";
+import { SourceParser } from "../../src/source/ast.ts";
+import { openCorpus, readSources } from "../../src/source/corpus.ts";
+import { emptyAnalysis, mergeAnalysis } from "../../src/source/model.ts";
 
 const root = fileURLToPath(new URL("../../", import.meta.url));
 const corpus = await openCorpus();

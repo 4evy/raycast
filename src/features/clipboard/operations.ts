@@ -1,6 +1,6 @@
 import * as v from "valibot";
-import { withDatabase } from "../../platform/database.mts";
-import type { RaycastClient } from "../../public/v1/contracts.mts";
+import { withDatabase } from "../../platform/database.ts";
+import type { RaycastClient } from "../../public/v1/contracts.ts";
 
 const extensionId = "e:r:clipboard-history";
 

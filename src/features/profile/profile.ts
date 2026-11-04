@@ -1,6 +1,6 @@
 import * as v from "valibot";
-import type { RaycastDatabaseClient } from "../../native/types.mts";
-import { PATHS } from "../../shared/config.mts";
+import type { RaycastDatabaseClient } from "../../native/types.ts";
+import { PATHS } from "../../shared/config.ts";
 
 export const currentUserSchema = v.looseObject({
 	id: v.pipe(v.string(), v.minLength(1)),

@@ -1,4 +1,4 @@
-import { configureFile } from "../../public/v1/index.mts";
+import { configureFile } from "../../public/v1/index.ts";
 export async function runConfigure(
 	configPath: string,
 	ifPresent = false,

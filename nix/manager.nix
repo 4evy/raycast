@@ -23,7 +23,7 @@ buildNpmPackage {
       ../packages/raycast/source/package.json
     ];
   };
-  npmDepsHash = "sha256-+GPFy2NW3P5q1xDfCOiVSKBWDsiBj1u/QhkDp9RJWvo=";
+  npmDepsHash = "sha256-xwNdCDzUSbyFR5v7k9qSei45uUGLC62Cc5VbBL3pBsg=";
   npmInstallFlags = [ "--omit=dev" ];
   dontNpmBuild = true;
   nativeBuildInputs = [ makeWrapper ];
@@ -31,7 +31,7 @@ buildNpmPackage {
     runHook preInstall
     mkdir -p "$out/lib/raycast" "$out/bin"
     cp -r bin src data node_modules *.cts package.json "$out/lib/raycast/"
-    substituteInPlace "$out/lib/raycast/src/application/configure/configure.mts" "$out/lib/raycast/bin/key/extract.sh" \
+    substituteInPlace "$out/lib/raycast/src/application/configure/configure.ts" "$out/lib/raycast/bin/key/extract.sh" \
       --replace-fail /usr/bin/env ${lib.meta.getExe' coreutils "env"}
     substituteInPlace "$out/lib/raycast/data/paths.json" \
       --replace-fail '"defaultsBin": "defaults"' '"defaultsBin": "/usr/bin/defaults"'
@@ -43,7 +43,7 @@ buildNpmPackage {
           gnused
         ]
       } \
-      --add-flags "$out/lib/raycast/src/cli/main.mts"
+      --add-flags "$out/lib/raycast/src/cli/main.ts"
     runHook postInstall
   '';
   meta = {

@@ -1,5 +1,5 @@
 import * as v from "valibot";
-import type { RaycastDatabaseClient } from "../../native/types.mts";
+import type { RaycastDatabaseClient } from "../../native/types.ts";
 
 const aliasSchema = v.pipe(
 	v.looseObject({

@@ -1,6 +1,6 @@
-import { queryCount } from "../../native/query/count.mts";
-import type { RaycastDatabaseClient } from "../../platform/database.mts";
-import { PATHS, SUMMARY } from "../../shared/config.mts";
+import { queryCount } from "../../native/query/count.ts";
+import type { RaycastDatabaseClient } from "../../platform/database.ts";
+import { PATHS, SUMMARY } from "../../shared/config.ts";
 
 export function parseStoredJson(value: unknown): unknown {
 	if (typeof value !== "string") return value;

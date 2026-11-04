@@ -10,9 +10,9 @@ import type {
 	RaycastDatabaseContext,
 	RaycastLogger,
 	RaycastNativeAddon,
-} from "../native/types.mts";
-import { envName, PATHS } from "../shared/config.mts";
-import { expandHome } from "./path.mts";
+} from "../native/types.ts";
+import { envName, PATHS } from "../shared/config.ts";
+import { expandHome } from "./path.ts";
 
 const require = createRequire(import.meta.url);
 

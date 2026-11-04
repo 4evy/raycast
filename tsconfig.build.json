@@ -7,13 +7,13 @@
 		"rootDir": ".",
 		"rewriteRelativeImportExtensions": true
 	},
-	"include": ["*.mts", "*.cts", "src/**/*.mts", "src/**/*.cts"],
+	"include": ["*.ts", "*.cts", "src/**/*.ts", "src/**/*.cts"],
 	"exclude": [
 		"scripts",
 		"dist",
-		"src/source/ast.mts",
-		"src/source/bindings.mts",
-		"src/source/analysis.mts",
-		"src/source/corpus.mts"
+		"src/source/ast.ts",
+		"src/source/bindings.ts",
+		"src/source/analysis.ts",
+		"src/source/corpus.ts"
 	]
 }

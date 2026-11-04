@@ -3,7 +3,7 @@ import {
 	THEME_COLOR_FIELDS as fields,
 	type RaycastDatabaseClient,
 	type ThemeCreate,
-} from "../../native/types.mts";
+} from "../../native/types.ts";
 
 const color = v.pipe(
 	v.string(),

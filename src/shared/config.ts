@@ -4,7 +4,7 @@ import policyJson from "../../data/ai/disable.json" with { type: "json" };
 import pathsJson from "../../data/paths.json" with { type: "json" };
 import runtimeJson from "../../data/runtime.json" with { type: "json" };
 import summaryJson from "../../data/summary.json" with { type: "json" };
-import type { InternalExtensionSettings } from "../native/types.mts";
+import type { InternalExtensionSettings } from "../native/types.ts";
 
 export const POLICY = policyJson satisfies {
 	backupVersion: number;

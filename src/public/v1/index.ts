@@ -1,24 +1,24 @@
 import * as v from "valibot";
-import { createRaycastClient as createClient } from "../../application/client.mts";
+import { createRaycastClient as createClient } from "../../application/client.ts";
 import {
 	configureFile as configure,
 	consumerConfigSchema,
-} from "../../application/configure/configure.mts";
-import { installThemes as install } from "../../application/themes/install.mts";
+} from "../../application/configure/configure.ts";
+import { installThemes as install } from "../../application/themes/install.ts";
 import {
 	themesFromPalette as fromPalette,
 	themeFileSchema,
-} from "../../features/themes/themes.mts";
-import { extractDatabaseKey as extract } from "../../platform/key/extract.mts";
+} from "../../features/themes/themes.ts";
+import { extractDatabaseKey as extract } from "../../platform/key/extract.ts";
 import type {
 	ConfigureResult,
 	ConsumerConfig,
 	RaycastClient,
 	Theme,
 	ThemeColor,
-} from "./contracts.mts";
+} from "./contracts.ts";
 
-export * from "./contracts.mts";
+export * from "./contracts.ts";
 
 /**
  * Create a client without opening a database
