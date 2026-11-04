@@ -12,6 +12,8 @@ export const POLICY = policyJson satisfies {
 	frecencyPrefixes: string[];
 	mergeableBackupCollections: string[];
 	internalExtensions: ExtensionRule[];
+	commandSettings: { id: string; extensionId: string }[];
+	userDefaults: { key: string; value: boolean }[];
 	statusFields: StatusField[];
 	macOSDefaults: { key: string; restoreType: string }[];
 	aiDataQueries: CountQuery[];
@@ -97,6 +99,7 @@ export const RESTORE_TYPE = {
 
 export const OP = {
 	INTERNAL_EXTENSION: "internal-extension",
+	COMMAND: "command",
 	MODEL: "model",
 	USER_DEFAULT: "user-default",
 	FRECENCY: "frecency",

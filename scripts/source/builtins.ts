@@ -42,6 +42,32 @@ for (const id of aiPolicy.fallbackCommandIds) {
 	if (!builtinCommandIds.has(id))
 		throw new Error(`AI policy command missing: ${id}`);
 }
+for (const { id, extensionId } of aiPolicy.commandSettings) {
+	const extension = analysis.builtinExtensions[extensionId];
+	const command = Object.values(extension?.commands ?? {}).find(
+		(command) => command.id === id,
+	);
+	if (command?.fields.type?.expression !== "`ai-extension-command`")
+		throw new Error(`AI policy command changed: ${id}`);
+}
+const disabledExtensions = new Set(
+	aiPolicy.internalExtensions
+		.filter((rule) => rule.enabled === false)
+		.map((rule) => rule.id),
+);
+const disabledCommands = new Set(aiPolicy.commandSettings.map(({ id }) => id));
+for (const extension of Object.values(analysis.builtinExtensions)) {
+	if (disabledExtensions.has(extension.id)) continue;
+	for (const command of Object.values(extension.commands)) {
+		if (
+			command.fields.type?.expression === "`ai-extension-command`" &&
+			!disabledCommands.has(command.id)
+		)
+			throw new Error(
+				`AI command is not covered by disable policy: ${command.id}`,
+			);
+	}
+}
 await writeFile(
 	path.join(root, "data/builtin/api.json"),
 	`${JSON.stringify({ release: corpus.manifest.release, extensions: analysis.builtinExtensions, definitions: analysis.builtinDefinitions, unresolved: analysis.unresolvedBuiltins }, null, 2)}\n`,

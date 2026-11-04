@@ -9,8 +9,13 @@
 	],
 	"mergeableBackupCollections": [
 		"internalExtensions",
+		"commandSettings",
+		"userDefaults",
 		"models",
 		"macOSDefaults"
+	],
+	"userDefaults": [
+		{ "key": "has-initialized-ai-skill-directories", "value": true }
 	],
 	"internalExtensions": [
 		{
@@ -28,8 +33,14 @@
 				"remoteAiChatEnabled": false,
 				"remoteAiChatKeepAvailable": false,
 				"aiLocalSubscriptionsEnabled": false,
+				"aiClaudeSubscriptionEnabled": false,
+				"aiCodexSubscriptionEnabled": false,
+				"aiCopilotSubscriptionEnabled": false,
+				"quickAiAutocompleteInRootSearch": false,
+				"quickAiAutocompletePromptHistory": false,
 				"showAgentsInRootSearch": false,
-				"aiChatPreventIdleSleep": false
+				"aiChatPreventIdleSleep": false,
+				"aiUsageMenuBarEnabled": false
 			},
 			"enabledFallbackCommandIds": [],
 			"enabled": false
@@ -62,6 +73,52 @@
 				"semanticIndexingUseFileSearchScope": false
 			}
 		}
+	],
+	"commandSettings": [
+		{ "id": "c:r:browser::-::aiExtension", "extensionId": "e:r:browser" },
+		{ "id": "c:r:calculator::-::aiExtension", "extensionId": "e:r:calculator" },
+		{ "id": "c:r:calendar::-::aiExtension", "extensionId": "e:r:calendar" },
+		{
+			"id": "c:r:clipboard-history::-::aiExtension",
+			"extensionId": "e:r:clipboard-history"
+		},
+		{ "id": "c:r:contacts::-::aiExtension", "extensionId": "e:r:contacts" },
+		{ "id": "c:r:developer::-::aiExtension", "extensionId": "e:r:developer" },
+		{
+			"id": "c:r:file-search::-::aiExtension",
+			"extensionId": "e:r:file-search"
+		},
+		{
+			"id": "c:r:file-search::-::fileExplorerAiExtension",
+			"extensionId": "e:r:file-search"
+		},
+		{
+			"id": "c:r:file-search::-::fileSearchAiExtension",
+			"extensionId": "e:r:file-search"
+		},
+		{
+			"id": "c:r:raycast-focus::-::aiExtension",
+			"extensionId": "e:r:raycast-focus"
+		},
+		{ "id": "c:r:notes::-::aiExtension", "extensionId": "e:r:notes" },
+		{ "id": "c:r:quicklinks::-::aiExtension", "extensionId": "e:r:quicklinks" },
+		{
+			"id": "c:r:raycast-core::-::askManual",
+			"extensionId": "e:r:raycast-core"
+		},
+		{
+			"id": "c:r:raycast-core::-::askFeedback",
+			"extensionId": "e:r:raycast-core"
+		},
+		{
+			"id": "c:r:raycast-core::-::askStore",
+			"extensionId": "e:r:raycast-core"
+		},
+		{
+			"id": "c:r:raycast-settings::-::aiExtension",
+			"extensionId": "e:r:raycast-settings"
+		},
+		{ "id": "c:r:snippets::-::aiExtension", "extensionId": "e:r:snippets" }
 	],
 	"statusFields": [
 		{
@@ -127,8 +184,32 @@
 			"path": ["localMeta", "aiLocalSubscriptionsEnabled"]
 		},
 		{
+			"key": "aiClaudeSubscriptionEnabled",
+			"path": ["localMeta", "aiClaudeSubscriptionEnabled"]
+		},
+		{
+			"key": "aiCodexSubscriptionEnabled",
+			"path": ["localMeta", "aiCodexSubscriptionEnabled"]
+		},
+		{
+			"key": "aiCopilotSubscriptionEnabled",
+			"path": ["localMeta", "aiCopilotSubscriptionEnabled"]
+		},
+		{
+			"key": "quickAiAutocompleteInRootSearch",
+			"path": ["localMeta", "quickAiAutocompleteInRootSearch"]
+		},
+		{
+			"key": "quickAiAutocompletePromptHistory",
+			"path": ["localMeta", "quickAiAutocompletePromptHistory"]
+		},
+		{
 			"key": "showAgentsInRootSearch",
 			"path": ["localMeta", "showAgentsInRootSearch"]
+		},
+		{
+			"key": "aiUsageMenuBarEnabled",
+			"path": ["localMeta", "aiUsageMenuBarEnabled"]
 		},
 		{
 			"key": "aiChatPreventIdleSleep",

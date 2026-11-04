@@ -162,6 +162,7 @@ export type SettingsRepository = {
 		settings: CommandSettingsUpdate,
 	) => Promise<void>;
 	addCommandSettings: (settings: CommandSettingsCreate) => Promise<void>;
+	deleteCommandSettings: (id: string) => Promise<void>;
 	allCommandSettings: () => Promise<CommandSettings[]>;
 	allMcpServers: () => Promise<unknown[]>;
 	updateGeneralSetting: (setting: GeneralSettingUpdate) => Promise<void>;

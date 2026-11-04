@@ -32,6 +32,11 @@ export type Snapshot = {
 	version: number;
 	createdAt: string;
 	internalExtensions: Record<string, BackupExtension>;
+	commandSettings: Record<
+		string,
+		{ extensionId: string; enabled: boolean } | null
+	>;
+	userDefaults: Record<string, string | number | boolean | null>;
 	models: Record<string, { disabledAt: string | null }>;
 	frecencyRecords: FrecencyRecord[];
 	macOSDefaults: Record<string, MacOSDefaultValue>;
@@ -81,7 +86,8 @@ function op(
 export function isRaycastAiItemId(itemId: unknown): itemId is string {
 	return (
 		typeof itemId === "string" &&
-		POLICY.frecencyPrefixes.some((prefix) => itemId.startsWith(prefix))
+		(POLICY.commandSettings.some(({ id }) => itemId === id) ||
+			POLICY.frecencyPrefixes.some((prefix) => itemId.startsWith(prefix)))
 	);
 }
 
@@ -92,9 +98,9 @@ function disabledInternalExtension(
 	if (!previous.id)
 		throw new Error("internal extension settings are missing an id");
 
-	// Raycast 2.5.1's backend Kzt enables content indexing whenever contentSearch
-	// is true and contentSearchEngine is not "native". Empty scopes alone do not
-	// disable it; the file-search policy selects the native engine explicitly
+	// Content indexing runs when contentSearch is true and its engine is not
+	// "native". Empty scopes alone do not disable it, so the file-search policy
+	// selects the native engine explicitly
 	return structuredClone({
 		...previous,
 		...patch,
@@ -194,6 +200,89 @@ const COLLECTIONS = [
 			Object.entries(value).map(([id, previous]) =>
 				op(OP.INTERNAL_EXTENSION, { id, enabled: previous.enabled }, () =>
 					restoreInternalExtension(db, id, previous),
+				),
+			),
+	}),
+	collection({
+		key: "commandSettings",
+		snapshot: async (db) =>
+			Object.fromEntries(
+				await Effect.runPromise(
+					Effect.forEach(
+						POLICY.commandSettings,
+						({ id }) =>
+							attempt(async () => {
+								const previous = await db.settings.getCommandSettings(id);
+								return [
+									id,
+									previous
+										? {
+												extensionId: previous.extensionId,
+												enabled: previous.enabled,
+											}
+										: null,
+								] as const;
+							}),
+						{ concurrency: "unbounded" },
+					),
+				),
+			),
+		disable: ({ db, value }) =>
+			POLICY.commandSettings.map(({ id, extensionId }) =>
+				op(OP.COMMAND, { id, enabled: false }, () =>
+					value[id]
+						? db.settings.updateCommandSettings(id, { enabled: false })
+						: db.settings.addCommandSettings({
+								id,
+								extensionId,
+								enabled: false,
+							}),
+				),
+			),
+		restore: ({ db, value }) =>
+			Object.entries(value).map(([id, previous]) =>
+				op(OP.COMMAND, { id, enabled: previous?.enabled }, async () => {
+					if (!previous) {
+						await db.settings.deleteCommandSettings(id);
+					} else if (await db.settings.getCommandSettings(id)) {
+						// Only enabled changes; keep aliases, hotkeys, and other settings
+						await db.settings.updateCommandSettings(id, {
+							enabled: previous.enabled,
+						});
+					} else {
+						await db.settings.addCommandSettings({ id, ...previous });
+					}
+				}),
+			),
+	}),
+	collection({
+		key: "userDefaults",
+		snapshot: async (db) =>
+			Object.fromEntries(
+				await Effect.runPromise(
+					Effect.forEach(
+						POLICY.userDefaults,
+						({ key }) =>
+							attempt(
+								async () => [key, await db.userDefaults.get(key)] as const,
+							),
+						{ concurrency: "unbounded" },
+					),
+				),
+			),
+		disable: ({ db }) =>
+			// Prevent startup from re-adding default skills after clearing the paths
+			POLICY.userDefaults.map(({ key, value }) =>
+				op(OP.USER_DEFAULT, { key, value }, () =>
+					db.userDefaults.set(key, value),
+				),
+			),
+		restore: ({ db, value }) =>
+			Object.entries(value).map(([key, previous]) =>
+				op(OP.USER_DEFAULT, { key, value: previous }, () =>
+					previous === null
+						? db.userDefaults.delete(key)
+						: db.userDefaults.set(key, previous),
 				),
 			),
 	}),
@@ -339,6 +428,20 @@ const snapshotSchema = v.looseObject({
 				),
 			"Invalid backup extension",
 		),
+	),
+	commandSettings: v.optional(
+		v.record(
+			v.string(),
+			v.nullable(v.object({ extensionId: v.string(), enabled: v.boolean() })),
+		),
+		() => ({}),
+	),
+	userDefaults: v.optional(
+		v.record(
+			v.string(),
+			v.nullable(v.union([v.string(), v.number(), v.boolean()])),
+		),
+		() => ({}),
 	),
 	models: v.record(
 		v.string(),
@@ -510,57 +613,84 @@ function statusFieldValue(item: BackupExtension, field: StatusField): unknown {
 export async function status(
 	db: RaycastDatabaseClient,
 ): Promise<Record<string, unknown>> {
-	const { internalExtensions, models, frecencyRecords, macOSDefaults, aiData } =
-		await Effect.runPromise(
-			Effect.all(
-				{
-					internalExtensions: Effect.forEach(
-						POLICY.internalExtensions,
-						({ id }) =>
-							attempt(async () => {
-								const item = await db.settings.getInternalExtensionSettings(id);
-								if (!item?.id) return [id, { present: false }] as const;
-								return [
-									id,
-									{
-										present: true,
-										...Object.fromEntries(
-											POLICY.statusFields.map((field) => [
-												field.key,
-												statusFieldValue(item, field),
-											]),
-										),
-									},
-								] as const;
-							}),
-						{ concurrency: "unbounded" },
-					).pipe(Effect.map(Object.fromEntries)),
-					models: attempt(() => db.ai.modelGetAll()),
-					frecencyRecords: attempt(() => db.frecency.getAll()).pipe(
-						Effect.map((records) =>
-							records.filter((record) => isRaycastAiItemId(record.itemId)),
-						),
+	const {
+		internalExtensions,
+		commandSettings,
+		userDefaults,
+		models,
+		frecencyRecords,
+		macOSDefaults,
+		aiData,
+	} = await Effect.runPromise(
+		Effect.all(
+			{
+				internalExtensions: Effect.forEach(
+					POLICY.internalExtensions,
+					({ id }) =>
+						attempt(async () => {
+							const item = await db.settings.getInternalExtensionSettings(id);
+							if (!item?.id) return [id, { present: false }] as const;
+							return [
+								id,
+								{
+									present: true,
+									...Object.fromEntries(
+										POLICY.statusFields.map((field) => [
+											field.key,
+											statusFieldValue(item, field),
+										]),
+									),
+								},
+							] as const;
+						}),
+					{ concurrency: "unbounded" },
+				).pipe(Effect.map(Object.fromEntries)),
+				commandSettings: Effect.forEach(
+					POLICY.commandSettings,
+					({ id }) =>
+						attempt(async () => {
+							const command = await db.settings.getCommandSettings(id);
+							return [
+								id,
+								{ present: command !== null, enabled: command?.enabled },
+							] as const;
+						}),
+					{ concurrency: "unbounded" },
+				).pipe(Effect.map(Object.fromEntries)),
+				userDefaults: Effect.forEach(
+					POLICY.userDefaults,
+					({ key }) =>
+						attempt(async () => [key, await db.userDefaults.get(key)] as const),
+					{ concurrency: "unbounded" },
+				).pipe(Effect.map(Object.fromEntries)),
+				models: attempt(() => db.ai.modelGetAll()),
+				frecencyRecords: attempt(() => db.frecency.getAll()).pipe(
+					Effect.map((records) =>
+						records.filter((record) => isRaycastAiItemId(record.itemId)),
 					),
-					macOSDefaults: Effect.forEach(
-						POLICY.macOSDefaults,
-						(rule) =>
-							attempt(
-								async () => [rule.key, await readMacOSDefault(rule)] as const,
-							),
-						{ concurrency: "unbounded" },
-					).pipe(Effect.map(Object.fromEntries)),
-					aiData: Effect.forEach(
-						POLICY.aiDataQueries,
-						(query) => attempt(() => queryCount(db, query)),
-						{ concurrency: "unbounded" },
-					).pipe(Effect.map(Object.fromEntries)),
-				},
-				{ concurrency: "unbounded" },
-			),
-		);
+				),
+				macOSDefaults: Effect.forEach(
+					POLICY.macOSDefaults,
+					(rule) =>
+						attempt(
+							async () => [rule.key, await readMacOSDefault(rule)] as const,
+						),
+					{ concurrency: "unbounded" },
+				).pipe(Effect.map(Object.fromEntries)),
+				aiData: Effect.forEach(
+					POLICY.aiDataQueries,
+					(query) => attempt(() => queryCount(db, query)),
+					{ concurrency: "unbounded" },
+				).pipe(Effect.map(Object.fromEntries)),
+			},
+			{ concurrency: "unbounded" },
+		),
+	);
 
 	return {
 		internalExtensions,
+		commandSettings,
+		userDefaults,
 		modelCount: models.length,
 		disabledModelCount: models.filter((model) => model.disabledAt != null)
 			.length,
