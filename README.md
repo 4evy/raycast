@@ -1,15 +1,11 @@
 # Raycast
 
-<p align="center">
-  <img src="https://img.shields.io/badge/macOS-Apple_Silicon-111827?style=flat-square&amp;logo=apple&amp;logoColor=white" alt="Apple Silicon macOS">
-  <img src="https://img.shields.io/badge/Node.js-%E2%89%A526.10.0-417E38?style=flat-square&amp;logo=nodedotjs&amp;logoColor=white" alt="Node.js 26.10.0 or newer">
-  <img src="https://img.shields.io/badge/TypeScript-API_v1-3178C6?style=flat-square&amp;logo=typescript&amp;logoColor=white" alt="TypeScript API v1">
-</p>
-
 Read and configure Raycast's local database from JSON, the CLI, or TypeScript.
 Supports profiles, command aliases, themes, and disabling AI.
 
-## Quick start
+Requires Apple Silicon macOS and Node.js 26.10.0 or newer.
+
+## Get started
 
 ```sh
 npm ci
@@ -22,9 +18,9 @@ Extraction reads Raycast's database-key backup from the login Keychain and
 caches the derived passphrase with mode 0600. Later runs reuse the cache.
 Raycast starts only if its runtime is missing.
 
-## Configure with JSON
+## Configure
 
-`raycast-config.json` — disable AI and open Raycast:
+Save as `raycast-config.json`:
 
 ```json
 {
@@ -38,100 +34,19 @@ Raycast starts only if its runtime is missing.
 npm run configure -- ./raycast-config.json
 ```
 
-Omitted fields leave settings unchanged. `disableAi: false` does not restore AI;
-use `npm run ai -- restore`. Configuration writes immediately and has no
-rollback or dry-run mode.
+Omitted fields leave settings unchanged. Configuration writes immediately,
+without rollback or a dry-run mode. `disableAi: false` does not restore AI.
 
-### Profile, aliases, and themes
+The [configuration schema](schemas/config.schema.json) covers profiles,
+application and command aliases, clipboard retention, and theme files. Asset
+paths resolve relative to the configuration file. Absolute paths and `~` also
+work. Applying a profile clears local OAuth session defaults.
 
-A combined configuration with `clip` for Clipboard History:
-
-```json
-{
-  "$schema": "./schemas/config.schema.json",
-  "profile": {
-    "currentUser": {
-      "id": "your-id",
-      "name": "Your Name",
-      "has_pro_features": true
-    },
-    "avatarFile": "avatar.png"
-  },
-  "commandAliases": [
-    {
-      "id": "c:r:clipboard-history::-::history",
-      "extensionId": "e:r:clipboard-history",
-      "alias": "clip",
-      "enabled": true
-    }
-  ],
-  "themesFile": "themes.json",
-  "disableAi": true,
-  "launch": true
-}
-```
-
-Asset paths resolve relative to the configuration file; absolute paths and `~`
-also work.
-
-- **Profile:** replace the example with your own fields from
-  `npm run db -- profile get`. Applying it replaces the stored profile and
-  clears local OAuth session defaults. Use `avatarUrl` instead of `avatarFile`
-  for a remote image; avatar failures produce warnings.
-- **Local Pro:** `has_pro_features` enables the **Unlimited** option under
-  Clipboard History -> **Keep history for**. Select it afterward; organization
-  policy can override it
-- **Aliases:** set `alias` to `null` to remove one, or `enabled` to `false` to
-  disable the command. Omit `enabled` to preserve its value. Unlisted commands
-  stay unchanged. Find IDs with `npm run db -- api builtin [filter]`.
-- **Application aliases:** use `appAliases` to find applications by their
-  indexed names and generate Raycast command IDs. Names are tried in order.
-  If none match, `fallbackPath` supplies the command path; without it, the
-  alias is skipped with a warning. `commandAliases` still handles built-in
-  commands.
-- **Existing profile:** use `fallbackUser` and `currentUserPatch` instead of
-  `currentUser` to keep stored profile fields. The fallback supplies `id` and
-  `name` when no profile exists; patch fields override the stored values.
-
-The [configuration schema](schemas/config.schema.json) lists supported fields.
-This format does not accept arbitrary Raycast settings.
-
-### Theme file
-
-Save as `themes.json` for the configuration above:
-
-```json
-{
-  "themes": [
-    {
-      "name": "Midnight",
-      "appearance": "dark",
-      "colors": {
-        "background": "#181825",
-        "backgroundSecondary": "#1E1E2E",
-        "foreground": "#CDD6F4",
-        "accent": "#CBA6F7",
-        "selection": "#45475A",
-        "loader": "#89B4FA",
-        "red": "#F38BA8",
-        "orange": "#FAB387",
-        "yellow": "#F9E2AF",
-        "green": "#A6E3A1",
-        "blue": "#89B4FA",
-        "purple": "#CBA6F7",
-        "magenta": "#F5C2E7"
-      }
-    }
-  ]
-}
-```
-
-The last theme for each appearance becomes active. Changes restart Raycast.
-To install themes alone:
-
-```sh
-npm run themes -- ./themes.json
-```
+- Inspect your profile with `npm run db -- profile get`.
+- Find built-in command IDs with `npm run db -- api builtin [filter]`.
+- Use the [theme schema](schemas/themes.schema.json) for `themesFile`, or
+  install themes directly with `npm run themes -- ./themes.json`. Theme changes
+  restart Raycast, and the last theme for each appearance becomes active.
 
 ## Disable or restore AI
 
@@ -154,220 +69,25 @@ Incompatible backups stop both operations before settings change. Preserve the
 old backup before moving it aside. A new backup captures only current settings,
 not values missing from the old file.
 
-## CLI
+## Other interfaces
 
-Use `npm run cli -- --help` or a command group's `--help` to browse commands.
+### CLI
+
+Browse commands with `npm run cli -- --help` or a command group's `--help`.
 Profile, alias, user-default, and AI mutations support `--dry-run`.
 
-```sh
-npm run db -- summary
-npm run db -- api builtin clipboard-history
-npm run db -- user defaults get your-setting-key
-npm run db -- user defaults set --help
-```
+### TypeScript
 
-The CLI is limited to AI controls and configuration. Database diagnostics cover
-health, theme selection, extension settings, and AI counts. Generic native
-method calls and backend API exploration are not supported.
+Run `npm pack`, install the resulting tarball in your project, and import from
+`raycast/v1`. Use `configureFile(path)` to apply JSON, or
+`createRaycastClient()` for individual operations. See the
+[API contracts](src/public/v1/contracts.ts) for available methods and types.
 
-## TypeScript library
+### Nix
 
-Run `npm pack`, then install the tarball in your project:
-
-```sh
-npm install /path/to/raycast-1.0.0.tgz
-```
-
-The examples below run as `.mts` files on Node 26.10.0+. Profile and theme
-scripts preview by default; `--apply` writes changes. See the [API contracts](src/public/v1/contracts.ts) for the full API,
-or use `configureFile(path)` to apply a JSON configuration.
-
-<details>
-<summary>Update an existing profile and disable AI</summary>
-
-Preserve existing profile fields and enable local Pro. Applying clears OAuth
-session defaults; the AI backup does not cover the profile.
-
-`local-setup.mts`:
-
-```typescript
-import { parseArgs } from "node:util";
-import {
-  createRaycastClient,
-  extractDatabaseKey,
-  parseConsumerConfig,
-} from "raycast/v1";
-
-const { values } = parseArgs({
-  options: { apply: { type: "boolean", default: false } },
-});
-const dryRun = !values.apply;
-
-await extractDatabaseKey();
-const raycast = createRaycastClient();
-const { status } = await raycast.database.status();
-if (!status.allHealthy) throw new Error("Raycast database health check failed");
-
-const { currentUser } = await raycast.profile.get();
-const { profile } = parseConsumerConfig({ profile: { currentUser } });
-if (!profile) throw new Error("Expected a validated profile");
-
-await raycast.profile.apply(
-  { ...profile.currentUser, has_pro_features: true },
-  { dryRun },
-);
-console.log(dryRun ? "Profile validated" : "Profile updated");
-
-const ai = await raycast.ai.disable({ dryRun });
-console.log({ dryRun, aiChanges: ai.changes.length });
-if (!dryRun) console.log({ aiBackup: ai.backup });
-```
-
-```sh
-node local-setup.mts
-node local-setup.mts --apply
-```
-
-</details>
-
-<details>
-<summary>Generate light and dark themes from a shared palette</summary>
-
-Map a shared palette to Raycast colors. `--apply` also writes
-`workbench-themes.json`, which can be reused as `themesFile`.
-
-`sync-themes.mts`:
-
-```typescript
-import { writeFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import { parseArgs } from "node:util";
-import {
-  createRaycastClient,
-  extractDatabaseKey,
-  installThemes,
-  themesFromPalette,
-  type ThemeColor,
-} from "raycast/v1";
-
-const { values } = parseArgs({
-  options: { apply: { type: "boolean", default: false } },
-});
-
-const accents = {
-  red: "#D64550",
-  orange: "#D97732",
-  yellow: "#C49A24",
-  green: "#48966B",
-  blue: "#487CC7",
-  purple: "#9065C4",
-  pink: "#C65E9B",
-};
-const palettes = {
-  light: {
-    ...accents,
-    base: "#FAF8F5",
-    surface: "#F0EDE8",
-    text: "#292D35",
-    highlight: "#DDD6EC",
-  },
-  dark: {
-    ...accents,
-    base: "#191B22",
-    surface: "#242731",
-    text: "#E4E6ED",
-    highlight: "#3C3550",
-  },
-};
-
-type PaletteKey = keyof (typeof palettes)[keyof typeof palettes];
-
-const themes = themesFromPalette("Workbench", palettes, {
-  background: "base",
-  backgroundSecondary: "surface",
-  foreground: "text",
-  accent: "purple",
-  selection: "highlight",
-  loader: "blue",
-  red: "red",
-  orange: "orange",
-  yellow: "yellow",
-  green: "green",
-  blue: "blue",
-  purple: "purple",
-  magenta: "pink",
-} satisfies Record<ThemeColor, PaletteKey>);
-
-await extractDatabaseKey();
-const raycast = createRaycastClient();
-const preview = await raycast.themes.apply(themes, { dryRun: true });
-console.log({ wouldChange: preview.changed });
-
-if (values.apply) {
-  const file = new URL("./workbench-themes.json", import.meta.url);
-  await writeFile(file, `${JSON.stringify({ themes }, null, 2)}\n`);
-  const { changed } = await installThemes(fileURLToPath(file));
-  console.log({ changed });
-}
-```
-
-```sh
-node sync-themes.mts
-node sync-themes.mts --apply
-```
-
-</details>
-
-<details>
-<summary>Print the database encryption key and inspect database health</summary>
-
-Write the key to stdout and database health to stderr. Keep stdout out of
-shared logs.
-
-`database-key.mts`:
-
-```typescript
-import { readFile } from "node:fs/promises";
-import { createRaycastClient, extractDatabaseKey } from "raycast/v1";
-
-await extractDatabaseKey();
-const raycast = createRaycastClient();
-const { keyFile, status } = await raycast.database.status();
-if (!keyFile) throw new Error("Database key cache was not found");
-
-const key = (await readFile(keyFile, "utf8")).trim();
-if (!key || key.includes("\0")) {
-  throw new Error("Expected a nonempty text key in the runtime cache");
-}
-
-console.error({ allHealthy: status.allHealthy });
-console.error(
-  status.databases.map((database) => ({
-    type: database.databaseType,
-    accessible: database.isAccessible,
-    encrypted: database.isEncrypted,
-  })),
-);
-process.stdout.write(`${key}\n`);
-```
-
-```sh
-node database-key.mts
-```
-
-</details>
-
-## Nix
-
-Add this checkout to your flake:
-
-```nix
-inputs.raycast.url = "path:/absolute/path/to/raycast";
-inputs.raycast.inputs.nixpkgs.follows = "nixpkgs";
-```
-
-Import `inputs.raycast.darwinModules.raycast` or
-`inputs.raycast.homeManagerModules.raycast`, then choose one configuration form:
+Add this checkout as a flake input and import
+`inputs.raycast.darwinModules.raycast` or
+`inputs.raycast.homeManagerModules.raycast`:
 
 ```nix
 {
@@ -382,53 +102,15 @@ Import `inputs.raycast.darwinModules.raycast` or
 }
 ```
 
-Or use an existing JSON file:
-
-```nix
-programs.raycast = {
-  enable = true;
-  configuration.configFile = "/path/to/raycast-config.json";
-};
-```
-
-Set only one form; omit both to install only the app. Nix settings go into the
-Nix store, so keep secrets out and use absolute paths for `avatarFile` and
-`themesFile`. The JSON file stays at its runtime path. nix-darwin needs
-`system.primaryUser` or `programs.raycast.user`.
-
-For a profile and aliases that depend on the local Raycast database, use Nix
-settings directly. Activation resolves application names after Raycast starts:
-
-```nix
-programs.raycast.configuration.settings = {
-  profile = {
-    fallbackUser = { id = "your-id"; name = "Your Name"; };
-    currentUserPatch.has_pro_features = true;
-    avatarUrl = "https://example.com/avatar.png";
-  };
-  appAliases = [
-    { names = [ "Zen Browser (Twilight)" "Zen Browser" ]; alias = "firefox"; }
-  ];
-  commandAliases = [
-    {
-      id = "c:r:clipboard-history::-::history";
-      extensionId = "e:r:clipboard-history";
-      alias = "clip";
-    }
-  ];
-  disableAi = true;
-};
-```
+Alternatively, set `programs.raycast.configuration.configFile` to an existing
+JSON file. Set only one configuration form, or omit both to install only the
+app. Settings enter the Nix store, so keep secrets out and use absolute asset
+paths. nix-darwin needs `system.primaryUser` or `programs.raycast.user`.
+See the [Nix modules](nix/modules/) for options.
 
 ## Development
 
-`npm run check` runs type checking, linting, build, and package/API checks.
-`npm run format` formats code. After public API changes, run
-`npm run api:update` and review the report.
-
-Refresh extracted sources with `npm run source:sync`, then run
-`npm run source:builtins` to regenerate built-in command and preference IDs and
-check the AI policy against that release. `npm run source:inspect` lists the
-extracted files and supports static source searches.
-`npm run release:update` updates the pinned release. Dependency changes
-also require refreshing `npmDepsHash` in [nix/manager.nix](nix/manager.nix).
+Run `npm run check` for type checking, linting, build, and package/API checks.
+Use `npm run format` to format code and `npm run api:update` after public API
+changes. Source extraction and release commands are listed in
+[package.json](package.json).
