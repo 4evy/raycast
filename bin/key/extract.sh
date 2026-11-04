@@ -56,11 +56,25 @@ main() {
   fi
 
   local key_file="${bin_dir}/.raycast-key-cache"
+  local verifier addon
+  verifier="$(dirname "${BASH_SOURCE[0]}")/verify.ts"
+  addon="${RAYCAST_DATA_ADDON:-${app}/Contents/Resources/macos-app_RaycastDesktopApp.bundle/Contents/Resources/backend/data.darwin-arm64.node}"
 
   if [[ -s "${key_file}" ]]; then
     chmod 600 "${key_file}"
-    echo "using cached Raycast DB key: ${key_file}"
-    return
+    local verification_status=0
+    "${bin_dir}/node" "${verifier}" "${app_support}" "${addon}" \
+      <"${key_file}" || verification_status=$?
+    case "${verification_status}" in
+      0)
+        echo "using verified cached Raycast DB key: ${key_file}"
+        return
+        ;;
+      2)
+        echo 'cached Raycast DB key does not open main.db; reading Keychain backup' >&2
+        ;;
+      *) return "${verification_status}" ;;
+    esac
   fi
 
   local key key_temp
@@ -84,6 +98,11 @@ main() {
   printf '%s%s' "${key}" 'yvkwWXzxPPBAqY2tmaKrB*DvYjjMaeEf' |
     /usr/bin/shasum -a 256 | cut -d ' ' -f 1 >"${key_temp}"
   chmod 600 "${key_temp}"
+  if ! "${bin_dir}/node" "${verifier}" "${app_support}" "${addon}" \
+    <"${key_temp}"; then
+    echo 'Raycast database key backup could not be verified against main.db; cache was not replaced' >&2
+    exit 1
+  fi
   mv "${key_temp}" "${key_file}"
   trap - EXIT INT TERM
   echo "Raycast DB key extracted from Keychain: ${key_file}"

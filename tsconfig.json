@@ -14,5 +14,12 @@
 		"exactOptionalPropertyTypes": true,
 		"verbatimModuleSyntax": true
 	},
-	"include": ["*.ts", "*.cts", "src/**/*.ts", "src/**/*.cts", "scripts/**/*.ts"]
+	"include": [
+		"*.ts",
+		"*.cts",
+		"bin/**/*.ts",
+		"src/**/*.ts",
+		"src/**/*.cts",
+		"scripts/**/*.ts"
+	]
 }

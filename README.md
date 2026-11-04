@@ -15,7 +15,10 @@ npm run db -- status
 
 Run in a logged-in desktop session and allow Keychain access if prompted.
 Extraction reads Raycast's database-key backup from the login Keychain and
-caches the derived passphrase with mode 0600. Later runs reuse the cache.
+caches the derived passphrase with mode 0600. Cached and newly extracted keys
+must open a private copy of the encrypted `main.db` using Raycast's native
+addon. A stale cache is replaced only after the backup key is verified.
+Verification never opens the live database or changes Raycast's app bundle.
 Raycast starts only if its runtime is missing.
 
 ## Configure
