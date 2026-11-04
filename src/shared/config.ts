@@ -39,7 +39,11 @@ export const PATHS = pathsJson satisfies {
 };
 
 export const RUNTIME = runtimeJson satisfies {
-	checkedAgainst: { raycastVersion: string; commit: string; date: string };
+	checkedAgainst: {
+		raycastVersion: string;
+		backendSha256: string;
+		date: string;
+	};
 	node: {
 		bundled: string;
 		minimum: string;
@@ -54,7 +58,7 @@ export const RUNTIME = runtimeJson satisfies {
 		unsupportedSyntax: string[];
 		modules: { esm: string; cjs: string; requireHook: string };
 	};
-	addon: { package: string; version: string; constructor: string[] };
+	addon: { package: string; constructor: string[] };
 };
 
 export const SUMMARY = summaryJson satisfies {

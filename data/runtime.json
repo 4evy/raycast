@@ -1,15 +1,15 @@
 {
 	"checkedAgainst": {
-		"raycastVersion": "2.5.1.0",
-		"commit": "09c79271d60fe898235e84a8d7db3268ee4fbad4",
-		"date": "2026-09-24"
+		"raycastVersion": "2.10.1.0",
+		"backendSha256": "a8d537eb132bdad3bc7386c666a0cb1941729289144ed95f61dbfecf6b9a6294",
+		"date": "2026-11-04"
 	},
 	"node": {
-		"bundled": "22.22.2",
+		"bundled": "26.12.1",
 		"minimum": "26.10.0",
-		"moduleAbi": 127,
+		"moduleAbi": 147,
 		"typescriptMode": "strip",
-		"amaro": "1.1.5"
+		"amaro": "1.1.11"
 	},
 	"typescript": {
 		"compiler": "7.1.0-beta",
@@ -29,7 +29,6 @@
 	},
 	"addon": {
 		"package": "@raycast/data-darwin-arm64",
-		"version": "4.3.0",
 		"constructor": ["appSupportPath", "encryptionKey", "logger"]
 	}
 }
