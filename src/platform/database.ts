@@ -88,7 +88,7 @@ export async function readKey(keyFile: string | undefined): Promise<string> {
 	const bytes = await readFile(keyFile);
 	if (bytes.includes(0)) {
 		throw new Error(
-			`${keyFile} contains raw key bytes; use the runtime ${PATHS.keyCacheName} dumped by keydump.cts`,
+			`${keyFile} contains raw key bytes; run key extract to cache the database passphrase`,
 		);
 	}
 

@@ -17,7 +17,6 @@
 		"appBundle": "RAYCAST_APP_BUNDLE",
 		"dataAddon": "RAYCAST_DATA_ADDON",
 		"keyFile": "RAYCAST_KEY_FILE",
-		"keyDumpFile": "RAYCAST_KEYDUMP_FILE",
 		"aiDisableBackup": "RAYCAST_AI_DISABLE_BACKUP"
 	}
 }

@@ -16,7 +16,6 @@ buildNpmPackage {
     fileset = lib.fileset.unions [
       ../package.json
       ../package-lock.json
-      ../keydump.cts
       ../bin
       ../src
       ../data
@@ -30,7 +29,7 @@ buildNpmPackage {
   installPhase = ''
     runHook preInstall
     mkdir -p "$out/lib/raycast" "$out/bin"
-    cp -r bin src data node_modules *.cts package.json "$out/lib/raycast/"
+    cp -r bin src data node_modules package.json "$out/lib/raycast/"
     substituteInPlace "$out/lib/raycast/src/application/configure/configure.ts" "$out/lib/raycast/bin/key/extract.sh" \
       --replace-fail /usr/bin/env ${lib.meta.getExe' coreutils "env"}
     substituteInPlace "$out/lib/raycast/data/paths.json" \

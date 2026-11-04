@@ -62,9 +62,9 @@ export function installThemes(file: string): Promise<{ changed: boolean }> {
 	return install(file);
 }
 /**
- * Capture or reuse the local database key and return process output
- * @remarks May start and restart Raycast; the key remains in its runtime
- * directory
+ * Derive or reuse the local database passphrase and return process output
+ * @remarks Reads Raycast's login Keychain backup without restarting the app
+ * and caches the passphrase in its runtime directory with mode 0600
  * @public
  */
 export function extractDatabaseKey(): Promise<{

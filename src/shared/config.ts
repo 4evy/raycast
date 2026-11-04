@@ -33,7 +33,6 @@ export const PATHS = pathsJson satisfies {
 		appBundle: string;
 		dataAddon: string;
 		keyFile: string;
-		keyDumpFile: string;
 		aiDisableBackup: string;
 	};
 };
