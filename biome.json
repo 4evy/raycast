@@ -1,5 +1,11 @@
 {
 	"files": { "maxSize": 4194304 },
+	"overrides": [
+		{
+			"includes": ["data/builtin/api.json"],
+			"files": { "maxSize": 16777216 }
+		}
+	],
 	"vcs": {
 		"enabled": true,
 		"clientKind": "git",

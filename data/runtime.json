@@ -1,11 +1,11 @@
 {
 	"checkedAgainst": {
-		"raycastVersion": "2.10.1.0",
-		"backendSha256": "a8d537eb132bdad3bc7386c666a0cb1941729289144ed95f61dbfecf6b9a6294",
-		"date": "2026-11-04"
+		"raycastVersion": "2.13.1.0",
+		"backendSha256": "66fcbfd8a1926558da6943dac43329156b7d3ff04fccacaefe917d855f05e207",
+		"date": "2026-11-20"
 	},
 	"node": {
-		"bundled": "26.12.1",
+		"bundled": "26.13.1",
 		"minimum": "26.10.0",
 		"moduleAbi": 147,
 		"typescriptMode": "strip",
