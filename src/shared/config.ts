@@ -13,7 +13,7 @@ export const POLICY = policyJson satisfies {
 	mergeableBackupCollections: string[];
 	internalExtensions: ExtensionRule[];
 	commandSettings: { id: string; extensionId: string }[];
-	userDefaults: { key: string; value: boolean }[];
+	userDefaults: { key: string; value: boolean | string; sensitive?: boolean }[];
 	statusFields: StatusField[];
 	macOSDefaults: { key: string; restoreType: string }[];
 	aiDataQueries: CountQuery[];

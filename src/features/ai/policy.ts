@@ -83,6 +83,16 @@ function op(
 	return { type, ...fields, apply };
 }
 
+function reportedUserDefault(
+	key: string,
+	value: Snapshot["userDefaults"][string],
+) {
+	const rule = POLICY.userDefaults.find((rule) => rule.key === key);
+	if (value === null || (rule && (!rule.sensitive || value === rule.value)))
+		return value;
+	return "[redacted]";
+}
+
 export function isRaycastAiItemId(itemId: unknown): itemId is string {
 	return (
 		typeof itemId === "string" &&
@@ -271,7 +281,6 @@ const COLLECTIONS = [
 				),
 			),
 		disable: ({ db }) =>
-			// Prevent startup from re-adding default skills after clearing the paths
 			POLICY.userDefaults.map(({ key, value }) =>
 				op(OP.USER_DEFAULT, { key, value }, () =>
 					db.userDefaults.set(key, value),
@@ -279,10 +288,13 @@ const COLLECTIONS = [
 			),
 		restore: ({ db, value }) =>
 			Object.entries(value).map(([key, previous]) =>
-				op(OP.USER_DEFAULT, { key, value: previous }, () =>
-					previous === null
-						? db.userDefaults.delete(key)
-						: db.userDefaults.set(key, previous),
+				op(
+					OP.USER_DEFAULT,
+					{ key, value: reportedUserDefault(key, previous) },
+					() =>
+						previous === null
+							? db.userDefaults.delete(key)
+							: db.userDefaults.set(key, previous),
 				),
 			),
 	}),
@@ -660,7 +672,13 @@ export async function status(
 				userDefaults: Effect.forEach(
 					POLICY.userDefaults,
 					({ key }) =>
-						attempt(async () => [key, await db.userDefaults.get(key)] as const),
+						attempt(
+							async () =>
+								[
+									key,
+									reportedUserDefault(key, await db.userDefaults.get(key)),
+								] as const,
+						),
 					{ concurrency: "unbounded" },
 				).pipe(Effect.map(Object.fromEntries)),
 				models: attempt(() => db.ai.modelGetAll()),

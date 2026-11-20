@@ -16,7 +16,12 @@
 		"macOSDefaults"
 	],
 	"userDefaults": [
-		{ "key": "has-initialized-ai-skill-directories", "value": true }
+		{ "key": "has-initialized-ai-skill-directories", "value": true },
+		{
+			"key": "ai.external-agents.connections",
+			"value": "[]",
+			"sensitive": true
+		}
 	],
 	"internalExtensions": [
 		{
