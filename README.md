@@ -60,13 +60,20 @@ npm run ai -- restore
 ```
 
 Disabling saves a backup, then applies the [AI policy](data/ai/disable.json).
-It disables built-in AI features, including dictation and translation, and
-clears BYOK keys and skill directories. Normal commands, chat history, and
-third-party extensions remain. Restore uses the saved backup.
+It turns off Raycast's local MCP server and dictation microphone warming, and
+disables built-in AI commands without disabling normal Applications or
+Organizations commands. It clears BYOK keys, configured skill directories, and
+saved external-agent connections. It leaves MCP client registrations, chat
+history, and third-party extensions in place.
 
-Restart Raycast after disabling or restoring AI. Some inline AI actions may
-remain visible. This is not a network firewall, and startup or account refresh
-can still discover models.
+Restore uses the saved backup. Keep it private: it can contain API keys and
+external-agent credentials. Disconnecting agents locally does not revoke their
+tokens at the provider.
+
+After upgrading Raycast, rerun `npm run ai -- disable` to cover new commands.
+Restart Raycast after disabling or restoring AI so the running app picks up the
+changes. Some inline AI actions may remain visible. This is not a network
+firewall, and startup or account refresh can still discover models.
 
 Incompatible backups stop both operations before settings change. Preserve the
 old backup before moving it aside. A new backup captures only current settings,
