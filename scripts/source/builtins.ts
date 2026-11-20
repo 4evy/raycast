@@ -26,9 +26,10 @@ for (const rule of aiPolicy.internalExtensions) {
 		["localMeta", "local"],
 	] as const) {
 		for (const key of Object.keys(rule[field] ?? {})) {
-			if (extension.preferences[key]?.storage !== storage)
+			const setting = extension.preferences[key] ?? extension.state[key];
+			if (setting?.storage !== storage)
 				throw new Error(
-					`AI policy preference storage changed: ${rule.id}.${key}, expected ${storage}`,
+					`AI policy setting storage changed: ${rule.id}.${key}, expected ${storage}`,
 				);
 		}
 	}

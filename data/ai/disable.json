@@ -4,6 +4,7 @@
 	"frecencyPrefixes": [
 		"c:r:ai:",
 		"c:r:dictation:",
+		"c:r:mcp:",
 		"c:r:translator:",
 		"c:r:screen-awareness:"
 	],
@@ -59,6 +60,9 @@
 		},
 		{
 			"id": "e:r:mcp",
+			"localMeta": {
+				"externalServerEnabled": false
+			},
 			"enabled": false
 		},
 		{
@@ -75,6 +79,10 @@
 		}
 	],
 	"commandSettings": [
+		{
+			"id": "c:r:applications::-::aiExtension",
+			"extensionId": "e:r:applications"
+		},
 		{ "id": "c:r:browser::-::aiExtension", "extensionId": "e:r:browser" },
 		{ "id": "c:r:calculator::-::aiExtension", "extensionId": "e:r:calculator" },
 		{ "id": "c:r:calendar::-::aiExtension", "extensionId": "e:r:calendar" },
@@ -101,6 +109,10 @@
 			"extensionId": "e:r:raycast-focus"
 		},
 		{ "id": "c:r:notes::-::aiExtension", "extensionId": "e:r:notes" },
+		{
+			"id": "c:r:organizations::-::aiExtension",
+			"extensionId": "e:r:organizations"
+		},
 		{ "id": "c:r:quicklinks::-::aiExtension", "extensionId": "e:r:quicklinks" },
 		{
 			"id": "c:r:raycast-core::-::askManual",
@@ -210,6 +222,10 @@
 		{
 			"key": "aiUsageMenuBarEnabled",
 			"path": ["localMeta", "aiUsageMenuBarEnabled"]
+		},
+		{
+			"key": "externalServerEnabled",
+			"path": ["localMeta", "externalServerEnabled"]
 		},
 		{
 			"key": "aiChatPreventIdleSleep",
