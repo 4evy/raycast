@@ -234,6 +234,14 @@
 	],
 	"macOSDefaults": [
 		{
+			"key": "RaycastDictationMicrophoneWarmMode",
+			"restoreType": "string"
+		},
+		{
+			"key": "RaycastDictationKeepMicrophoneWarm",
+			"restoreType": "bool"
+		},
+		{
 			"key": "raycast_HasOpenedAIChat",
 			"restoreType": "bool"
 		},
